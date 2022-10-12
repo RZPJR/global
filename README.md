@@ -1,6 +1,6 @@
-# styleguide
+# global
 
-[![CircleCI](https://circleci.com/gh/vue-microfrontends/styleguide.svg?style=svg)](https://circleci.com/gh/vue-microfrontends/styleguide)
+[![CircleCI](https://circleci.com/gh/vue-microfrontends/global.svg?style=svg)](https://circleci.com/gh/vue-microfrontends/global)
 
 ## What is this?
 
@@ -14,7 +14,7 @@ This repository is a javascript project that creates a javascript bundle that is
 
 This project uses [Vue](https://vuejs.org) and was created with the [create-single-spa](https://single-spa.js.org/docs/create-single-spa) CLI. It uses webpack and babel.
 
-Whenever a pull request is merged to master, [CircleCI builds and deploys the project](https://circleci.com/gh/vue-microfrontends/styleguide). The ["workflows" view](https://circleci.com/gh/vue-microfrontends/workflows) (pictured below) can be seen if you are logged into CircleCI. Deployments for this in-browser module are completely independent of deployments for any other module.
+Whenever a pull request is merged to master, [CircleCI builds and deploys the project](https://circleci.com/gh/vue-microfrontends/global). The ["workflows" view](https://circleci.com/gh/vue-microfrontends/workflows) (pictured below) can be seen if you are logged into CircleCI. Deployments for this in-browser module are completely independent of deployments for any other module.
 
 ![image](https://user-images.githubusercontent.com/5524384/75210801-5ba02700-573f-11ea-8064-46af165cba0a.png)
 
@@ -29,12 +29,12 @@ There are two ways to do local development. It is preferred to do one module at 
 ### One module at a time
 
 ```sh
-cd styleguide
+cd global
 yarn install
 yarn start --https --port 9001
 ```
 
-Note that you may use whichever port you would like to. Go to https://localhost:9001/vue-mf-styleguide.js and verify that you are able to load the file without any SSL problems. To solve SSL problems, see [these instructions](https://improveandrepeat.com/2016/09/allowing-self-signed-certificates-on-localhost-with-chrome-and-firefox/).
+Note that you may use whichever port you would like to. Go to https://localhost:9001/vue-mf-global.js and verify that you are able to load the file without any SSL problems. To solve SSL problems, see [these instructions](https://improveandrepeat.com/2016/09/allowing-self-signed-certificates-on-localhost-with-chrome-and-firefox/).
 
 Now, go to https://vue.microfrontends.app. In the browser console, run the following:
 

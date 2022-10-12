@@ -1,0 +1,113 @@
+// ---MARGIN--- 
+@for $i from 1 through 100 {
+    // Margin All 
+    .ma#{$i} {
+        margin: $i * 1px;
+    }
+    .-ma#{$i} {
+        margin: $i * -1px;
+    }
+    // Margin Top 
+    .mt#{$i} {
+        margin-top: $i * 1px;
+    }
+    .-mt#{$i} {
+        margin-top: $i * -1px;
+    }
+    // Margin Bottom 
+    .mb#{$i} {
+        margin-bottom: $i * 1px;
+    }
+    .-mb#{$i} {
+        margin-bottom: $i * -1px;
+    }
+    // Margin Right 
+    .mr#{$i} {
+        margin-right: $i * 1px;
+    }
+    .-mr#{$i} {
+        margin-right: $i * -1px;
+    }
+    // Margin Left
+    .ml#{$i} {
+        margin-left: $i * 1px;
+    }
+    .-ml#{$i} {
+        margin-left: $i * -1px;
+    }
+    // Margin Vertikal
+    .my#{$i} {
+        margin-top: $i * 1px;
+        margin-bottom: $i * 1px;
+    }
+    .-my#{$i} {
+        margin-top: $i * -1px;
+        margin-bottom: $i * -1px;
+    }
+    // Margin Horizontal
+    .mx#{$i} {
+        margin-left: $i * 1px;
+        margin-right: $i * 1px;
+    }
+    .-mx#{$i} {
+        margin-left: $i * -1px;
+        margin-right: $i * -1px;
+    }
+}
+
+// ---PADDING--- 
+@for $i from 1 through 100 {
+    // Padding All 
+    .pa#{$i} {
+        padding: $i * 1px;
+    }
+    .-pa#{$i} {
+        padding: $i * -1px;
+    }
+    // Padding Top 
+    .pt#{$i} {
+        padding-top: $i * 1px;
+    }
+    .-pt#{$i} {
+        padding-top: $i * -1px;
+    }
+    // Padding Bottom 
+    .pb#{$i} {
+        padding-bottom: $i * 1px;
+    }
+    .-pb#{$i} {
+        padding-bottom: $i * -1px;
+    }
+    // Padding Right 
+    .pr#{$i} {
+        padding-right: $i * 1px;
+    }
+    .-pr#{$i} {
+        padding-right: $i * -1px;
+    }
+    // Padding Left
+    .pl#{$i} {
+        padding-left: $i * 1px;
+    }
+    .-pl#{$i} {
+        padding-left: $i * -1px;
+    }
+    // Padding Vertikal
+    .py#{$i} {
+        padding-top: $i * 1px;
+        padding-bottom: $i * 1px;
+    }
+    .-py#{$i} {
+        padding-top: $i * -1px;
+        padding-bottom: $i * -1px;
+    }
+    // Padding Horizontal
+    .px#{$i} {
+        padding-left: $i * 1px;
+        padding-right: $i * 1px;
+    }
+    .-px#{$i} {
+        padding-left: $i * -1px;
+        padding-right: $i * -1px;
+    }
+}

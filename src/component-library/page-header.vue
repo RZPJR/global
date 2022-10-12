@@ -1,25 +1,34 @@
 <template>
   <div class="page-header">
-    <h1>{{ title }}</h1>
+    <h1>Component</h1>
+    <h2>{{ title }}</h2>
+    <h3>{{ this.items[0].code }}</h3>
   </div>
 </template>
 <script>
 export default {
   props: ["title"],
+  data(){
+    return {
+      items: []
+    }
+  },
+  mounted() {
+    this.renderData('')
+  },
+  methods: {
+      renderData(){
+          this.items = []
+          this.$http.get("/inventory/uom",{params:{
+                  perpage:100,
+                  orderby:'-id',
+              }}).then(response => {
+              this.items = response.data.data
+              if(this.items === null){
+                  this.items = []
+              }
+          });
+      },
+  }
 };
 </script>
-<style scoped>
-.page-header {
-  height: 10.2rem;
-  display: flex;
-  background-color: #35495e;
-  padding: 1.6rem;
-}
-
-.page-header h1 {
-  color: white;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-</style>
