@@ -1,0 +1,31 @@
+// FONT FAMILY 
+@font-face {
+    font-family: OpenSans;
+    src: url(../fonts/OpenSans.ttf);
+}
+.OpenSans {
+    font-family: 'OpenSans';
+}
+
+// FONT SIZE 
+@for $i from 1 through 100 {
+    .fs#{$i} {
+        font-size: $i * 1px;
+    }
+}
+
+/* No Caps */
+.no-caps {
+    text-transform: none !important;
+}
+
+// emphasize or distinguish
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style :italic;
+}
+.underline {
+    text-decoration: underline; 
+}
