@@ -19,7 +19,7 @@ export { default as SelectOrderType } from "./component-library/SelectOrderType.
 export { default as SelectCity } from "./component-library/SelectCity.vue";
 export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
 export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";
-export { default as BreadCrumbsNew } from "./component-library/com-new/BreadCrumbsNew.vue";
+//export { default as BreadCrumbsNew } from "./component-library/com-new/BreadCrumbsNew.vue";
 // Filter for Index ------------------------
 
 // Component for Create ------------------------
