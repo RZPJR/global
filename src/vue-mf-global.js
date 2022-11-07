@@ -45,6 +45,7 @@ export { default as ImageAvaUser } from "../public/img/ava_home_user.png";
 export { default as BgNavbarNew } from "../public/img/bg_navbar_new.png";
 export { default as Image503 } from "../public/img/main.png";
 export { default as Image403 } from "../public/img/403.svg";
+export { default as Image404 } from "../public/img/404.svg";
 export { default as Menu } from "../public/icon/menu.png";
 export { default as Polygon } from "../public/icon/polygon.png";
 
