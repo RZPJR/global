@@ -38,11 +38,15 @@ export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vu
 
 // Image Source
 export { default as ImageLogo } from "../public/img/eden-logo.png";
+export { default as ImageLogoStaging } from "../public/img/eden-logo-staging.png";
+export { default as ImageLogoDev } from "../public/img/eden-logo-dev.png";
 export { default as ImageLogoLogin } from "../public/img/logo_login.png";
 export { default as ImageAvaUser } from "../public/img/ava_home_user.png";
 export { default as BgNavbarNew } from "../public/img/bg_navbar_new.png";
 export { default as Image503 } from "../public/img/main.png";
 export { default as Image403 } from "../public/img/403.svg";
+export { default as Menu } from "../public/icon/menu.png";
+export { default as Polygon } from "../public/icon/polygon.png";
 
 // Image Source
 
