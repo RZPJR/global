@@ -3,9 +3,9 @@
   align-content: start;
   background-color: #ebebeb;
   font-family: "OpenSans";
-  width: 100%;
   color: #333333;
-  max-width: 7680px;
+  padding: 12px;
+  min-width: 100%;
   min-height: 100vh;
 }
 .box {
@@ -265,4 +265,11 @@
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
+}
+
+#microApp {
+  @media screen and (min-width: 1024px) {
+    margin-left: 220px;
+  }
+  min-height: 100vh;
 }
