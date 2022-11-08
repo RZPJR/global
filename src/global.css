@@ -1049,3 +1049,19 @@ div.v-input__slot
   height: 80%;
   margin: 12px;
 }
+
+.error-image {
+  padding-top: 9%;
+  text-align: center;
+}
+
+.error-message {
+  font-size: 20px;
+  color: grey;
+}
+
+#errorButton {
+  color: white;
+  border-radius: 25px;
+  background-color: #768f9c;
+}
