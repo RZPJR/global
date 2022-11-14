@@ -51,11 +51,13 @@ export { default as MultiSelectSubDistrictAll } from "./component-library/MultiS
 export { default as MultiSelectWrt } from "./component-library/MultiSelectWrt.vue";
 export { default as SelectArchetype } from "./component-library/SelectArchetype.vue";
 export { default as SelectDivision } from "./component-library/SelectDivision.vue";
+export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
 export { default as ShippingAddressNew } from "./component-library/com-new/ShippingAddressNew.vue";
 export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
+export { default as PermissonUpdate } from "./component-library/com-new/PermissonUpdate.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
