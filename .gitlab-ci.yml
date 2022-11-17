@@ -1,0 +1,62 @@
+stages:
+  - build
+  - deploy
+  - reconfig
+
+Build Image:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "gitlab-ci-token" "${CI_JOB_TOKEN}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor      
+      --cache=false
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile docker/Dockerfile
+      --destination $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_COMMIT_SHORT_SHA
+  only:
+    - dev
+
+Deploy Dev:
+  stage: deploy
+  image: gcr.io/google.com/cloudsdktool/google-cloud-cli:alpine
+  before_script:
+    - gcloud components install kubectl gke-gcloud-auth-plugin
+    - echo $GCP_SA_KEY > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud container clusters get-credentials $CLUSTER_NAME --region asia-southeast1 --project $PROJECT_NAME
+  script:
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" kubernetes/deploy-dev.yaml
+    - kubectl apply -f kubernetes/deploy-dev.yaml
+  only:
+    - dev
+  tags:
+    - deploy_to_dev
+
+Importmap Shared-deps:
+  stage: reconfig
+  image: alpine
+  before_script:
+    - apk add git curl bash jq
+    - git config --global user.email "$CI_PROJECT_NAME-$CI_COMMIT_BRANCH@deploy.com"
+    - git config --global user.name "$CI_PROJECT_NAME"
+    - git clone -b $CI_COMMIT_BRANCH https://$GITLAB_CI_ACCESS:$GITLAB_CI_TOKEN@git.edenfarm.id/project-version3/erp-dashboard/shared-dependencies.git /shared-deps
+    - cd /shared-deps
+  script:
+    - >
+      if [ "`grep $CI_PROJECT_NAME importmap.json | wc -l`" == 0 ]; then 
+        echo "Adding $CI_PROJECT_NAME to importmap.json..."
+        jq '.imports += {"@vue-mf/'"$CI_PROJECT_NAME"'": "https://'"$CI_PROJECT_NAME"'.edenfarm.tech/js/app.js","@vue-mf/'"$CI_PROJECT_NAME"'/": "https://'"$CI_PROJECT_NAME"'.edenfarm.tech/"}' importmap.json > temp.json
+        mv temp.json importmap.json
+        cat importmap.json
+        echo "Pushing updated importmap.json to shared-dependencies..."
+        git add . && git commit -m "[${CI_COMMIT_BRANCH}-${CI_PIPELINE_IID}] ${CI_COMMIT_MESSAGE}"
+        git push origin $CI_COMMIT_BRANCH
+      else
+        echo "$CI_PROJECT_NAME already added to importmap.json"
+      fi
+  only:
+    - dev

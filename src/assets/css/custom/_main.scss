@@ -1,268 +1,275 @@
 // Container
 .main-container {
-    align-content: start;
-    background-color: #ebebeb;
-    padding: 12px;
-    font-family: "OpenSans";
-    width: 100%;
-    color: #333333;
-    max-width: 7680px;
+  align-content: start;
+  background-color: #ebebeb;
+  font-family: "OpenSans";
+  color: #333333;
+  padding: 12px;
+  min-width: 100%;
+  min-height: 100vh;
 }
 .box {
-    background-color: #ffffff;
-    padding: 16px;
-    margin: 12px;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
+  background-color: #ffffff;
+  padding: 16px;
+  margin: 12px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
 }
 .box-start {
-    background-color: #ffffff;
-    padding: 16px;
-    margin: 12px;
-    margin-bottom: -4px;
-    width: 100%;
-    border-radius: 8px;
+  background-color: #ffffff;
+  padding: 16px;
+  margin: 12px;
+  margin-bottom: -4px;
+  width: 100%;
+  border-radius: 8px;
 }
 .box-end {
-    background-color: #ffffff;
-    padding: 16px;
-    margin: 12px;
-    margin-top: -4px;
-    width: 100%;
-    border-radius: 8px;
+  background-color: #ffffff;
+  padding: 16px;
+  margin: 12px;
+  margin-top: -4px;
+  width: 100%;
+  border-radius: 8px;
 }
 .box-title {
-    background-color: #ffffff;
-    padding: 16px;
-    width: 100%;
-    margin-top: 12px;
-    margin-right: 12px;
-    margin-left: 12px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+  background-color: #ffffff;
+  padding: 16px;
+  width: 100%;
+  margin-top: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 }
 .box-body {
-    background-color: #ffffff;
-    padding: 16px;
-    width: 100%;
-    margin-bottom: 12px;
-    margin-right: 12px;
-    margin-left: 12px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-top: 1px solid #ebebeb;
-    overflow: hidden;
+  background-color: #ffffff;
+  padding: 16px;
+  width: 100%;
+  margin-bottom: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top: 1px solid #ebebeb;
+  overflow: hidden;
 }
 .box-title-end {
-    background-color: #ffffff;
-    padding: 16px;
-    width: 100%;
-    margin-top: 12px;
-    margin-right: 12px;
-    margin-left: 12px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    margin-top: -4px;
+  background-color: #ffffff;
+  padding: 16px;
+  width: 100%;
+  margin-top: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  margin-top: -4px;
 }
 .box-header-table {
-    background: linear-gradient(to right, #805b9d, #963f73);
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 16px;
-    width: 100%;
-    margin-top: 12px;
-    margin-right: 12px;
-    margin-left: 12px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+  background: linear-gradient(to right, #805b9d, #963f73);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px;
+  width: 100%;
+  margin-top: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 }
 .box-body-table {
-    background-color: #ffffff;
-    width: 100%;
-    margin-bottom: 12px;
-    margin-right: 12px;
-    margin-left: 12px;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-top: 1px solid #ebebeb;
-    overflow: hidden;
+  background-color: #ffffff;
+  width: 100%;
+  margin-bottom: 12px;
+  margin-right: 12px;
+  margin-left: 12px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top: 1px solid #ebebeb;
+  overflow: hidden;
 }
 .box-table {
-    background-color: #ffffff;
-    margin: 12px;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
+  background-color: #ffffff;
+  margin: 12px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
 }
 .box-table-extra-margin-bottom {
-    background-color: #ffffff;
-    margin: 12px;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 125px;
-    margin-top: 0;
+  background-color: #ffffff;
+  margin: 12px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 125px;
+  margin-top: 0;
 }
 .box-footer-modal {
-    width: 100%;
-    border-top: 1px solid #ebebeb;
+  width: 100%;
+  border-top: 1px solid #ebebeb;
 }
 .box-col {
-    background-color: white;
-    border-radius: 8px;
-    padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
 }
 .box-col-header {
-    background: linear-gradient(to right, #805b9d, #963f73);
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 16px;
+  background: linear-gradient(to right, #805b9d, #963f73);
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 16px;
 }
 .box-col-body {
-    background-color: white;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    padding: 16px;
+  background-color: white;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 16px;
 }
 .box-col-body-table {
-    background-color: white;
-    border-bottom-right-radius: 8px;
-    border-bottom-left-radius: 8px;
+  background-color: white;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 .box-col24 {
-    background-color: white;
-    border-radius: 8px;
-    padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
 }
 .box-modal-table {
-    border: 1px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
 }
 //Login
 .login-page {
-    // background-image: url("/img/bg_login.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-    margin-top: -25px;
+  // background-image: url("/img/bg_login.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  margin-top: -25px;
 }
 //Button
 .btn-search-home {
-    background-color: #50aba3;
-    border-radius: 4px;
-    width: 40px;
-    height: 40px;
-    color: white;
+  background-color: #50aba3;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  color: white;
 }
 .main-btn {
-    width: 96px;
-    text-transform: none !important;
-    font-weight: bold;
+  width: 96px;
+  text-transform: none !important;
+  font-weight: bold;
 }
 .only-btn {
-    text-transform: none !important;
-    font-weight: bold;
+  text-transform: none !important;
+  font-weight: bold;
 }
 //Text
 .text-title-modal {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 4px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 4px;
 }
 .text-title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 //Navbar
 .hr-navbar-new {
-    border-top: 1px solid grey;
+  border-top: 1px solid grey;
 }
 //HR or Line
 .hr-title {
-    border-top: 1px solid #e5e5e5;
-    margin-right: -16px;
-    margin-left: -16px;
+  border-top: 1px solid #e5e5e5;
+  margin-right: -16px;
+  margin-left: -16px;
 }
 .hr-title-modal {
-    border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }
 .h-row {
-    height: 48px;
+  height: 48px;
 }
 //Modal
 .dialog {
-    padding: 24px;
-    font-family: "OpenSans";
+  padding: 24px;
+  font-family: "OpenSans";
 }
 .checkbox-label-def {
-    border-radius: 15px;
-    border: 1px solid #50aba3;
-    width: 100%;
-    padding: 24px;
-    background: #edf7f6;
+  border-radius: 15px;
+  border: 1px solid #50aba3;
+  width: 100%;
+  padding: 24px;
+  background: #edf7f6;
 }
 .checkbox-label {
-    border-radius: 15px;
-    border: 1px solid #ebebeb;
-    width: 100%;
-    padding: 24px;
+  border-radius: 15px;
+  border: 1px solid #ebebeb;
+  width: 100%;
+  padding: 24px;
 }
 //Navbar
 .nav-title {
-    margin-left: 8px;
-    font-size: 20px;
-    font-weight: bold;
+  margin-left: 8px;
+  font-size: 20px;
+  font-weight: bold;
 }
 // Breadcrumbs
 .breadcrumbs-main {
-    padding: 8px;
-    padding-left: 24px;
-    padding-right: 24px;
-    font-family: "OpenSans";
-    font-size: 14px;
-    background-color: #ffffff;
-    border-top: 1px solid #ebebeb;
+  padding: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-family: "OpenSans";
+  font-size: 14px;
+  background-color: #ffffff;
+  border-top: 1px solid #ebebeb;
 }
 .no-underline {
-    text-decoration: none;
+  text-decoration: none;
 }
 // Hidden
 .hidden {
-    display: none;
+  display: none;
 }
 //Field
 .vue-number-def {
-    border: 2px solid #b7b7b7;
-    height: 40px;
-    text-align: right;
-    padding: 8px;
-    width: 100%;
-    border-radius: 8px;
+  border: 2px solid #b7b7b7;
+  height: 40px;
+  text-align: right;
+  padding: 8px;
+  width: 100%;
+  border-radius: 8px;
 }
 .totalTransactionBox {
-    position: fixed;
-    bottom: 16px;
-    width: 83%;
-    padding-right: 24px;
+  position: fixed;
+  bottom: 16px;
+  width: 83%;
+  padding-right: 24px;
 }
 
 // Full Height
 .full-height {
-    height: 100%;
+  height: 100%;
 }
 // full width
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 .text-ellipsis {
-    width: 150px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
+  width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+#microApp {
+  @media screen and (min-width: 1024px) {
+    margin-left: 220px;
+  }
+  min-height: 100vh;
 }
