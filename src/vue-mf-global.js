@@ -58,6 +58,7 @@ export { default as ConfirmationDialogNew } from "./component-library/com-new/Co
 export { default as ShippingAddressNew } from "./component-library/com-new/ShippingAddressNew.vue";
 export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
 export { default as PermissonUpdate } from "./component-library/com-new/PermissonUpdate.vue";
+export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
