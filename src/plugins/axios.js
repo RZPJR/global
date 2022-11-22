@@ -1,8 +1,8 @@
 import axios from "axios";
 import Vue from "vue";
 
-// let API_URL = 'https://account.edenfarm.tech/v1'
-let API_URL = "https://apidev.edenfarm.tech/v1";
+let API_URL = 'https://account.edenfarm.tech/v1'
+// let API_URL = "https://apidev.edenfarm.tech/v1";
 // let API_URL_2 = process.env.VUE_APP_API_URL_2
 let APP_URL = "http://localhost:5000/";
 const ajax = axios.create({

@@ -33,7 +33,7 @@
             }
         },
         mounted() {
-            this.$http.get('/permission',)
+            this.$http.get('/permission/tree',)
             .then(response => {
                 let that = this
                 response.data.data.forEach((value, index) => {
