@@ -52,6 +52,7 @@ export { default as MultiSelectWrt } from "./component-library/MultiSelectWrt.vu
 export { default as SelectArchetype } from "./component-library/SelectArchetype.vue";
 export { default as SelectDivision } from "./component-library/SelectDivision.vue";
 export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
+export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
