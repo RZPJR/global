@@ -88,16 +88,10 @@ export default {
     autoSelectByID(val) {
       if (val) {
         // ini ke endpoint detail
-        this.$http
-          .get("/division", {
-            params: {
-              conditions: "id.e:" + val.id,
-            },
-          })
-          .then((response) => {
-            this.items.push(response.data.data[0]);
-            this.divisions = response.data.data[0];
-          });
+        this.$http.get("/division/" + val.id).then((response) => {
+          this.items.push(response.data.data);
+          this.divisions = response.data.data;
+        });
       }
     },
     selected(event) {

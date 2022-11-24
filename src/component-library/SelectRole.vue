@@ -103,16 +103,10 @@ export default {
     },
     autoSelectByID(val) {
       if (val) {
-        this.$http
-          .get("/role/filter", {
-            params: {
-              conditions: "id.e:" + val.id,
-            },
-          })
-          .then((response) => {
-            this.items.push(response.data.data[0]);
-            this.roles = response.data.data[0];
-          });
+        this.$http.get("/role/" + val.id).then((response) => {
+          this.items.push(response.data.data);
+          this.roles = response.data.data;
+        });
       }
     },
     selected(event) {
@@ -149,7 +143,6 @@ export default {
     division_id: {
       // ini fungsi untuk request by division_id
       handler: function (val) {
-        console.log(val);
         if (val !== null) {
           // ini untuk auto select
           this.roles = null;

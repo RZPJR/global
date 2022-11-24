@@ -158,32 +158,26 @@ export default {
       deep: true,
     },
     clear: {
-      // untuk clear
       handler: function (val) {
-        // untuk clear
         this.roles = null;
         this.all_role = false;
         this.remoteSearch("", this.division_id);
       },
       deep: true,
     },
-
     main_role: {
-      // perubahan untuk main_role
       handler: function (val) {
         if (val !== null) {
-          // ini untuk auto select
-          this.autoSelectByID(val, this.division_id);
+          this.roles = null;
+          this.remoteSearch("", this.division_id);
         }
       },
       deep: true,
     },
     role: {
-      // perubahan untuk auto select
       handler: function (val) {
         if (val !== null) {
-          // ini untuk auto select
-          this.autoSelectByID(val, this.division_id);
+          this.autoSelectByID(val);
         }
       },
       deep: true,
@@ -196,11 +190,8 @@ export default {
       deep: true,
     },
     division_id: {
-      // ini fungsi untuk request by division_id
       handler: function (val) {
         if (val !== null) {
-          // ini untuk auto select
-          this.roles = null;
           this.remoteSearch("", val);
         }
       },
