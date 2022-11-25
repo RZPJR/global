@@ -168,7 +168,6 @@ export default {
     main_role: {
       handler: function (val) {
         if (val !== null) {
-          this.roles = null;
           this.remoteSearch("", this.division_id);
         }
       },
