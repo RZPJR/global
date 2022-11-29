@@ -57,7 +57,7 @@ export default {
           }
         });
         this.idPermission.forEach((value, index) => {
-          this.selectedItem.push({ id: value });
+          this.selectedItem.push(value);
         });
       })
       .catch((e) => {
