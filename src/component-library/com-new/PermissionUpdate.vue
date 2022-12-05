@@ -31,7 +31,7 @@ export default {
   },
   created() {
     this.$http
-      .get("/permission/tree")
+      .get("/account/v1/permission/tree")
       .then((response) => {
         let that = this;
         response.data.data.forEach((value, index) => {
