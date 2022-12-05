@@ -1,9 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 
-let API_URL = 'https://account.edenfarm.tech/v1'
-// let API_URL = "https://apidev.edenfarm.tech/v1";
-// let API_URL_2 = process.env.VUE_APP_API_URL_2
+let API_URL = "https://gateway.edenfarm.tech";
 let APP_URL = "http://localhost:5000/";
 const ajax = axios.create({
   baseURL: API_URL,
@@ -57,34 +55,6 @@ ajax.interceptors.response.use(
   }
 );
 
-// FOR USING ANOTHER API URL
-// const ajax2 = axios.create({
-//     baseURL: API_URL_2,
-// })
-// ajax2.CancelToken = axios.CancelToken
-// ajax2.isCancel = axios.isCancel
-
-/*
- * The interceptor here ensures that we check for the token in local storage every time an ajax request is made
- */
-// ajax2.interceptors.request.use(
-//     (config) => {
-//         let token = localStorage.getItem('bearer')
-
-//         if (token !== '') {
-//             config.headers['Authorization'] = `Bearer ${token}`;
-//             ajax2.defaults.headers.post['Content-Type'] = "application/json;charset=utf-8";
-//         } else {
-//             window.location.href = APP_URL
-//         }
-
-//         return config
-//     },
-//     (error) => {
-//         return Promise.reject(error.message);
-//     }
-// );
-
 /*
  * The interceptor takes care of auth
  */
@@ -100,11 +70,6 @@ axios.interceptors.response.use(
 /*
  * The interceptor takes care of all responses except auth
  */
-// ajax2.interceptors.response.use((response) => {
-//     return response;
-// }, (error) => {
-//     return errorHandling(error);
-// });
 
 export default {
   install() {
