@@ -68,7 +68,7 @@ export default {
       this.isLoading = true;
       // ini ke endpoint get all
       this.$http
-        .get("/division", {
+        .get("/account/v1/division", {
           params: {
             perpage: 20,
             conditions: "status:1|name.icontains:" + search,
@@ -88,7 +88,7 @@ export default {
     autoSelectByID(val) {
       if (val) {
         // ini ke endpoint detail
-        this.$http.get("/division/" + val.id).then((response) => {
+        this.$http.get("/account/v1/division/" + val.id).then((response) => {
           this.items.push(response.data.data);
           this.divisions = response.data.data;
         });
