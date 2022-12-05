@@ -83,7 +83,7 @@ export default {
 
       // ini ke endpoint get all
       this.$http
-        .get("/role", {
+        .get("/account/v1/role", {
           params: {
             conditions:
               "status:1|name.icontains:" + search + division + is_helper,
@@ -103,7 +103,7 @@ export default {
     },
     autoSelectByID(val) {
       if (val) {
-        this.$http.get("/role/" + val.id).then((response) => {
+        this.$http.get("/account/v1/role/" + val.id).then((response) => {
           this.items.push(response.data.data);
           this.roles = response.data.data;
         });
