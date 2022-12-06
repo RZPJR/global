@@ -78,6 +78,7 @@ export { default as Image500 } from "../public/img/500.svg";
 export { default as Image503 } from "../public/img/main.png";
 export { default as Menu } from "../public/icon/menu.png";
 export { default as Polygon } from "../public/icon/polygon.png";
+export { default as UserProfile } from "../public/img/user-profile.png";
 
 // Image Source
 
