@@ -92,7 +92,7 @@ export default {
       this.is_loading = true;
       // ini ke endpoint get all
       this.$http
-        .get("/role", {
+        .get("/account/v1/role", {
           params: {
             conditions: "status:1|name.icontains:" + search + division_id,
             orderby: "-id",
@@ -116,10 +116,8 @@ export default {
     autoSelectByID(val) {
       // auto select by ID
       if (val) {
-        console.log("masuk disini");
         this.roles = [];
         for (let i = 0; i < val.length; i++) {
-          console.log("lagi masukin", val[i]);
           this.roles.push(val[i]);
         }
       }
@@ -186,7 +184,6 @@ export default {
     roles: {
       // untuk search
       handler: function (val) {
-        console.log("masuk kesiniiiiiiiiiiii", val);
         this.remoteSearch("", this.division_id);
       },
       deep: true,
