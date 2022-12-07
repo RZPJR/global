@@ -60,6 +60,7 @@ export { default as ShippingAddressNew } from "./component-library/com-new/Shipp
 export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
 export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
 export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
+export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";

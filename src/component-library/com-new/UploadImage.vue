@@ -92,7 +92,6 @@
                 image: null,
                 imageError: '',
                 disable: true,
-                currentTime: this.$moment().valueOf(),
                 nameFile: '',
                 imgUrl: null,
                 overlay: false,
@@ -142,21 +141,20 @@
                                 }
                             } else {
                                 that.imageError = "";
-                                that.nameFile = (that.forImgName + "-" + that.currentTime).replace(/ /g, "");
-
+                                that.nameFile = (that.forImgName).replace(/ /g, "");
                                 let datas = new FormData();
                                 let blob = resp.slice(0, resp.size, resp.type);
                                 let newFile = new File([blob], that.nameFile + '.' + that.extention, {type: resp.type});
                                 datas.append('file', newFile); // file = data from File client or upload
                                 datas.append('type', that.type); // name of directory (voucher,courier dll)
                                 that.overlay = true;
-                                that.$http.post('/upload/img', datas, {
+                                that.$http.post('/storage/v1/upload/image', datas, {
                                     headers: {
                                         'Content-Type': 'multipart/form-data'
                                     }
                                 }).then(response => {
                                     that.overlay = false
-                                    that.imgUrl = response.data.data;
+                                    that.imgUrl = response.data.data.url;
                                     that.$root.$emit('event_uploadImage', that.imgUrl)
                                 }).catch(function (error) {
                                     that.overlay = false;
@@ -179,11 +177,6 @@
                 if (!this.image) return;
                 return URL.createObjectURL(this.image);
             }
-        },
-        mounted (){
-            setInterval(() => {
-                this.currentTime = this.$moment().valueOf()
-            }, 1000);
         },
         watch: {
             'errorMsg': {
