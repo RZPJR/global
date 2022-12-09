@@ -43,7 +43,7 @@
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/inventory/tag_product/filter",{params:{
+                this.$http.get("/catalog/v1/item_category",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search,
                 }}).then(response => {
@@ -61,7 +61,7 @@
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/inventory/tag_product/filter",{params:{
+                    this.$http.get("/catalog/v1/item_category",{params:{
                         conditions:'id.e:'+val.id,
                     }}).then(response => {
                         this.items.push(response.data.data[0])

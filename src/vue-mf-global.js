@@ -16,6 +16,7 @@ export { default as SelectWrt } from "./component-library/SelectWrt.vue";
 export { default as SelectWarehouse } from "./component-library/SelectWarehouse.vue";
 export { default as SelectOrderType } from "./component-library/SelectOrderType.vue";
 export { default as SelectCity } from "./component-library/SelectCity.vue";
+export { default as SelectProductTag } from "./component-library/SelectProductTag.vue";
 export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
 export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";
 export { default as SelectWarehouseCoverage } from "./component-library/SelectWarehouseCoverage.vue";
@@ -61,6 +62,7 @@ export { default as DetailRowNew } from "./component-library/com-new/DetailRowNe
 export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
 export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
 export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
+export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
@@ -80,6 +82,10 @@ export { default as Image503 } from "../public/img/main.png";
 export { default as Menu } from "../public/icon/menu.png";
 export { default as Polygon } from "../public/icon/polygon.png";
 export { default as UserProfile } from "../public/img/user-profile.png";
+export { default as AddImage } from "../public/img/AddImage.png";
+export { default as AddImageEnable } from "../public/img/AddImageEnable.png";
+export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
+export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
 
 // Image Source
 
