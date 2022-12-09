@@ -5,7 +5,7 @@
         :placeholder="placeholder"
         :loading="isLoading"
         item-text="name"
-        label="Product Tag"
+        label="Item Category"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -52,7 +52,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'Product Tag'
+                    let label = 'Item Category'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
