@@ -54,6 +54,11 @@ export { default as SelectArchetype } from "./component-library/SelectArchetype.
 export { default as SelectDivision } from "./component-library/SelectDivision.vue";
 export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
 export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
+export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
+export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
+export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
+export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
+export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
@@ -61,6 +66,7 @@ export { default as ShippingAddressNew } from "./component-library/com-new/Shipp
 export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
 export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
 export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
+export { default as AuditLogNew } from "./component-library/com-new/AuditLogNew.vue";
 export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
 export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
 
@@ -82,6 +88,9 @@ export { default as Image503 } from "../public/img/main.png";
 export { default as Menu } from "../public/icon/menu.png";
 export { default as Polygon } from "../public/icon/polygon.png";
 export { default as UserProfile } from "../public/img/user-profile.png";
+export { default as IconClose } from "../public/icon/close-new.png";
+export { default as ImgMobileView } from "../public/img/mobile-view.png";
+export { default as ImgMobileFrame } from "../public/img/mobile_frame.png";
 export { default as AddImage } from "../public/img/AddImage.png";
 export { default as AddImageEnable } from "../public/img/AddImageEnable.png";
 export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
