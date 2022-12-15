@@ -23,7 +23,7 @@
             <img width="60" class="mt15 mb10" src="/icon/upload_new.png" alt=""> <br>
             <span class="text-black60">Choose or drag file here</span>
           </div>
-        </template >
+        </template>
       </VueFileAgent>
       <div title="after-outer">
         <div class="fs12" style="color:red">
@@ -39,6 +39,7 @@
 </style>
 <script>
   import readXlsxFile from 'read-excel-file'
+  
   export default {
     name: 'UploadExcel',
     data: function(){
