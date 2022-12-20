@@ -2,11 +2,11 @@
 .main-container {
   align-content: start;
   background-color: #ebebeb;
-  padding: 12px;
   font-family: "OpenSans";
-  width: 100%;
   color: #333333;
-  max-width: 7680px;
+  padding: 12px;
+  min-width: 100%;
+  min-height: 100vh;
 }
 .box {
   background-color: #ffffff;
