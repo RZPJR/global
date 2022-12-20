@@ -55,6 +55,7 @@ export { default as SelectDivision } from "./component-library/SelectDivision.vu
 export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
 export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
 export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
+export { default as UploadImageCustomize } from "./component-library/UploadImageCustomize.vue";
 export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
 export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
 export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
