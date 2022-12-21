@@ -9,10 +9,9 @@
                 :items="items"
                 :loading="isLoading"
                 :placeholder="placeholder"
-                item-value='code'
-                item-text='name'
+                item-value='item_id'
+                item-text='description'
                 :name="name"
-                label="Product"
                 clearable
                 :no-filter="true"
                 :search-input.sync="search"
@@ -22,13 +21,21 @@
                 outlined
                 :error-messages="error"
             >
+                <template v-slot:label>
+                    <div class="select-item">
+                        <span v-if="required"
+                            >Item<span :class="disabled ? '' : 'text-red'">*</span>
+                        </span>
+                        <span v-else>Item</span>
+                    </div>
+                    </template>
                 <template slot="selection" slot-scope="data">
                     <div class="select-item">
-                        {{ data.item.code }} - {{ data.item.name }}
+                        {{ data.item.item_id }} - {{ data.item.description }}
                     </div>
                 </template>
                 <template slot="item" slot-scope="data">
-                    {{ data.item.code }} - {{ data.item.name }}
+                    {{ data.item.item_id }} - {{ data.item.description }}
                 </template>
             </v-autocomplete>
         </div>
@@ -71,7 +78,7 @@
                 product_text : ""
             };
         },
-        props: ['product','disabled','clear','label','error', 'norequired', "warehouse", "refs", "pb", "sb", "prefixValue","name", "dense"],
+        props: ['product','disabled','clear','label','error', 'norequired', "warehouse", "refs", "pb", "sb", "prefixValue","name", "dense", "required"],
         methods: {
             checkExist() {
                 if (this.products != null) {
@@ -89,38 +96,22 @@
                 this.$refs.product.focus();
             },
             remoteSearch(search) {
-                let warehouse = ''
-                if (this.warehouse) {
-                    warehouse = '|warehouse.id.e:'+this.warehouse
-                }
-                let purchasable = ""
-                if (this.pb) { // purchasable
-                    purchasable = '|purchasable:'+this.pb
-                }
-                let salable = ""
-                if (this.sb) { // salable
-                    salable = '|salable:'+this.sb
-                }
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/warehouse/stock/filter",{params:{
+                this.$http.get("/catalog/v1/item_section/item",{params:{
                     perpage:10,
-                    conditions:'Or.product.name.icontains:'+search+'%2COr.product.code.icontains:'
-                    +search+'|status:1'+warehouse+purchasable+salable,
-                    embeds: 'product,product.uom_id',
+                    search:search
                 }}).then(response => {
                     this.isLoading = false
-                    let label = 'Product'
+                    let label = 'Item'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
                     this.items = []
                     let array = response.data.data
                     if (array !=null) {
-                        for (let i = 0; i < array.length; i++) {
-                            this.items.push(array[i].product);
-                        }
+                        this.items = array
                     }
                     if (this.product) {
                         this.autoSelectByID(this.product)
@@ -136,7 +127,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/warehouse/stock/filter",{params:{
+                    this.$http.get("/catalog/v1/item_section/item",{params:{
                         conditions:'product.id.e:'+val.id,
                         embeds: 'product,product.uom_id',
                     }}).then(response => {
