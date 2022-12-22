@@ -61,7 +61,7 @@
             <v-img
                 v-if="imageFromUpdate"
                 :src="imageFromUpdate"
-                class="rounded-form"
+                class="rounded-form -mt33"
                 :width="minWidth"
                 :height="minHeight"
             />
