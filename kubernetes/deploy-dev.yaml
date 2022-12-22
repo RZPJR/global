@@ -22,24 +22,24 @@ spec:
         app: global
     spec:
       imagePullSecrets:
-      - name: registry
+        - name: registry
       containers:
-      - name: global
-        image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/dev:<VERSION>
-        ports:
-          - name: http-port
-            containerPort: 8080
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: 150Mi
-            cpu: 100m
-          limits:
-            memory: 500Mi
-            cpu: 300m
-        volumeMounts:
-        - name: tz-config
-          mountPath: /etc/localtime
+        - name: global
+          image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/dev:<VERSION>
+          ports:
+            - name: http-port
+              containerPort: 8080
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 150Mi
+              cpu: 100m
+            limits:
+              memory: 500Mi
+              cpu: 300m
+          volumeMounts:
+            - name: tz-config
+              mountPath: /etc/localtime
       volumes:
         - name: tz-config
           hostPath:
@@ -55,10 +55,10 @@ metadata:
     app: global
 spec:
   ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: http-port
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http-port
   selector:
     app: global
 ---
@@ -75,18 +75,18 @@ spec:
   minReplicas: 1
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 75
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 75
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 75
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -110,17 +110,17 @@ metadata:
   name: global
 spec:
   tls:
-  - hosts:
-    - global.edenfarm.tech
-    secretName: global-tls
+    - hosts:
+        - global.edenfarm.tech
+      secretName: global-tls
   rules:
-  - host: global.edenfarm.tech
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: svc-global
-            port:
-              number: 80
+    - host: global.edenfarm.tech
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-global
+                port:
+                  number: 80

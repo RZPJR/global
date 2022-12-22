@@ -77,6 +77,7 @@ export default {
             region_id: area,
             archetype_id: archetype,
             status: "1,5",
+            search: search,
           },
         })
         .then((response) => {

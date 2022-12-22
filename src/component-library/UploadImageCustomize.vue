@@ -48,7 +48,7 @@
             :style="'width:'+minWidth+'px;height:'+minHeight+'px'"
             :class="notUseLabel? '':'mt-2'">
             <v-btn
-                class="btn-remove absolute"
+                class="btn-remove absolute -mt40"
                 fab
                 x-small
                 plain
@@ -61,14 +61,14 @@
             <v-img
                 v-if="imageFromUpdate"
                 :src="imageFromUpdate"
-                class="rounded-form"
+                class="rounded-form -mt33"
                 :width="minWidth"
                 :height="minHeight"
             />
             <v-img
                 v-else
                 :src="url"
-                class="rounded-form"
+                class="rounded-form -mt33"
                 :width="minWidth"
                 :height="minHeight"
             />

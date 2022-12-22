@@ -2,7 +2,7 @@ stages:
   - build
   - deploy
   - reconfig
-  
+
 Build Image:
   stage: build
   image:

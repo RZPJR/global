@@ -32,14 +32,14 @@
         </template>
       </v-autocomplete>
     </div>
-    <div class="w160 -mt25">
+    <!-- <div class="w160 -mt25">
       <v-checkbox
         :disabled="disabled"
         label="Select All Region"
         v-model="selectedAll"
         @click="selectAll(selectedAll)"
       ></v-checkbox>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
