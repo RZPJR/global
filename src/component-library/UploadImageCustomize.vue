@@ -3,8 +3,9 @@
         <div v-if="notUseLabel!=true">Image<span class="text-red">*</span></div>
         <v-file-input id="fileUpload" type="file" v-model="image" :accept="accept" style="display:none;" @change="verifyFileUpload()"/>
         <div
-            class="rounded-form image-box-error pt36 fs12 text-black60"
+            class="rounded-form image-box-error fs12 text-black60"
             :class="notUseLabel? '':'mt-2'"
+            :style="'width:'+minWidth+'px;height:'+minHeight+'px;padding-top:'+minHeight/3+'px'"
             v-if="image == null && imageError !== ''"
             @click="chooseFiles()"
         >
@@ -22,7 +23,8 @@
             </v-flex>
         </div>
         <div
-            class="rounded-form image-box pt36 fs12 text-black60"
+            class="rounded-form image-box fs12 text-black60"
+            :style="'width:'+minWidth+'px;height:'+minHeight+'px;padding-top:'+minHeight/3+'px'"
             :class="notUseLabel? '':'mt-2'"
             v-if="image == null && imageError == ''"
             @click="chooseFiles()"
@@ -42,12 +44,11 @@
         </div>
         <div 
             v-if="image !== null" 
-            class="rounded-form image-box" 
-            style="position:relative;" 
+            class="rounded-form image-box relative" 
+            :style="'width:'+minWidth+'px;height:'+minHeight+'px'"
             :class="notUseLabel? '':'mt-2'">
             <v-btn
-                style="position:absolute;"
-                class="btn-remove"
+                class="btn-remove absolute"
                 fab
                 x-small
                 plain
@@ -61,13 +62,15 @@
                 v-if="imageFromUpdate"
                 :src="imageFromUpdate"
                 class="rounded-form"
-                style="width:299px;height:180px;"
+                :width="minWidth"
+                :height="minHeight"
             />
             <v-img
                 v-else
                 :src="url"
                 class="rounded-form"
-                style="width:299px;height:180px;"
+                :width="minWidth"
+                :height="minHeight"
             />
         </div>
         <div class="text-red fs12">{{imageError}}</div>
@@ -85,19 +88,21 @@
 
 <script>
     export default {
-        name: 'UploadImage',
+        name: 'UploadImageCustomize',
         props: ['forImgName', 'errorMsg', 'imageFromUpdate', 'maxSize', 'extention', 'minWidth', 'minHeight', 'type', 'accept', 'notUseLabel'],
         data() {
             return {
                 image: null,
                 imageError: '',
                 disable: true,
+                currentTime: this.$moment().valueOf(),
                 nameFile: '',
                 imgUrl: null,
                 overlay: false,
             }
         },
         methods: {
+            //For choosing file
             chooseFiles() {
                 if (this.forImgName) {
                     this.imageError = ""
@@ -106,6 +111,7 @@
                     this.imageError = "Please input name before upload image"
                 }
             },
+            //For veryfying the uploaded file
             verifyFileUpload() {
                 let that = this;
                 let file = document.getElementById("fileUpload");
@@ -125,7 +131,7 @@
 
                     img.src = window.URL.createObjectURL(file.files[0]);
                     img.onload = function () {
-                        if (this.naturalWidth < that.minWidth && this.naturalHeight < that.minHeight) {
+                        if (this.naturalWidth < that.minWidth || this.naturalHeight < that.minHeight) {
                             that.imageError = "Min resolution: " + that.minWidth + " x " + that.minHeight + " pixels";
                             that.image = null;
                         } else {
@@ -141,7 +147,8 @@
                                 }
                             } else {
                                 that.imageError = "";
-                                that.nameFile = (that.forImgName).replace(/ /g, "");
+                                that.nameFile = (that.forImgName + "-" + that.currentTime).replace(/ /g, "");
+
                                 let datas = new FormData();
                                 let blob = resp.slice(0, resp.size, resp.type);
                                 let newFile = new File([blob], that.nameFile + '.' + that.extention, {type: resp.type});
@@ -154,8 +161,12 @@
                                     }
                                 }).then(response => {
                                     that.overlay = false
-                                    that.imgUrl = response.data.data.url;
-                                    that.$root.$emit('event_uploadImage', that.imgUrl)
+                                    if (response.data.data && response.data.data != null) {
+                                        that.imgUrl = response.data.data.url;
+                                        that.$root.$emit('event_uploadImage', that.imgUrl)
+                                    } else {
+                                        that.imgUrl = null
+                                    }
                                 }).catch(function (error) {
                                     that.overlay = false;
                                     that.image = null;
@@ -165,6 +176,7 @@
                     };
                 }
             },
+            //To remove file
             onRemove() {
                 let that = this
                 that.image = null;
@@ -173,10 +185,16 @@
             },
         },
         computed: {
+            //For updating url to variable
             url() {
                 if (!this.image) return;
                 return URL.createObjectURL(this.image);
             }
+        },
+        mounted (){
+            setInterval(() => {
+                this.currentTime = this.$moment().valueOf()
+            }, 1000);
         },
         watch: {
             'errorMsg': {
@@ -203,8 +221,6 @@
         align-items: center;
     }
     .image-box {
-        width:250px;
-        height:180px;
         max-width:100%;
         background: #EBEBEB;
         border-style:dashed;
@@ -212,8 +228,6 @@
         border-width:1px;
     }
     .image-box-error {
-        width:250px;
-        height:180px;
         max-width:100%;
         border-style:dashed;
         background: #EBEBEB;

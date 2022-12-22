@@ -1,6 +1,6 @@
 <template>
   <v-autocomplete
-    v-model="product_tags"
+    v-model="product_sections"
     :items="items"
     :placeholder="placeholder"
     :loading="isLoading"
@@ -12,15 +12,14 @@
     outlined
     :error-messages="error"
     clearable
-    :dense="dense"
-    :class="dense ? '' : 'rounded-form'"
+    :dense="true"
   >
     <template v-slot:label>
       <div class="select-item">
         <span v-if="required"
-          >Item Category<span :class="disabled ? '' : 'text-red'">*</span></span
+          >Item Section<span :class="disabled ? '' : 'text-red'">*</span></span
         >
-        <span v-else>Item Category</span>
+        <span v-else>Item Section</span>
       </div>
     </template>
     <template slot="selection" slot-scope="data">
@@ -35,26 +34,49 @@
 </template>
 <script>
 export default {
-  name: "SelectProductTag",
+  name: "SelectProductSection",
   data() {
     return {
       items: [],
       placeholder: "",
       isLoading: false,
       search: "",
-      product_tags: null,
+      product_sections: null,
     };
   },
-  props: ["product_tag", "disabled", "clear", "error", "dense", "required"],
+  props: [
+    "product_section",
+    "area",
+    "archetype",
+    "disabled",
+    "clear",
+    "error",
+    "required",
+  ],
   methods: {
     remoteSearch(search) {
+      // For get data list product section
+      if (search == null) {
+        search = "";
+      }
       this.placeholder = "Loading items...";
+      let area = "";
+      if (this.area) {
+        area = String(this.area);
+      }
+      let archetype = "";
+      if (this.archetype) {
+        archetype = String(this.archetype);
+      }
       this.isLoading = true;
       this.$http
-        .get("/catalog/v1/item_category", {
+        .get("/campaign/v1/item_section", {
           params: {
-            perpage: 10,
-            conditions: "status:1|name.icontains:" + search,
+            per_page: 10,
+            orderby: "-id",
+            region_id: area,
+            archetype_id: archetype,
+            status: "1,5",
           },
         })
         .then((response) => {
@@ -67,23 +89,23 @@ export default {
             this.items = [];
           }
           this.isLoading = false;
-          let label = "Item Category";
+          let label = "Item Section";
           if (this.label) label = this.label;
           this.placeholder = "Select " + label;
         });
     },
     autoSelectByID(val) {
+      // untuk auto fill when update
       if (val) {
-        // ini ke endpoint detail
         this.$http
-          .get("/catalog/v1/item_category", {
+          .get("/campaign/v1/item_section", {
             params: {
               conditions: "id.e:" + val.id,
             },
           })
           .then((response) => {
             this.items.push(response.data.data[0]);
-            this.product_tags = response.data.data[0];
+            this.product_sections = response.data.data[0];
           });
       }
     },
@@ -105,16 +127,34 @@ export default {
     clear: {
       handler: function (val) {
         // ini untuk clear data
-        this.product_tags = null;
+        this.product_sections = null;
         if (val) this.remoteSearch("");
       },
       deep: true,
     },
-    product_tag: {
+    product_section: {
       handler: function (val) {
         // watch perubahan untuk auto select (biasa di pakai di page update)
         if (val) {
           this.autoSelectByID(val);
+        }
+      },
+      deep: true,
+    },
+    area: {
+      handler: function (val) {
+        // watch perubahan untuk auto select (biasa di pakai di page update)
+        if (val) {
+          this.remoteSearch(this.search);
+        }
+      },
+      deep: true,
+    },
+    archetype: {
+      handler: function (val) {
+        // watch perubahan untuk auto select (biasa di pakai di page update)
+        if (val) {
+          this.remoteSearch(this.search);
         }
       },
       deep: true,

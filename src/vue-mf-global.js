@@ -16,6 +16,7 @@ export { default as SelectWrt } from "./component-library/SelectWrt.vue";
 export { default as SelectWarehouse } from "./component-library/SelectWarehouse.vue";
 export { default as SelectOrderType } from "./component-library/SelectOrderType.vue";
 export { default as SelectCity } from "./component-library/SelectCity.vue";
+export { default as SelectProductTag } from "./component-library/SelectProductTag.vue";
 export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
 export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";
 export { default as SelectWarehouseCoverage } from "./component-library/SelectWarehouseCoverage.vue";
@@ -52,12 +53,24 @@ export { default as MultiSelectWrt } from "./component-library/MultiSelectWrt.vu
 export { default as SelectArchetype } from "./component-library/SelectArchetype.vue";
 export { default as SelectDivision } from "./component-library/SelectDivision.vue";
 export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
+export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
+export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
+export { default as UploadImageCustomize } from "./component-library/UploadImageCustomize.vue";
+export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
+export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
+export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
+export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
 export { default as ShippingAddressNew } from "./component-library/com-new/ShippingAddressNew.vue";
 export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
-export { default as PermissonUpdate } from "./component-library/com-new/PermissonUpdate.vue";
+export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
+export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
+export { default as AuditLogNew } from "./component-library/com-new/AuditLogNew.vue";
+export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
+export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
+export { default as UploadExcel } from "./component-library/UploadExcel.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
@@ -76,6 +89,15 @@ export { default as Image500 } from "../public/img/500.svg";
 export { default as Image503 } from "../public/img/main.png";
 export { default as Menu } from "../public/icon/menu.png";
 export { default as Polygon } from "../public/icon/polygon.png";
+export { default as UserProfile } from "../public/img/user-profile.png";
+export { default as IconClose } from "../public/icon/close-new.png";
+export { default as ImgMobileView } from "../public/img/mobile-view.png";
+export { default as ImgMobileFrame } from "../public/img/mobile_frame.png";
+export { default as AddImage } from "../public/img/AddImage.png";
+export { default as AddImageEnable } from "../public/img/AddImageEnable.png";
+export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
+export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
+export { default as Worktime } from "../public/img/worktime_new.png";
 
 // Image Source
 

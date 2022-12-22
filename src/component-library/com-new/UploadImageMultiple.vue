@@ -17,7 +17,7 @@
                                     <div class="center"> 
                                         Min. resolution 360 x 180 pixels
                                     </div> 
-                                    <v-icon x-large>mdi-camera</v-icon> 
+                                    <v-icon x-large>photo_camera</v-icon> 
                                     <span><b>Upload Image</b></span>
                                     <span>Max : 2 Mb</span>
                                 </v-flex>
@@ -32,7 +32,7 @@
                                     <div class="center"> 
                                         Min. resolution 360 x 180 pixels
                                     </div> 
-                                    <v-icon x-large>mdi-camera</v-icon> 
+                                    <v-icon x-large>photo_camera</v-icon> 
                                     <span><b>Upload Image</b></span>
                                     <span>Max : 2 Mb</span>
                                 </v-flex>
@@ -52,7 +52,7 @@
                                     @click="onRemove(idx)"
                                 >
                                     <v-icon dark>
-                                        mdi-close
+                                        close
                                     </v-icon>
                                 </v-btn>
                                 <v-img
@@ -77,7 +77,7 @@
                             <div class="center"> 
                                 Min. resolution 360 x 180 pixels
                             </div> 
-                            <v-icon x-large>mdi-camera</v-icon> 
+                            <v-icon x-large>photo_camera</v-icon> 
                             <span><b>Upload Image</b></span>
                             <span>Max : 2 Mb</span>
                         </v-flex>
@@ -92,7 +92,7 @@
                             <div class="center"> 
                                 Min. resolution 360 x 180 pixels
                             </div> 
-                            <v-icon x-large>mdi-camera</v-icon> 
+                            <v-icon x-large>photo_camera</v-icon> 
                             <span><b>Upload Image</b></span>
                             <span>Max : 2 Mb</span>
                         </v-flex>
@@ -112,7 +112,7 @@
                             @click="onRemove(idx)"
                         >
                             <v-icon dark>
-                                mdi-close
+                                close
                             </v-icon>
                         </v-btn>
                         <v-img
@@ -126,17 +126,26 @@
                 </div>
             </div>
             <div class="ma-3" v-if="maxImg">
-                <img v-if="imgAddEnable" class="img-add" @click="addImg()" src="/img/AddImageEnable.png" alt="">
-                <img v-else class="img-add" src="/img/AddImage.png" alt="">
+                <img v-if="imgAddEnable" class="img-add" @click="addImg()" :src="addImageEnable" alt="">
+                <img v-else class="img-add" :src="addImage" alt="">
             </div>
         </v-row>
     </div>
 </template>
 <script>
+import { 
+  AddImage,
+  AddImageEnable,
+  AddImageOrFile,
+  AddImageOrFileEnable
+} from "@vue-mf/global";
     export default {
+        components: {AddImage, AddImageEnable},
         name: 'UploadImageMultiple',
         data() {
             return {
+                addImage: AddImage,
+                addImageEnable: AddImageEnable,
                 arrImg: [
                     {
                         image: null,
@@ -146,7 +155,6 @@
                     }
                 ],
                 imgRemove: [],
-                currentTime: this.$moment(new Date()).format('YYYY-MM-DD_HH-mm-ss')
             }
         },
         props: {
@@ -175,9 +183,6 @@
                     self.realRemove()
                 }
             });
-            setInterval(() => {
-                this.currentTime = this.$moment(new Date()).format('YYYY-MM-DD_HH-mm-ss')
-            }, 1000);
         },
         computed: {
             imgAddEnable() {
@@ -200,7 +205,9 @@
                 let array = []
                 for (let i = 0; i < this.arrImg.length; i++) {
                     if (this.arrImg[i].imgUrl != null) {
-                        array.push(this.arrImg[i].imgUrl)
+                        array.push({
+                            image_url: this.arrImg[i].imgUrl
+                        })
                     }
                 }
                 this.$root.$emit('event_multipleImage', array)
@@ -246,18 +253,19 @@
                                 that.arrImg[id].imageError = "Max file size: 2 Mb";
                             } else {
                                 that.arrImg[id].imageError = "";
-                                that.arrImg[id].nameFile = (that.name + "-" + that.currentTime).replace(/\//g, "");
+                                that.arrImg[id].nameFile = (that.name).replace(/\//g, "");
+                                let randomStr = Math.random().toString(36).slice(2);
                                 let datas = new FormData();
                                 var blob = resp.slice(0, resp.size, resp.type);
-                                let newFile = new File([blob], that.arrImg[id].nameFile + '.jpeg', {type: resp.type});
+                                let newFile = new File([blob], that.arrImg[id].nameFile+ randomStr + '.jpeg', {type: resp.type});
                                 datas.append('file', newFile);
                                 datas.append('type', "product");
-                                that.$http.post('/upload/img', datas, {
+                                that.$http.post('/storage/v1/upload/image', datas, {
                                     headers: {
                                         'Content-Type': 'multipart/form-data'
                                     }
                                 }).then(response => {
-                                    that.arrImg[id].imgUrl = response.data.data;
+                                    that.arrImg[id].imgUrl = response.data.data.url;
                                     that.pushModel()
                                 });
                             }
