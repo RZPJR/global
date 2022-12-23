@@ -101,7 +101,8 @@
                 // ini ke endpoint get all
                 this.$http.get("/catalog/v1/item_section/item",{params:{
                     perpage:10,
-                    search:search
+                    search:search,
+                    status: '1',
                 }}).then(response => {
                     this.isLoading = false
                     let label = 'Item'
