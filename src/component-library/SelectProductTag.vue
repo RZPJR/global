@@ -53,6 +53,7 @@ export default {
       this.$http
         .get("/catalog/v1/item_category", {
           params: {
+            status: '1',
             perpage: 10,
             conditions: "status:1|name.icontains:" + search,
           },

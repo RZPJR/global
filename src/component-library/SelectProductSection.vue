@@ -76,7 +76,7 @@ export default {
             orderby: "-id",
             region_id: area,
             archetype_id: archetype,
-            status: "1,5",
+            status: "1",
             search: search,
           },
         })
