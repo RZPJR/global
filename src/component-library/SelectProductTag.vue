@@ -55,7 +55,7 @@ export default {
           params: {
             status: '1',
             perpage: 10,
-            conditions: "status:1|name.icontains:" + search,
+            search: search,
           },
         })
         .then((response) => {
