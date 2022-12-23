@@ -1,10 +1,9 @@
 <template>
-  <v-select
+  <v-autocomplete
     v-model="glossarys"
     :items="items"
     :loading="isLoading"
     item-text="name"
-    item-value="id"
     :search-input.sync="search"
     @change="selected"
     :disabled="disabled"
@@ -14,6 +13,7 @@
     :dense="dense"
     :class="dense ? '' : 'rounded-form'"
     required
+    clearable
     :error-messages="error"
   >
     <template slot="selection" slot-scope="data">
@@ -32,7 +32,7 @@
         {{ label }}
       </span>
     </template>
-  </v-select>
+  </v-autocomplete>
 </template>
 <script>
 export default {
@@ -76,6 +76,7 @@ export default {
             perpage: 10,
             table: table,
             attribute: attribute,
+            search: this.search,
           },
         })
         .then((response) => {
@@ -89,10 +90,6 @@ export default {
                   value: element.value_int,
                   value_name: this.capitalizeFirstLetter(element.value_name),
                 });
-              });
-              this.items.unshift({
-                value: 0,
-                value_name: "All",
               });
             }
           } else if (this.label == "Routing Profile") {
