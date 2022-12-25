@@ -68,7 +68,8 @@ export default {
         .get("/configuration/v1/glossary", {
           params: {
             perpage: 10,
-            conditions: "attribute:" + this.attribute + "|table:" + this.table,
+            attribute:this.attribute,
+            table: this.table,
           },
         })
         .then((response) => {
