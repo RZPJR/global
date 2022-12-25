@@ -82,19 +82,21 @@ export default {
             this.$emit("selected", event);
         },
         typeHandler(val) {
+            const sortedArray = val.sort(function(a, b) {
+                return a.value_int - b.value_int
+            });
             switch (this.label) {
                 case 'Routing Profile':
-                    val.forEach((element) => {
+                    sortedArray.forEach((element) => {
                         this.items.push({
                             id: element.id,
                             value: element.value_int,
-                            value_name:
-                            element.value_name == "bike" ? "No Highway" : "Highway",
+                            value_name: element.value_name == "bike" ? "No Highway" : "Highway",
                         });
                     });
                     break;
                 default:
-                    val.forEach((element) => {
+                    sortedArray.forEach((element) => {
                         this.items.push({
                             id: element.id,
                             value: element.value_int,
