@@ -37,14 +37,14 @@
         </template>
       </v-autocomplete>
     </div>
-    <div class="w180 -mt25">
+    <!-- <div class="w180 -mt25">
       <v-checkbox
         :disabled="disabled"
         label="Select All Archetype"
         v-model="selectedAll"
         @click="selectAll(selectedAll)"
       ></v-checkbox>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

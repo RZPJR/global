@@ -55,6 +55,7 @@ export { default as SelectDivision } from "./component-library/SelectDivision.vu
 export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
 export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
 export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
+export { default as UploadImageCustomize } from "./component-library/UploadImageCustomize.vue";
 export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
 export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
 export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
@@ -69,6 +70,7 @@ export { default as PermissionCreate } from "./component-library/com-new/Permiss
 export { default as AuditLogNew } from "./component-library/com-new/AuditLogNew.vue";
 export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
 export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
+export { default as UploadExcel } from "./component-library/UploadExcel.vue";
 
 //loading bar
 export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
@@ -95,6 +97,7 @@ export { default as AddImage } from "../public/img/AddImage.png";
 export { default as AddImageEnable } from "../public/img/AddImageEnable.png";
 export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
 export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
+export { default as Worktime } from "../public/img/worktime_new.png";
 
 // Image Source
 

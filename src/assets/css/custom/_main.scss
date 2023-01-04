@@ -139,8 +139,30 @@
   border-radius: 8px;
   padding: 24px;
 }
+.box-col-ep {
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px 20px;
+}
 .box-modal-table {
   border: 1px solid #d3d3d3;
+}
+.box-breadcrumbs {
+  background-color: white;
+  margin:-15px -15px 20px -15px;
+  width:105%;
+}
+.capsule {
+  background: linear-gradient(to right, #805b9d, #963f73);
+  padding: 16px;
+  margin: 12px;
+  width: 200px;
+  border-radius: 100px;
+  overflow: hidden;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
 }
 //Login
 .login-page {
@@ -194,6 +216,23 @@
 .h-row {
   height: 48px;
 }
+.hr-dash-left{
+  border-left: 1px dashed lightgrey;
+}
+.hr-dash-right{
+  border-right: 1px dashed lightgrey;
+}
+.hr-menu {
+  border-top: 1px solid #EBEBEB;
+}
+.hr-bottom{
+  border-bottom: 1px solid lightgrey;
+}
+.download-dashed-box {
+  border: 2px dashed #AAAAAA;
+  min-height:220px;
+  text-align: center;
+}
 //Modal
 .dialog {
   padding: 24px;
@@ -245,10 +284,10 @@
   border-radius: 8px;
 }
 .totalTransactionBox {
-  position: fixed;
-  bottom: 16px;
-  width: 83%;
-  padding-right: 24px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-right: 42px;
 }
 
 // Full Height
@@ -259,6 +298,47 @@
 .full-width {
   width: 100%;
 }
+.border-list {
+  border: 1px solid #858585;
+  border-radius: 8px;
+}
+.border-list-error {
+  border: 1px solid red;
+  border-radius: 8px;
+}
+.border-list-title {
+  border-bottom: 1px solid #858585;
+}
+.border-list-item {
+  border-bottom: 1px solid #EBEBEB;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.border-list-item-active {
+  border-bottom: 1px solid #EBEBEB;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: #EDF9F7;
+  cursor: pointer;
+}
+.border-list-scroll {
+  height: 392px;
+  overflow: auto;
+}
+.move-list-icon {
+  text-align: center;
+  margin-top: 200px;
+}
+.no-product-list {
+  font-size: 14px;
+  margin-top: 160px;
+  color: #858585;
+  text-align: center;
+}
 .text-ellipsis {
   width: 150px;
   text-overflow: ellipsis;
@@ -266,7 +346,34 @@
   white-space: nowrap;
   display: inline-block;
 }
-
+.btn-text {
+  font-weight: bold;
+  text-transform: none !important;
+  font-weight: bold;
+}
+.close-overlay {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
+.image-overlay-full {
+  border-radius:10px;
+  max-width: 910px;
+  max-height: auto;
+  min-width: 910px;
+  min-height: auto;
+}
+.break-words{
+  width: 100%;
+  word-break: break-word;
+}
+.scroll-list {
+  height: 500px;
+  overflow: auto;
+  background-color: #EEEEEE;
+  border-radius: 8px;
+  padding: 16px;
+}
 #microApp {
   @media screen and (min-width: 524px) and (min-height: 500px) {
     margin-left: 220px;
