@@ -60,6 +60,7 @@ export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSel
 export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
 export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
 export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
+export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
