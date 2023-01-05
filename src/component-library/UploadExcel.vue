@@ -20,7 +20,7 @@
       >
         <template v-slot:file-preview-new>
           <div class="mt-9" style="min-height:180px; text-align: center;" key="new">
-            <img width="60" class="mt15 mb10" src="/icon/upload_new.png" alt=""> <br>
+            <img width="60" class="mt15 mb10" src="./../../public/icon/upload_new.png" alt=""> <br>
             <span class="text-black60">Choose or drag file here</span>
           </div>
         </template>
