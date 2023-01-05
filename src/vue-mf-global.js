@@ -61,6 +61,7 @@ export { default as MultiSelectArcheTypeCheckbox } from "./component-library/Mul
 export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
 export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
 export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
+export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
