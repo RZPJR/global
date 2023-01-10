@@ -19,11 +19,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.code }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.code }} - {{ data.item.description }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -57,8 +57,12 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // For get data from api
-                this.$http.get("/sales/group",{params:{
-                    conditions:'status:1|name.icontains:'+search,
+                this.$http.get("/bridge/v1/territory",{params:{
+                    per_page:1000,
+                    status:1,
+                    search:search,
+                    order_by:'-id'
+                    
                 }}).then(response => {
                     if(response)
                     this.items=response.data.data
@@ -73,7 +77,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/sales/group",{params:{
+                    this.$http.get("/bridge/v1/territory",{params:{
                         conditions:'id.e:'+val,
                     }}).then(response => {
                         this.items.push(response.data.data[0])
