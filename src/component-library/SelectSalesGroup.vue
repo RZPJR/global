@@ -33,8 +33,8 @@
             </div>
             <div v-else>
                 <!-- <span v-if="!norequired">Sales Group<span :class="disabled?'':'text-red'">*</span></span> -->
-                <span v-if="!norequired">Sales Group<span style="color:red">*</span></span>
-                <span v-else>Sales Group</span>
+                <span v-if="!norequired">Territory<span style="color:red">*</span></span>
+                <span v-else>Territory</span>
             </div>
         </template>
     </v-autocomplete>
@@ -58,18 +58,15 @@
                 this.isLoading = true
                 // For get data from api
                 this.$http.get("/bridge/v1/territory",{params:{
-                    per_page:1000,
-                    status:1,
                     search:search,
-                    order_by:'-id'
-                    
-                }}).then(response => {
+                }
+                }).then(response => {
                     if(response)
                     this.items=response.data.data
                     if(this.items === null)
                     this.items = []
                     this.isLoading = false
-                    let label = 'Sales Group'
+                    let label = 'Territory'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -77,9 +74,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/territory",{params:{
-                        conditions:'id.e:'+val,
-                    }}).then(response => {
+                    this.$http.get("/bridge/v1/territory").then(response => {
                         this.items.push(response.data.data[0])
                         this.isLoading = false
                         this.sales_group = response.data.data[0]
@@ -98,8 +93,11 @@
         watch: {
             search: {
                 handler: function (val) {
-                    if(val) this.remoteSearch(val) 
-                    else this.remoteSearch('')
+                    if (val) {
+                        this.remoteSearch(val);
+                    } else{
+                        this.remoteSearch("");
+                    }
                 },
                 deep: true
             },
