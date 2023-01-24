@@ -16,6 +16,7 @@ export { default as SelectWrt } from "./component-library/SelectWrt.vue";
 export { default as SelectWarehouse } from "./component-library/SelectWarehouse.vue";
 export { default as SelectOrderType } from "./component-library/SelectOrderType.vue";
 export { default as SelectCity } from "./component-library/SelectCity.vue";
+export { default as SelectDeclineType } from "./component-library/SelectDeclineType.vue";
 export { default as SelectProductTag } from "./component-library/SelectProductTag.vue";
 export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
 export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";

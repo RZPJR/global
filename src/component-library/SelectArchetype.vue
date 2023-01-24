@@ -3,7 +3,7 @@
     v-model="archetypes"
     :items="items"
     :loading="isLoading"
-    item-text="name"
+    item-text="code"
     :search-input.sync="search"
     :placeholder="placeholder"
     @change="selected"
@@ -16,10 +16,10 @@
     :error-messages="error"
   >
     <template slot="selection" slot-scope="data">
-      <div class="select-item">{{ data.item.code }} - {{ data.item.name }}</div>
+      <div class="select-item">{{ data.item.code }}</div>
     </template>
     <template slot="item" slot-scope="data">
-      {{ data.item.code }} - {{ data.item.name }}
+      {{ data.item.code }}
     </template>
     <template v-slot:label>
       <div v-if="label">
@@ -63,45 +63,45 @@ export default {
   ],
   methods: {
     remoteSearch(search) {
-      // let business_type_id = ''
-      // if(this.business_type_id){
-      //     business_type_id = "|business_type_id.e:" + this.business_type_id
-      // }
-      // let aux_data = '';
-      // if(this.aux_data) {
-      //     aux_data = '|aux_data.in:'+this.aux_data;
-      // }
-      // let cg = ''
-      // if (this.customer_group){
-      //     cg = '|customer_group:'+this.customer_group;
-      // }else{
-      //     cg = '';
-      // }
-      // if (this.archetype){
-      //     this.autoSelectByID(this.archetype)
-      // }
-      // this.placeholder="Loading items..."
-      // this.isLoading = true
-      // // ini ke endpoint get all
-      // this.$http.get("/customer/archetype/filter?embeds=business_type_id",{params:{
-      //     perpage:20,
-      //     conditions:'status:1|name.icontains:'+search+business_type_id+aux_data+cg,
-      // }}).then(response => {
-      //     this.items = response.data.data
-      //     if(this.items === null){
-      //         this.items = []
-      //     }
-      //     this.isLoading = false
-      //     let label = 'Archetype'
-      //     if (this.label)
-      //     label = this.label
-      //     this.placeholder = "Select "+ label
-      // });
+      let business_type_id = ''
+      if(this.business_type_id){
+          business_type_id = "|business_type_id.e:" + this.business_type_id
+      }
+      let aux_data = '';
+      if(this.aux_data) {
+          aux_data = '|aux_data.in:'+this.aux_data;
+      }
+      let cg = ''
+      if (this.customer_group){
+          cg = '|customer_group:'+this.customer_group;
+      }else{
+          cg = '';
+      }
+      if (this.archetype){
+          this.autoSelectByID(this.archetype)
+      }
+      this.placeholder="Loading items..."
+      this.isLoading = true
+      // ini ke endpoint get all
+      this.$http.get("/bridge/v1/archetype",{params:{
+          perpage:20,
+          search:search,
+      }}).then(response => {
+          this.items = response.data.data
+          if(this.items === null){
+              this.items = []
+          }
+          this.isLoading = false
+          let label = 'Archetype'
+          if (this.label)
+          label = this.label
+          this.placeholder = "Select "+ label
+      });
     },
     autoSelectByID(val) {
       if (val) {
         this.$http
-          .get("/customer/archetype/filter?embeds=business_type_id", {
+          .get("/bridge/v1/archetype", {
             params: {
               conditions: "id.e:" + val.id,
             },

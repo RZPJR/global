@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.description }}
             </div>
         </template>
         <template v-slot:label>
@@ -27,12 +27,12 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Area<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Area</span>
+                <span v-if="!norequired">Region<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Region</span>
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -59,7 +59,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/config/area/filter",{params:{
+                this.$http.get("/bridge/v1/region",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search + aux_data,
                 }}).then(response => {
@@ -73,7 +73,7 @@
                         this.autoSelectByID(this.area)
                     }
                     this.isLoading = false
-                    let label = 'Area'
+                    let label = 'Region'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -81,7 +81,7 @@
             },
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/config/area/filter",{params:{
+                    this.$http.get("/bridge/v1/region",{params:{
                         conditions:'id.e:'+val.id,
                     }}).then(response => {
                         this.items.push(response.data.data[0])

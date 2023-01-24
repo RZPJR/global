@@ -62,7 +62,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/customer/archetype/filter?embeds=business_type_id",{params:{
+                this.$http.get("/bridge/v1/archetype",{params:{
                     conditions:'status:1|name.icontains:'+search+aux_data,
                 }}).then(response => {
                     if(response.data.data){

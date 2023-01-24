@@ -56,7 +56,7 @@
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.post("/customer/prospect_customer/decline_type", {})
+                this.$http.get("/configuration/v1/glossary?page=1&per_page=1000&table=prospect_customer&attribute=decline_type")
                     .then(response => {
                     if(response){
                         this.items = response.data.data

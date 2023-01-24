@@ -33,8 +33,8 @@
             </v-chip>
         </template> -->
         <template v-slot:label>
-            <span v-if="!norequired">Area<span style="color:red">*</span></span>
-            <span v-else>Area</span>
+            <span v-if="!norequired">Region<span style="color:red">*</span></span>
+            <span v-else>Region</span>
         </template>
         <template slot="item" slot-scope="data">
             {{ data.item.code }} - {{ data.item.name }}
@@ -67,7 +67,7 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/config/area/filter",{params:{
+                this.$http.get("/bridge/v1/region",{params:{
                     // perpage:10,
                     conditions:'status:1|name.icontains:'+search + aux_data,
                 }}).then(response => {
@@ -76,7 +76,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'Area'
+                    let label = 'Region'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label

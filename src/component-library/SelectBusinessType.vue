@@ -2,7 +2,7 @@
     <v-autocomplete
         v-model="business_types"
         :items="items"
-        item-text="name"
+        item-text="code"
         :search-input.sync="search"
         :placeholder="placeholder"
         :loading="isLoading"
@@ -29,13 +29,13 @@
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.code }}
         </template>
         <template slot="selection" slot-scope="data">
-            {{ data.item.name }}
+            {{ data.item.code }}
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.name }}
+            {{ data.item.code }}
         </template>
     </v-autocomplete>
 </template>
@@ -62,7 +62,7 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/customer/business_type/filter",{params:{
+                this.$http.get("/bridge/v1/business_type",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search+aux_data,
                 }}).then(response => {
