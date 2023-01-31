@@ -21,8 +21,8 @@
         :error-messages="error"
     >
         <template v-slot:label>
-            <span v-if="!norequired">Business Type<span class="text-red">*</span></span>
-            <span v-else>Business Type</span>
+            <span v-if="!norequired">Customer Type<span class="text-red">*</span></span>
+            <span v-else>Customer Type</span>
         </template>
         <template slot="item" slot-scope="data">
             {{ data.item.code }} - {{ data.item.name }}
