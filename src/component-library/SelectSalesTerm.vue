@@ -51,37 +51,37 @@
         props: ['sales_term','disabled','clear','error','label', "norequired","exceptPBD", "dense"],
         methods: {
             remoteSearch(search) {
-                let pbd = ''
-                if (this.exceptPBD) {
-                    pbd = 'name:PBD'
-                }
-                this.placeholder="Loading items..."
-                this.isLoading = true
-                this.$http.get("/finance/sales/term/filter",{params:{
-                    perpage:10,
-                    exclude : pbd,
-                    conditions:'name.icontains:'+search+'|status:1',
-                }}).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Sales Term'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                // let pbd = ''
+                // if (this.exceptPBD) {
+                //     pbd = 'name:PBD'
+                // }
+                // this.placeholder="Loading items..."
+                // this.isLoading = true
+                // this.$http.get("/finance/sales/term/filter",{params:{
+                //     perpage:10,
+                //     exclude : pbd,
+                //     conditions:'name.icontains:'+search+'|status:1',
+                // }}).then(response => {
+                //     this.items = response.data.data
+                //     if(this.items === null){
+                //         this.items = []
+                //     }
+                //     this.isLoading = false
+                //     let label = 'Sales Term'
+                //     if (this.label) 
+                //     label = this.label
+                //     this.placeholder = "Select "+ label
+                // });
             },
             autoSelectByID(val) {
-                if(val){
-                    this.$http.get("/finance/sales/term/filter",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.sales_terms = response.data.data[0]
-                    });
-                }
+                // if(val){
+                //     this.$http.get("/finance/sales/term/filter",{params:{
+                //             conditions:'id.e:'+val.id,
+                //         }}).then(response => {
+                //         this.items.push(response.data.data[0])
+                //         this.sales_terms = response.data.data[0]
+                //     });
+                // }
             },
             selected(event) {
                 this.$emit('selected', event);

@@ -63,6 +63,7 @@ export { default as SelectRedirectTo } from "./component-library/SelectRedirectT
 export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
 export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
 export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
+export { default as SelectInvoiceTerm }  from "./component-library/SelectInvoiceTerm.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
