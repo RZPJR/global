@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="main_outlets"
+        v-model="customers"
         :items="items"
         :loading="isLoading"
         item-text="name"
@@ -29,53 +29,53 @@
                <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-               <span v-if="!norequired">Main Outlet<span :class="disabled?'':'text-red'">*</span></span>
-               <span v-else>Main Outlet</span>
+               <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+               <span v-else>Customer</span>
             </div>
         </template>
     </v-autocomplete>
 </template>
 <script>
     export default {
-        name: 'SelectMainOutlet',
+        name: 'SelectCustomer',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 placeholder : '',
                 search:'',
-                main_outlets:null
+                customers:null
             };
         },
-        props: ['main_outlet','disabled','clear','error','filtered', "label", 'norequired', "dense"],
+        props: ['customer','disabled','clear','error','filtered', "label", 'norequired', "dense"],
         methods: {
             remoteSearch(search) {
-                this.placeholder="Loading items..."
-                this.isLoading = true
-                this.$http.get("/customer/merchant/filter",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search,
-                }}).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Main Outlet'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                // this.placeholder="Loading items..."
+                // this.isLoading = true
+                // this.$http.get("/customer/merchant/filter",{params:{
+                //     perpage:10,
+                //     conditions:'status:1|name.icontains:'+search,
+                // }}).then(response => {
+                //     this.items = response.data.data
+                //     if(this.items === null){
+                //         this.items = []
+                //     }
+                //     this.isLoading = false
+                //     let label = 'Main Outlet'
+                //     if (this.label) 
+                //     label = this.label
+                //     this.placeholder = "Select "+ label
+                // });
             },
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/customer/merchant/filter",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.main_outlets = response.data.data[0]
-                    });
+                    // this.$http.get("/customer/merchant/filter",{params:{
+                    //     conditions:'id.e:'+val.id,
+                    // }}).then(response => {
+                    //     this.items.push(response.data.data[0])
+                    //     this.customers = response.data.data[0]
+                    // });
                 }
 
             },
@@ -92,7 +92,7 @@
                     if(val){
                         this.isLoading = true
                         this.remoteSearch(val)
-                    } else if(!this.main_outlet){
+                    } else if(!this.customer){
                         this.remoteSearch('')
                     }
 
@@ -101,12 +101,12 @@
             },
             clear: {
                 handler: function (val) { // ini untuk clear data
-                    this.main_outlets = null
+                    this.customers = null
                 },
                 deep: true
             },
 
-            main_outlet:{
+            customer:{
                 handler: function (val) { // watch perubahan untuk auto select (biasa di pakai di page update)
                     if(val){
                         this.autoSelectByID(val)

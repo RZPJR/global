@@ -35,7 +35,7 @@ export { default as SelectRole } from "./component-library/SelectRole.vue";
 export { default as SelectUser } from "./component-library/SelectUser.vue";
 export { default as SelectStatus } from "./component-library/SelectStatus.vue";
 export { default as SelectPacker } from "./component-library/SelectPacker.vue";
-export { default as SelectMainOutlet } from "./component-library/SelectMainOutlet.vue";
+export { default as SelectCustomer } from "./component-library/SelectCustomer.vue";
 export { default as SelectGlossary } from "./component-library/SelectGlossary.vue";
 export { default as SelectFilterBusinessType } from "./component-library/SelectFilterBusinessType.vue";
 export { default as SelectGoodsReceipt } from "./component-library/SelectGoodsReceipt.vue";
@@ -64,6 +64,7 @@ export { default as SelectProductSection } from "./component-library/SelectProdu
 export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
 export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
 export { default as SelectInvoiceTerm }  from "./component-library/SelectInvoiceTerm.vue";
+export { default as SelectPriceSet }  from "./component-library/SelectPriceSet.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
