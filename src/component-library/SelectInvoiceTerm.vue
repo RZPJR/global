@@ -50,44 +50,44 @@
         props: ['invoice_term','disabled','clear','label','error', 'label', "norequired", "dense"],
         methods: {
             remoteSearch(search) {
-                this.placeholder="Loading items..."
-                this.isLoading = true
-                this.$http.get("/finance/invoice/term/filter",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search,
-                }}).then(response => {
-                    this.items = []
-                    let arr = response.data.data
-                    for (let i = 0; i < arr.length; i++) {
-                        this.items.push({
-                            value:arr[i].id,
-                            id:arr[i].id,
-                            name:arr[i].name
-                        })
-                    }
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Invoice Term'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                // this.placeholder="Loading items..."
+                // this.isLoading = true
+                // this.$http.get("/finance/invoice/term/filter",{params:{
+                //     perpage:10,
+                //     conditions:'status:1|name.icontains:'+search,
+                // }}).then(response => {
+                //     this.items = []
+                //     let arr = response.data.data
+                //     for (let i = 0; i < arr.length; i++) {
+                //         this.items.push({
+                //             value:arr[i].id,
+                //             id:arr[i].id,
+                //             name:arr[i].name
+                //         })
+                //     }
+                //     if(this.items === null){
+                //         this.items = []
+                //     }
+                //     this.isLoading = false
+                //     let label = 'Invoice Term'
+                //     if (this.label) 
+                //     label = this.label
+                //     this.placeholder = "Select "+ label
+                // });
             },
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/finance/invoice/term/filter",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        // this.items.push(response.data.data)
-                        this.invoice_terms = {
-                            value:response.data.data[0].id,
-                            id:response.data.data[0].id,
-                            name:response.data.data[0].name
-                        }
-                    });
+                    // this.$http.get("/finance/invoice/term/filter",{params:{
+                    //     conditions:'id.e:'+val.id,
+                    // }}).then(response => {
+                    //     // this.items.push(response.data.data)
+                    //     this.invoice_terms = {
+                    //         value:response.data.data[0].id,
+                    //         id:response.data.data[0].id,
+                    //         name:response.data.data[0].name
+                    //     }
+                    // });
                 }
 
             },
