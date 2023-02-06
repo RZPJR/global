@@ -29,8 +29,8 @@
                <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-               <span v-if="!norequired">main_outlet<span :class="disabled?'':'text-red'">*</span></span>
-               <span v-else>main_outlet</span>
+               <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+               <span v-else>Customer</span>
             </div>
         </template>
     </v-autocomplete>
