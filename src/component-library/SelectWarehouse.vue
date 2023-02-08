@@ -4,7 +4,6 @@
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
-        item-text="name"
         :name="dataname"
         :search-input.sync="search"
         @change="selected"
@@ -18,11 +17,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.code }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.code }} - {{ data.item.description }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -46,7 +45,7 @@
                 isLoading: false,
                 search:'',
                 dataname:'',
-                warehouses:null
+                warehouses:{}
             };
         },
         props: ['warehouse','disabled','clear','label','error','area_id','update', 'norequired', 'aux_data', 'subdistrict_id', "name", "dense"],
@@ -87,23 +86,24 @@
                 });
             },
             autoSelectByID(val) {
-                this.$http.get("/config/warehouse/filter",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        if (response.data.data === null) {
-                            this.items = []
-                            this.warehouses = null
-                        }
-                        this.items.push(response.data.data[0])
-                        this.warehouses = response.data.data[0]
-                });
+                this.items.push(val)
+                this.warehouses = val
+                // this.$http.get("/config/warehouse/filter",{params:{
+                //         conditions:'id.e:'+val.id,
+                //     }}).then(response => {
+                //         if (response.data.data === null) {
+                //             this.items = []
+                //             this.warehouses = null
+                //         }
+                //         this.items.push(response.data.data[0])
+                //         this.warehouses = response.data.data[0]
+                // });
             },
             selected(event) {
                 this.$emit('selected', event);
             }
         },
-        created() {
-            // this.remoteSearch('', '');
+        mounted() {
             if (!this.name) {
                 this.dataname = 'warehouse'
             } else {

@@ -66,12 +66,13 @@ export default {
     remoteSearch(search) {
       this.placeholder = "Loading items...";
       this.isLoading = true;
-      // ini ke endpoint get all
+      // to endpoint get list division
       this.$http
         .get("/account/v1/division", {
           params: {
             perpage: 20,
-            conditions: "status:1|name.icontains:" + search,
+            status:1,
+            search:search
           },
         })
         .then((response) => {
@@ -99,7 +100,6 @@ export default {
     },
   },
   mounted() {
-    // this.remoteSearch('', true);
   },
   watch: {
     search: {
