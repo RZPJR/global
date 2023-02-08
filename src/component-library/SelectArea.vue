@@ -3,7 +3,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         :name="dataname"
         :search-input.sync="search"
         :placeholder="placeholder"
@@ -46,7 +46,7 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                areas:null
+                areas:{}
             };
         },
         props: ['area','disabled','clear','label','error','aux_data', 'norequired', 'name', "dense"],
@@ -69,9 +69,6 @@
                     if(this.items === null){
                         this.items = []
                     }
-                    if (this.area){
-                        this.autoSelectByID(this.area)
-                    }
                     this.isLoading = false
                     let label = 'Region'
                     if (this.label) 
@@ -81,11 +78,9 @@
             },
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/region",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.areas = response.data.data[0]
+                    this.$http.get("/bridge/v1/region/"+val.id)
+                    .then(response => {
+                        this.areas = response.data.data
                     });
                 }
             },
@@ -94,7 +89,6 @@
             }
         },
         mounted() {
-            // this.remoteSearch('',this.aux_data);
             if(this.area){
                 this.autoSelectByID(this.area)
             }
@@ -109,8 +103,8 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.area){
-                        this.remoteSearch('',this.aux_data)
+                    } else{
+                        this.remoteSearch('')
                     }
                 },
                 deep: true

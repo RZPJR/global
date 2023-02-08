@@ -4,7 +4,7 @@
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         item-value="code"
         name="salesGroup"
         :search-input.sync="search"
@@ -74,10 +74,9 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/territory").then(response => {
-                        this.items.push(response.data.data[0])
+                    this.$http.get("/bridge/v1/territory/"+val.id).then(response => {
                         this.isLoading = false
-                        this.sales_group = response.data.data[0]
+                        this.sales_group = response.data.data
                     });
                 }
             },
