@@ -29,8 +29,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Warehouse<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Warehouse</span>
+                <span v-if="!norequired">Site<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Site</span>
             </div>
         </template>
     </v-autocomplete>
@@ -68,7 +68,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/config/warehouse/filter",{params:{
+                this.$http.get("/bridge/v1/site",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search+area_id+aux+subdistrictId,
                 }}).then(response => {
@@ -79,7 +79,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'Warehouse'
+                    let label = 'Site'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
