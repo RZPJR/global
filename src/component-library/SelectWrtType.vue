@@ -21,44 +21,61 @@
         data() {
             return {
                 wrtType:'',
-                wrtTypes:[
-                    {
-                        text:'Delivery',
-                        value:1
-                    },
-                    {
-                        text:'Self Pickup',
-                        value:2
-                    }
-                ],
+                wrtTypes:[],
             };
         },
         props:['default', 'dense', 'all'],
         methods: {
             selected(event) { // Select Wrt Type
                 this.$emit('selected', event);
+            },
+            getData() {
+                if (this.all == true) {
+                    this.wrtTypes = [
+                        {
+                            text:'All',
+                            value:''
+                        },
+                        {
+                            text:'Delivery',
+                            value:1
+                        },
+                        {
+                            text:'Self Pickup',
+                            value:2
+                        }
+                    ]
+                } else {
+                    this.wrtTypes = [
+                        {
+                            text:'Delivery',
+                            value:1
+                        },
+                        {
+                            text:'Self Pickup',
+                            value:2
+                        }
+                    ]
+
+                }
             }
         },
         created() {
-            if (this.default) {
-                this.wrtType = this.default
-            }
-            if (this.all == true) {
-                this.wrtTypes=[
-                    {
-                        text:'All',
-                        value:''
-                    },
-                    {
-                        text:'Delivery',
-                        value:1
-                    },
-                    {
-                        text:'Self Pickup',
-                        value:2
+            this.getData()
+        },
+        watch: {
+            default: {
+                handler: function (val) {
+                    if(val){
+                        this.wrtTypes.forEach(e => {
+                            if (e.value == val) {
+                                this.wrtType = e
+                            }
+                        });
                     }
-                ]
-            }
+                },
+                deep: true
+            },
         }
     };
 </script>
