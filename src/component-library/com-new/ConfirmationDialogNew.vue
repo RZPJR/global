@@ -48,7 +48,7 @@
                         </template>
                     </v-textarea>
                 </v-col>
-                <pre>{{sendData.data}}</pre>
+                <!-- <pre>{{sendData.data}}</pre> -->
                 <v-card-actions class="pb-4">
                 <v-spacer></v-spacer>
                     <v-btn
