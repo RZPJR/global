@@ -31,11 +31,11 @@
                     </template>
                 <template slot="selection" slot-scope="data">
                     <div class="select-item">
-                        {{ data.item.item_id }} - {{ data.item.description }}
+                        {{ data.item.code }} - {{ data.item.description }}
                     </div>
                 </template>
                 <template slot="item" slot-scope="data">
-                    {{ data.item.item_id }} - {{ data.item.description }}
+                    {{ data.item.code }} - {{ data.item.description }}
                 </template>
             </v-autocomplete>
         </div>
@@ -99,7 +99,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/catalog/v1/item_section/item",{params:{
+                this.$http.get("/bridge/v1/item",{params:{
                     perpage:10,
                     search:search,
                     status: '1',
@@ -128,7 +128,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/catalog/v1/item_section/item",{params:{
+                    this.$http.get("/bridge/v1/item",{params:{
                         conditions:'product.id.e:'+val.id,
                         embeds: 'product,product.uom_id',
                     }}).then(response => {
