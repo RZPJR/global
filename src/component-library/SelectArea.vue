@@ -3,7 +3,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         :name="dataname"
         :search-input.sync="search"
         :placeholder="placeholder"
