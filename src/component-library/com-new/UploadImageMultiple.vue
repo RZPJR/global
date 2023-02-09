@@ -171,7 +171,9 @@ import {
             },
             data: {
                 handler: function (val) {
-                    this.arrImg = val
+                    if(val){
+                        this.arrImg = val
+                    }  
                 },
                 deep: true
             },
@@ -183,6 +185,9 @@ import {
                     self.realRemove()
                 }
             });
+            if(this.data){
+                this.arrImg = this.data
+            }
         },
         computed: {
             imgAddEnable() {
