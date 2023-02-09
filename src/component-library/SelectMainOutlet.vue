@@ -29,8 +29,8 @@
                <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-               <span v-if="!norequired">Main Outlet<span :class="disabled?'':'text-red'">*</span></span>
-               <span v-else>Main Outlet</span>
+               <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+               <span v-else>Customer</span>
             </div>
         </template>
     </v-autocomplete>
@@ -50,32 +50,32 @@
         props: ['main_outlet','disabled','clear','error','filtered', "label", 'norequired', "dense"],
         methods: {
             remoteSearch(search) {
-                this.placeholder="Loading items..."
-                this.isLoading = true
-                this.$http.get("/customer/merchant/filter",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search,
-                }}).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Main Outlet'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                // this.placeholder="Loading items..."
+                // this.isLoading = true
+                // this.$http.get("/main_outlet/merchant/filter",{params:{
+                //     perpage:10,
+                //     conditions:'status:1|name.icontains:'+search,
+                // }}).then(response => {
+                //     this.items = response.data.data
+                //     if(this.items === null){
+                //         this.items = []
+                //     }
+                //     this.isLoading = false
+                //     let label = 'Main Outlet'
+                //     if (this.label) 
+                //     label = this.label
+                //     this.placeholder = "Select "+ label
+                // });
             },
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/customer/merchant/filter",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.main_outlets = response.data.data[0]
-                    });
+                    // this.$http.get("/main_outlet/merchant/filter",{params:{
+                    //     conditions:'id.e:'+val.id,
+                    // }}).then(response => {
+                    //     this.items.push(response.data.data[0])
+                    //     this.main_outlets = response.data.data[0]
+                    // });
                 }
 
             },

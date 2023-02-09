@@ -64,29 +64,25 @@ export default {
     "main_role",
   ],
   methods: {
+    // For fetch endpoint get all role
     remoteSearch(search, division_id) {
       let division = "";
-      if (
-        division_id !== "" &&
-        division_id !== undefined &&
-        division_id !== null
-      ) {
-        division = "|division_id:" + division_id;
+      if (division_id) {
+        division = division_id;
       }
-
-      let is_helper = "";
-      if (this.is_helper) {
-        is_helper = "|code__in:ROL0022.ROL0023.ROL0049.ROL0055";
-      }
+      // Need Follow Up for develop
+      // let is_helper = "";
+      // if (this.is_helper) {
+      //   is_helper = "|code__in:ROL0022.ROL0023.ROL0049.ROL0055";
+      // }
       this.placeholder = "Loading items...";
       this.isLoading = true;
-
-      // ini ke endpoint get all
       this.$http
         .get("/account/v1/role", {
           params: {
-            conditions:
-              "status:1|name.icontains:" + search + division + is_helper,
+            status: 1,
+            search: search,
+            division_id: division,
             orderby: "-id",
           },
         })
@@ -101,6 +97,7 @@ export default {
           this.placeholder = "Select " + label;
         });
     },
+    // For request by division_id (Page update & etc)
     autoSelectByID(val) {
       if (val) {
         this.$http.get("/account/v1/role/" + val.id).then((response) => {
@@ -134,17 +131,16 @@ export default {
     role: {
       handler: function (val) {
         if (val !== null) {
-          // ini untuk auto select
+          // for auto select
           this.autoSelectByID(val);
         }
       },
       deep: true,
     },
     division_id: {
-      // ini fungsi untuk request by division_id
       handler: function (val) {
         if (val !== null) {
-          // ini untuk auto select
+          // for auto select
           this.roles = null;
           this.remoteSearch("", val);
         }
