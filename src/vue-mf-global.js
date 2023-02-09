@@ -34,6 +34,7 @@ export { default as SelectProvince } from "./component-library/SelectProvince.vu
 export { default as SelectRole } from "./component-library/SelectRole.vue";
 export { default as SelectUser } from "./component-library/SelectUser.vue";
 export { default as SelectStatus } from "./component-library/SelectStatus.vue";
+export { default as SelectWrtType } from "./component-library/SelectWrtType.vue";
 export { default as SelectPacker } from "./component-library/SelectPacker.vue";
 export { default as SelectMainOutlet } from "./component-library/SelectMainOutlet.vue";
 export { default as SelectGlossary } from "./component-library/SelectGlossary.vue";

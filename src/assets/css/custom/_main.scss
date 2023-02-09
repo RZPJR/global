@@ -8,6 +8,12 @@
   min-width: 100%;
   min-height: 100vh;
 }
+.v-application--wrap {
+  margin-top: -12px;
+}
+.route-active {
+  color: #4abfb2
+}
 .box {
   background-color: #ffffff;
   padding: 16px;
