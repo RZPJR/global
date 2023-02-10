@@ -94,7 +94,7 @@
                             </div> 
                             <v-icon x-large>photo_camera</v-icon> 
                             <span><b>Upload Image</b></span>
-                            <span>Max : 2 Mb</span>
+                            <span>Max : 1 Mb</span>
                         </v-flex>
                     </div>
                     <div 

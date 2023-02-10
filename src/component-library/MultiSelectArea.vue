@@ -3,7 +3,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         name="area"
         :counter="maxSelected"
         :menu-props="menuProps"
@@ -18,7 +18,6 @@
         chips
         multiple
         deletable-chips
-        :class="dense?'':'rounded-form'"
         :dense="dense"
         :error-messages="error"
     >
@@ -37,7 +36,7 @@
             <span v-else>Region</span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
