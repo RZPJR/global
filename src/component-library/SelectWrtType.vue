@@ -1,6 +1,6 @@
 <template>
     <v-select
-        v-model="wrtType"
+        v-model="wrt"
         :items="wrtTypes"
         item-text="text"
         label="WRT Type"
@@ -20,58 +20,51 @@
         name: 'SelectWrtType',
         data() {
             return {
-                wrtType:'',
-                wrtTypes:[],
+                wrt:'',
+                wrtTypes:[
+                    {
+                        text:'Delivery',
+                        value:1
+                    },
+                    {
+                        text:'Self Pickup',
+                        value:2
+                    }
+                ],
             };
         },
-        props:['default', 'dense', 'all'],
+        props:['wrtType', 'dense', 'all'],
         methods: {
             selected(event) { // Select Wrt Type
                 this.$emit('selected', event);
             },
             getData() {
                 if (this.all == true) {
-                    this.wrtTypes = [
-                        {
-                            text:'All',
-                            value:''
-                        },
-                        {
-                            text:'Delivery',
-                            value:1
-                        },
-                        {
-                            text:'Self Pickup',
-                            value:2
-                        }
-                    ]
-                } else {
-                    this.wrtTypes = [
-                        {
-                            text:'Delivery',
-                            value:1
-                        },
-                        {
-                            text:'Self Pickup',
-                            value:2
-                        }
-                    ]
-
+                    this.wrtTypes.unshift({
+                        text:'All',
+                        value:''
+                    })
                 }
+            },
+            setWrt() {
+                this.wrtTypes.forEach(e => {
+                    if (e.value == this.wrtType) {
+                        this.wrt = e
+                    }
+                });
             }
         },
         created() {
             this.getData()
+            if (this.wrtType) {
+                this.setWrt()
+            }
         },
         watch: {
-            default: {
+            wrtType: {
                 handler: function (val) {
                     if(val){
-                        this.wrtTypes.forEach(e => {
-                            if (e.value == val) {
-                                this.wrtType = e
-                            }
-                        });
+                        this.setWrt()
                     }
                 },
                 deep: true

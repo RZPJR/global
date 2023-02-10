@@ -6,7 +6,7 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="name"
+        item-text="code"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -28,23 +28,22 @@
         </template>
         <template slot="selection" slot-scope="data">
           <v-chip close @click:close="remove(data)">
-            {{ data.item.name }} - {{ data.item.business_type.name }}
+            {{ data.item.code }} 
           </v-chip>
         </template>
         <template slot="item" slot-scope="data">
-          {{ data.item.code }} - {{ data.item.name }} -
-          {{ data.item.business_type.name }}
+          {{ data.item.code }}
         </template>
       </v-autocomplete>
     </div>
-    <!-- <div class="w180 -mt25">
+    <div class="w180 -mt25">
       <v-checkbox
         :disabled="disabled"
         label="Select All Archetype"
         v-model="selectedAll"
         @click="selectAll(selectedAll)"
       ></v-checkbox>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -74,31 +73,31 @@ export default {
   methods: {
     remoteSearch(search, aux_data) {
       // render data
-      // if (aux_data !== '' && aux_data !== undefined){
-      //     aux_data = '|aux_data.in:'+aux_data;
-      // }else{
-      //     aux_data = '';
-      // }
-      // this.placeholder="Loading items..."
-      // this.isLoading = true
-      // // ini ke endpoint get all
-      // this.$http.get("/customer/archetype/filter?embeds=business_type_id",{params:{
-      //     conditions:'status:1|name.icontains:'+search+aux_data,
-      // }}).then(response => {
-      //     if (response.data.data) {
-      //         this.items = response.data.data
-      //     } else {
-      //         this.items = []
-      //     }
-      //     if(this.items === null){
-      //         this.items = []
-      //     }
-      //     this.isLoading = false
-      //     let label = 'Archetype'
-      //     if (this.label)
-      //     label = this.label
-      //     this.placeholder = "Select "+ label
-      // });
+      if (aux_data !== '' && aux_data !== undefined){
+          aux_data = '|aux_data.in:'+aux_data;
+      }else{
+          aux_data = '';
+      }
+      this.placeholder="Loading items..."
+      this.isLoading = true
+      // ini ke endpoint get all
+      this.$http.get("/bridge/v1/archetype",{params:{
+          search:search,
+      }}).then(response => {
+          if (response.data.data) {
+              this.items = response.data.data
+          } else {
+              this.items = []
+          }
+          if(this.items === null){
+              this.items = []
+          }
+          this.isLoading = false
+          let label = 'Archetype'
+          if (this.label)
+          label = this.label
+          this.placeholder = "Select "+ label
+      });
     },
     autoSelectByID(val) {
       //autofill when update
