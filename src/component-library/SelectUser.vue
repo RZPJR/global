@@ -77,6 +77,7 @@
                     this.$http.get("/account/v1/user/"+val.id).then(response => {
                         this.items.push(response.data.data)
                         this.users = response.data.data
+                        this.isLoading = false
                     }).catch(e => {
                         this.items = []
                         this.isLoading = false
