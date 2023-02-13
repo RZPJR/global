@@ -87,9 +87,13 @@
             autoSelectByID(val) {
                 if(val){
                     this.areas= []
-                    for (let i = 0; i < val.length; i++) {
-                        this.areas.push(val[i])
-                    }
+                    val.forEach(id => {
+                        this.$http.get("/bridge/v1/region/" + id).then(response => {
+                            console.log("Urutan 3")
+                            console.log(response.data.data)
+                            this.areas.push(response.data.data)
+                        });
+                    });
                     if(this.areas.length >= this.maxSelected){
                         this.menuProps.disabled = true
                     }
@@ -150,8 +154,8 @@
                 deep: true
             },
             area: {
-                handler: function (val) {
-                    if(val !== null){ // ini untuk auto select
+                handler: function (val) { // ini untuk auto select
+                    if(val){
                         this.autoSelectByID(val)
                     }
                 },
