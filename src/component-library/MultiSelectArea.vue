@@ -89,8 +89,6 @@
                     this.areas= []
                     val.forEach(id => {
                         this.$http.get("/bridge/v1/region/" + id).then(response => {
-                            console.log("Urutan 3")
-                            console.log(response.data.data)
                             this.areas.push(response.data.data)
                         });
                     });
