@@ -66,6 +66,7 @@ export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vu
 export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
 export { default as SelectInvoiceTerm }  from "./component-library/SelectInvoiceTerm.vue";
 export { default as SelectPriceSet }  from "./component-library/SelectPriceSet.vue";
+export { default as SelectVendor }  from "./component-library/SelectVendor.vue";
 
 //MODAL COMPONENTS
 export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
