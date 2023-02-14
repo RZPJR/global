@@ -1,6 +1,7 @@
 <template>
     <v-autocomplete
         v-model="warehouses"
+        item-text="description"
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
@@ -69,8 +70,8 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/bridge/v1/site",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search+area_id+aux+subdistrictId,
+                    // perpage:10,
+                    // conditions:'status:1|name.icontains:'+search+area_id+aux+subdistrictId,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
@@ -86,18 +87,15 @@
                 });
             },
             autoSelectByID(val) {
-                this.items.push(val)
-                this.warehouses = val
-                // this.$http.get("/config/warehouse/filter",{params:{
-                //         conditions:'id.e:'+val.id,
-                //     }}).then(response => {
-                //         if (response.data.data === null) {
-                //             this.items = []
-                //             this.warehouses = null
-                //         }
-                //         this.items.push(response.data.data[0])
-                //         this.warehouses = response.data.data[0]
-                // });
+                this.$http.get("/bridge/v1/site/"+val.id,{params:{
+                    }}).then(response => {
+                        if (response.data.data === null) {
+                            this.items = []
+                            this.warehouses = null
+                        }
+                        this.items.push(response.data.data)
+                        this.warehouses = response.data.data
+                });
             },
             selected(event) {
                 this.$emit('selected', event);
@@ -132,8 +130,6 @@
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
-                    } else {
-                        this.warehouses = null
                     }
                 },
                 deep: true

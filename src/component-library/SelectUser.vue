@@ -56,9 +56,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/account/v1/user",{params:{
-                   
-                }}).then(response => {
+                this.$http.get("/account/v1/user",{params:{}}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
                         this.items = []
@@ -68,14 +66,21 @@
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
+                }).catch(e => {
+                    this.items = []
                 });
             },
             autoSelectByID(val) {
                 if(val){
+                    this.isLoading = true
                     // ini ke endpoint detail
                     this.$http.get("/account/v1/user/"+val.id).then(response => {
                         this.items.push(response.data.data)
                         this.users = response.data.data
+                        this.isLoading = false
+                    }).catch(e => {
+                        this.items = []
+                        this.isLoading = false
                     });
                 }
 
