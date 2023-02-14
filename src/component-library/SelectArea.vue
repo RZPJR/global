@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.description }}
+                {{ data.item.code }} - {{ data.item.description }}
             </div>
         </template>
         <template v-slot:label>
@@ -32,7 +32,7 @@
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.description }}
+            {{ data.item.code }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -61,7 +61,8 @@
                 // ini ke endpoint get all
                 this.$http.get("/bridge/v1/region",{params:{
                     perpage:10,
-                    conditions:'status:1|name.icontains:'+search + aux_data,
+                    status:1,
+                    search:search,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
