@@ -27,8 +27,13 @@
           >
           <span v-else>Multiselect Region</span>
         </template>
+        <template slot="selection" slot-scope="data">
+          <v-chip close @click:close="remove(data)">
+            {{ data.item.code }} - {{ data.item.description }} 
+          </v-chip>
+        </template>
         <template slot="item" slot-scope="data">
-          {{ data.item.description }}
+          {{ data.item.code }} - {{ data.item.description }}
         </template>
       </v-autocomplete>
     </div>
@@ -75,7 +80,8 @@ export default {
       this.placeholder="Loading items..."
       this.isLoading = true
       this.$http.get("/bridge/v1/region",{params:{
-          conditions:'status:1|name.icontains:'+search + aux_data,
+          status:1,
+          search:search,
       }}).then(response => {
           if (response.data.data) {
               this.items = response.data.data
@@ -104,6 +110,11 @@ export default {
     selected(event) {
       // Select area
       this.$emit("selected", event);
+    },
+    remove(item) {
+      // delete 1 selected item 
+      this.areas.splice(item.index, 1);
+      this.$emit("selected", this.areas);
     },
     selectAll(d) {
       // checkbox untuk select all area
