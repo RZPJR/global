@@ -12,11 +12,7 @@ componentFiles.keys().forEach((fileName) => {
   components[componentName] = componentFiles(fileName).default;
 });
 
-// Register all components globally
-Object.keys(components).forEach((componentName) => {
-    console.log(componentName,'wwwwwwwwwwwwwwwwwwwwww')
-  Vue.component(componentName, components[componentName]);
-});
+export {components as Components}
 
 export { default as ImageLogo } from "../public/img/eden-logo.png";
 export { default as ImageLogoStaging } from "../public/img/eden-logo-staging.png";
