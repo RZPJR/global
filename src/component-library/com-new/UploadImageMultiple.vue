@@ -94,7 +94,7 @@
                             </div> 
                             <v-icon x-large>photo_camera</v-icon> 
                             <span><b>Upload Image</b></span>
-                            <span>Max : 2 Mb</span>
+                            <span>Max : 1 Mb</span>
                         </v-flex>
                     </div>
                     <div 
@@ -171,9 +171,7 @@ import {
             },
             data: {
                 handler: function (val) {
-                    if(val){
-                        this.arrImg = val
-                    }  
+                    this.arrImg = val
                 },
                 deep: true
             },
@@ -185,7 +183,7 @@ import {
                     self.realRemove()
                 }
             });
-            if(this.data){
+            if(this.data.length > 0){
                 this.arrImg = this.data
             }
         },
@@ -255,7 +253,7 @@ import {
                             const isLt2M = resp.size / 1024 / 1024 < 2;
                             if (!isLt2M) {
                                 that.arrImg[id].image = null;
-                                that.arrImg[id].imageError = "Max file size: 2 Mb";
+                                that.arrImg[id].imageError = "Max file size: 1 Mb";
                             } else {
                                 that.arrImg[id].imageError = "";
                                 that.arrImg[id].nameFile = (that.name).replace(/\//g, "");

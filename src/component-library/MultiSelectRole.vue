@@ -94,8 +94,8 @@ export default {
       this.$http
         .get("/account/v1/role", {
           params: {
-            conditions: "status:1|name.icontains:" + search + division_id,
-            orderby: "-id",
+            // conditions: "status:1|name.icontains:" + search + division_id,
+            // orderby: "-id",
           },
         })
         .then((response) => {

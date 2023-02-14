@@ -3,7 +3,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         name="area"
         :counter="maxSelected"
         :menu-props="menuProps"
@@ -18,7 +18,6 @@
         chips
         multiple
         deletable-chips
-        :class="dense?'':'rounded-form'"
         :dense="dense"
         :error-messages="error"
     >
@@ -37,7 +36,7 @@
             <span v-else>Region</span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -88,9 +87,11 @@
             autoSelectByID(val) {
                 if(val){
                     this.areas= []
-                    for (let i = 0; i < val.length; i++) {
-                        this.areas.push(val[i])
-                    }
+                    val.forEach(id => {
+                        this.$http.get("/bridge/v1/region/" + id).then(response => {
+                            this.areas.push(response.data.data)
+                        });
+                    });
                     if(this.areas.length >= this.maxSelected){
                         this.menuProps.disabled = true
                     }
@@ -151,8 +152,8 @@
                 deep: true
             },
             area: {
-                handler: function (val) {
-                    if(val !== null){ // ini untuk auto select
+                handler: function (val) { // ini untuk auto select
+                    if(val){
                         this.autoSelectByID(val)
                     }
                 },

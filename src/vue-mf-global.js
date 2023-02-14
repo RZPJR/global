@@ -1,87 +1,19 @@
+import Vue from "vue";
+import http from "./plugins/axios.js";
 import "./set-public-path";
 import "./global.css";
 import "./assets/css/main.scss";
-import Vue from "vue";
-import http from "./plugins/axios.js";
 
-Vue.use(http);
+// Import all components in the component-library directory
+const components = {};
+const componentFiles = require.context("./component-library", true, /\.vue$/);
+componentFiles.keys().forEach((fileName) => {
+  const componentName = fileName.split("/").pop().replace(/\.\w+$/, "");
+  components[componentName] = componentFiles(fileName).default;
+});
 
-// You can export Vue components from this file and import them into your microfrontends
-//SELECT COMPONENTS
-export { default as SelectArea } from "./component-library/SelectArea.vue";
-export { default as SelectMerchant } from "./component-library/SelectMerchant.vue";
-export { default as SelectBranch } from "./component-library/SelectBranch.vue";
-export { default as SelectPaymentGroup } from "./component-library/SelectPaymentGroup.vue";
-export { default as SelectWrt } from "./component-library/SelectWrt.vue";
-export { default as SelectWarehouse } from "./component-library/SelectWarehouse.vue";
-export { default as SelectOrderType } from "./component-library/SelectOrderType.vue";
-export { default as SelectCity } from "./component-library/SelectCity.vue";
-export { default as SelectDeclineType } from "./component-library/SelectDeclineType.vue";
-export { default as SelectProductTag } from "./component-library/SelectProductTag.vue";
-export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
-export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";
-export { default as SelectWarehouseCoverage } from "./component-library/SelectWarehouseCoverage.vue";
-export { default as SelectSalesTerm } from "./component-library/SelectSalesTerm.vue";
-export { default as SelectPaymentGroupComb } from "./component-library/SelectPaymentGroupComb.vue";
-export { default as SelectProductTable } from "./component-library/SelectProductTable.vue";
-export { default as SelectDistrict } from "./component-library/SelectDistrict.vue";
-export { default as SelectCourier } from "./component-library/SelectCourier.vue";
-export { default as SelectCategory } from "./component-library/SelectCategory.vue";
-export { default as SelectPaymentChannel } from "./component-library/SelectPaymentChannel.vue";
-export { default as SelectProduct } from "./component-library/SelectProduct.vue";
-export { default as SelectPicker } from "./component-library/SelectPicker.vue";
-export { default as SelectProvince } from "./component-library/SelectProvince.vue";
-export { default as SelectRole } from "./component-library/SelectRole.vue";
-export { default as SelectUser } from "./component-library/SelectUser.vue";
-export { default as SelectStatus } from "./component-library/SelectStatus.vue";
-export { default as SelectWrtType } from "./component-library/SelectWrtType.vue";
-export { default as SelectPacker } from "./component-library/SelectPacker.vue";
-export { default as SelectMainOutlet } from "./component-library/SelectMainOutlet.vue";
-export { default as SelectGlossary } from "./component-library/SelectGlossary.vue";
-export { default as SelectFilterBusinessType } from "./component-library/SelectFilterBusinessType.vue";
-export { default as SelectGoodsReceipt } from "./component-library/SelectGoodsReceipt.vue";
-export { default as SelectSubDistrict } from "./component-library/SelectSubDistrict.vue";
-export { default as SelectUom } from "./component-library/SelectUom.vue";
-export { default as SelectSupplier } from "./component-library/SelectSupplier.vue";
-export { default as MultiSelectArcheType } from "./component-library/MultiSelectArcheType.vue";
-export { default as MultiSelectArea } from "./component-library/MultiSelectArea.vue";
-export { default as MultiSelectBusinessType } from "./component-library/MultiSelectBusinessType.vue";
-export { default as MultiSelectDistrict } from "./component-library/MultiSelectDistrict.vue";
-export { default as MultiSelectGlossary } from "./component-library/MultiSelectGlossary.vue";
-export { default as MultiSelectPacker } from "./component-library/MultiSelectPacker.vue";
-export { default as MultiSelectProductTag } from "./component-library/MultiSelectProductTag.vue";
-export { default as MultiSelectSubDistrictAll } from "./component-library/MultiSelectSubDistrictAll.vue";
-export { default as MultiSelectWrt } from "./component-library/MultiSelectWrt.vue";
-export { default as SelectArchetype } from "./component-library/SelectArchetype.vue";
-export { default as SelectDivision } from "./component-library/SelectDivision.vue";
-export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
-export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
-export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
-export { default as UploadImageCustomize } from "./component-library/UploadImageCustomize.vue";
-export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
-export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
-export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
-export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
-export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
-export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
-export { default as SelectInvoiceTerm }  from "./component-library/SelectInvoiceTerm.vue";
-export { default as SelectPriceSet }  from "./component-library/SelectPriceSet.vue";
+export {components as Components}
 
-//MODAL COMPONENTS
-export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
-export { default as ShippingAddressNew } from "./component-library/com-new/ShippingAddressNew.vue";
-export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
-export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
-export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
-export { default as AuditLogNew } from "./component-library/com-new/AuditLogNew.vue";
-export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
-export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
-export { default as UploadExcel } from "./component-library/UploadExcel.vue";
-
-//loading bar
-export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
-
-// Image Source
 export { default as ImageLogo } from "../public/img/eden-logo.png";
 export { default as ImageLogoStaging } from "../public/img/eden-logo-staging.png";
 export { default as ImageLogoDev } from "../public/img/eden-logo-dev.png";
@@ -105,8 +37,4 @@ export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
 export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
 export { default as Worktime } from "../public/img/worktime_new.png";
 
-// Image Source
-
-// CSS Style
-// export { default as CustomCss } from "../src/assets/custom/main.css";
-// CSS Style
+Vue.use(http);
