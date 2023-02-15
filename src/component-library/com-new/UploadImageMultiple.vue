@@ -250,7 +250,7 @@ import {
                             that.arrImg[id].image = null;
                         } else {
                             that.arrImg[id].imageError = "";
-                            const isLt2M = resp.size / 1024 / 1024 < 2;
+                            const isLt2M = resp.size / 1024 / 1024 < 1;
                             if (!isLt2M) {
                                 that.arrImg[id].image = null;
                                 that.arrImg[id].imageError = "Max file size: 1 Mb";
