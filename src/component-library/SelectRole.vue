@@ -108,11 +108,6 @@
           if(this.role){
               this.autoSelectByID(this.role)
           }
-          if (!this.name) {
-              this.dataname = 'vendor_badge'
-          } else {
-              this.dataname = this.name
-          }
       },
       watch: {
           search: {
