@@ -1,26 +1,23 @@
 <template>
     <v-autocomplete
+        :data-unq="dataUnq"
         v-model="vendor_badges"
-        :items="items"
-        :loading="isLoading"
-        item-text="description"
-        :name="dataname"
-        :search-input.sync="search"
-        :placeholder="placeholder"
+        :item-text="textList"
         @change="selected"
-        :disabled="disabled"
+        @click:clear="remoteSearch('')"
         return-object
         clearable
         outlined
+        :items="items"
+        :name="dataname"
+        :loading="isLoading"
+        :search-input.sync="search"
+        :placeholder="placeholder"
+        :disabled="disabled"
         :dense="dense"
         :class="dense?'':'rounded-form'"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
-            </div>
-        </template>
         <template v-slot:label>
             <div v-if="label">
                 <span v-if="!norequired">{{ label }}<span :class="disabled?'':'text-red'">*</span></span>
@@ -29,6 +26,11 @@
             <div v-else>
                 <span v-if="!norequired">Vendor Badge<span :class="disabled?'':'text-red'">*</span></span>
                 <span v-else>Vendor Badge</span>
+            </div>
+        </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item" >
+                {{ data.item.code }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
@@ -46,34 +48,48 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_badges:{}
+                vendor_badges:[]
             };
         },
-        props: ['vendor_badge','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['vendor_badge','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],
         methods: {
+            // For show dropdown suggestion search by code or name
+            textList(item){
+                return item.code + ' — ' + item.name
+            },
+            // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
                 // await this.$http.get("/bridge/v1/vendor/badge",{params:{
-                //     perpage:10,
-                //     status:1,
-                //     search:search,
-                // }}).then(response => {
-                //     if(response && response.data.data !== null) this.items = response.data.data
-                //     let label = this.label ? this.label : 'Vendor Badge'
-                //     this.placeholder = "Select "+ label
-                // });
+                await this.$http.get("/account/v1/role",{params:{
+                    per_page:10,
+                    search:search,
+                }}).then(response => {
+                    if(response && response.data.data !== null) {
+                        this.items = response.data.data
+                    }
+                    let label = this.label ? this.label : 'Vendor Badge'
+                    this.placeholder = "Select "+ label
+                    console.log(this.items)
+                });
                 this.isLoading = false
             },
+            // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                // if(val.id){
-                //     this.$http.get("/bridge/v1/vendor/badge/"+val.id)
-                //     .then(response => {
-                //         this.vendor_badges = response.data.data
-                //     });
-                // }
+                if(val.id){
+                    console.log(val.id,'val')
+                    // this.$http.get("/bridge/v1/vendor/badge/"+val.id)
+                    this.$http.get("/account/v1/role/"+val.id)
+                    .then(response => {
+                        console.log(response.data.data,'response')
+                        this.items = response.data.data
+                        this.vendor_badges = response.data.data
+                    });
+                }
             },
+            // For Pass Selected Value
             selected(event) {
                 this.$emit('selected', event);
             }
@@ -93,7 +109,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else{
+                    } else if (!this.vendor_badge) {
                         this.remoteSearch('')
                     }
                 },

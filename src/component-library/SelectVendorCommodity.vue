@@ -1,26 +1,23 @@
 <template>
     <v-autocomplete
+        :data-unq="dataUnq"
         v-model="vendor_comodities"
-        :items="items"
-        :loading="isLoading"
-        item-text="description"
-        :name="dataname"
-        :search-input.sync="search"
-        :placeholder="placeholder"
+        :item-text="textList"
         @change="selected"
-        :disabled="disabled"
+        @click:clear="remoteSearch('')"
         return-object
         clearable
         outlined
+        :items="items"
+        :name="dataname"
+        :loading="isLoading"
+        :search-input.sync="search"
+        :placeholder="placeholder"
+        :disabled="disabled"
         :dense="dense"
         :class="dense?'':'rounded-form'"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
-            </div>
-        </template>
         <template v-slot:label>
             <div v-if="label">
                 <span v-if="!norequired">{{ label }}<span :class="disabled?'':'text-red'">*</span></span>
@@ -29,6 +26,11 @@
             <div v-else>
                 <span v-if="!norequired">Vendor Commodity<span :class="disabled?'':'text-red'">*</span></span>
                 <span v-else>Vendor Commodity</span>
+            </div>
+        </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item" >
+                {{ data.item.code }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
@@ -46,34 +48,45 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_comodities:{}
+                vendor_comodities:[]
             };
         },
-        props: ['vendor_commodity','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['vendor_commodity','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],
         methods: {
-            async remoteSearch(search) {
+            // For show dropdown suggestion search by code or name
+            textList(item){
+                return item.code + ' — ' + item.name
+            },
+            // For get all data from API
+            async remoteSearch(search) { // For get all data from API
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
                 // await this.$http.get("/bridge/v1/vendor/commodity",{params:{
-                //     perpage:10,
-                //     status:1,
-                //     search:search,
-                // }}).then(response => {
-                //     if(response && response.data.data !== null) this.items = response.data.data
-                //     let label = this.label ? this.label : 'Vendor Commodity'
-                //     this.placeholder = "Select "+ label
-                // });
+                await this.$http.get("/account/v1/role",{params:{
+                    per_page:10,
+                    search:search,
+                }}).then(response => {
+                    if(response && response.data.data !== null) {
+                        this.items = response.data.data
+                    }
+                    let label = this.label ? this.label : 'Vendor Commodity'
+                    this.placeholder = "Select "+ label
+                });
                 this.isLoading = false
             },
+            // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                // if(val.id){
-                //     this.$http.get("/bridge/v1/vendor/commodity/"+val.id)
-                //     .then(response => {
-                //         this.vendor_comodities = response.data.data
-                //     });
-                // }
+                if(val.id){
+                    // this.$http.get("/bridge/v1/vendor/commodity/"+val.id)
+                    this.$http.get("/account/v1/role/"+val.id)
+                    .then(response => {
+                        this.items = response.data.data
+                        this.vendor_comodities = response.data.data
+                    });
+                }
             },
+            // For Pass Selected Value
             selected(event) {
                 this.$emit('selected', event);
             }
@@ -93,7 +106,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else{
+                    } else if (!this.vendor_commodity) {
                         this.remoteSearch('')
                     }
                 },
