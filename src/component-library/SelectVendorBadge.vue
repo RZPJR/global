@@ -48,7 +48,7 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_badges:[]
+                vendor_badges:{}
             };
         },
         props: ['vendor_badge','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],

@@ -48,7 +48,7 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_types:[]
+                vendor_types:{}
             };
         },
         props: ['vendor_type','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],

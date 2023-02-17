@@ -48,7 +48,7 @@
                 dataname:'',
                 placeholder : '',
                 isLoading: false,
-                vendor_relations:[]
+                vendor_relations:{}
             };
         },
         props: ['vendor_relation','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],

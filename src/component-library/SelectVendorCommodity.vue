@@ -48,7 +48,7 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_comodities:[]
+                vendor_comodities:{}
             };
         },
         props: ['vendor_commodity','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],

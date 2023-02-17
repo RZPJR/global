@@ -48,7 +48,7 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_organizations:[]
+                vendor_organizations:{}
             };
         },
         props: ['vendor_organization','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq"],
