@@ -5,7 +5,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         name="area"
         :placeholder="placeholder"
         :search-input.sync="search"
@@ -27,19 +27,24 @@
           >
           <span v-else>Multiselect Region</span>
         </template>
+        <template slot="selection" slot-scope="data">
+          <v-chip close @click:close="remove(data)">
+            {{ data.item.code }} - {{ data.item.description }} 
+          </v-chip>
+        </template>
         <template slot="item" slot-scope="data">
-          {{ data.item.code }} - {{ data.item.name }}
+          {{ data.item.code }} - {{ data.item.description }}
         </template>
       </v-autocomplete>
     </div>
-    <!-- <div class="w160 -mt25">
+    <div class="w160 -mt25">
       <v-checkbox
         :disabled="disabled"
         label="Select All Region"
         v-model="selectedAll"
         @click="selectAll(selectedAll)"
       ></v-checkbox>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -67,30 +72,31 @@ export default {
   methods: {
     remoteSearch(search, aux_data) {
       // get data or render data
-      // if (aux_data !== '' && aux_data !== undefined){
-      //     aux_data = '|aux_data.in:'+aux_data;
-      // }else{
-      //     aux_data = '';
-      // }
-      // this.placeholder="Loading items..."
-      // this.isLoading = true
-      // this.$http.get("/config/area/filter",{params:{
-      //     conditions:'status:1|name.icontains:'+search + aux_data,
-      // }}).then(response => {
-      //     if (response.data.data) {
-      //         this.items = response.data.data
-      //     } else {
-      //         this.items = []
-      //     }
-      //     if(this.items === null){
-      //         this.items = []
-      //     }
-      //     this.isLoading = false
-      //     let label = 'Area'
-      //     if (this.label)
-      //     label = this.label
-      //     this.placeholder = "Select "+ label
-      // });
+      if (aux_data !== '' && aux_data !== undefined){
+          aux_data = '|aux_data.in:'+aux_data;
+      }else{
+          aux_data = '';
+      }
+      this.placeholder="Loading items..."
+      this.isLoading = true
+      this.$http.get("/bridge/v1/region",{params:{
+          status:1,
+          search:search,
+      }}).then(response => {
+          if (response.data.data) {
+              this.items = response.data.data
+          } else {
+              this.items = []
+          }
+          if(this.items === null){
+              this.items = []
+          }
+          this.isLoading = false
+          let label = 'Region'
+          if (this.label)
+          label = this.label
+          this.placeholder = "Select "+ label
+      });
     },
     autoSelectByID(val) {
       // for update fill the field
@@ -104,6 +110,11 @@ export default {
     selected(event) {
       // Select area
       this.$emit("selected", event);
+    },
+    remove(item) {
+      // delete 1 selected item 
+      this.areas.splice(item.index, 1);
+      this.$emit("selected", this.areas);
     },
     selectAll(d) {
       // checkbox untuk select all area

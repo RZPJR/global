@@ -1,86 +1,20 @@
+import Vue from "vue";
+import http from "./plugins/axios.js";
 import "./set-public-path";
 import "./global.css";
 import "./assets/css/main.scss";
-import Vue from "vue";
-import http from "./plugins/axios.js";
 
-Vue.use(http);
+// Import all components in the component-library directory
+const components = {};
+const componentFiles = require.context("./component-library", true, /\.vue$/);
+componentFiles.keys().forEach((fileName) => {
+  const componentName = fileName.split("/").pop().replace(/\.\w+$/, "");
+  components[componentName] = componentFiles(fileName).default;
+});
 
-// You can export Vue components from this file and import them into your microfrontends
-//SELECT COMPONENTS
-export { default as SelectArea } from "./component-library/SelectArea.vue";
-export { default as SelectMerchant } from "./component-library/SelectMerchant.vue";
-export { default as SelectBranch } from "./component-library/SelectBranch.vue";
-export { default as SelectPaymentGroup } from "./component-library/SelectPaymentGroup.vue";
-export { default as SelectWrt } from "./component-library/SelectWrt.vue";
-export { default as SelectWarehouse } from "./component-library/SelectWarehouse.vue";
-export { default as SelectOrderType } from "./component-library/SelectOrderType.vue";
-export { default as SelectCity } from "./component-library/SelectCity.vue";
-export { default as SelectDeclineType } from "./component-library/SelectDeclineType.vue";
-export { default as SelectProductTag } from "./component-library/SelectProductTag.vue";
-export { default as SelectBusinessType } from "./component-library/SelectBusinessType.vue";
-export { default as SelectSalesPerson } from "./component-library/SelectSalesPerson.vue";
-export { default as SelectWarehouseCoverage } from "./component-library/SelectWarehouseCoverage.vue";
-export { default as SelectSalesTerm } from "./component-library/SelectSalesTerm.vue";
-export { default as SelectPaymentGroupComb } from "./component-library/SelectPaymentGroupComb.vue";
-export { default as SelectProductTable } from "./component-library/SelectProductTable.vue";
-export { default as SelectDistrict } from "./component-library/SelectDistrict.vue";
-export { default as SelectCourier } from "./component-library/SelectCourier.vue";
-export { default as SelectCategory } from "./component-library/SelectCategory.vue";
-export { default as SelectPaymentChannel } from "./component-library/SelectPaymentChannel.vue";
-export { default as SelectProduct } from "./component-library/SelectProduct.vue";
-export { default as SelectPicker } from "./component-library/SelectPicker.vue";
-export { default as SelectProvince } from "./component-library/SelectProvince.vue";
-export { default as SelectRole } from "./component-library/SelectRole.vue";
-export { default as SelectUser } from "./component-library/SelectUser.vue";
-export { default as SelectStatus } from "./component-library/SelectStatus.vue";
-export { default as SelectPacker } from "./component-library/SelectPacker.vue";
-export { default as SelectMainOutlet } from "./component-library/SelectMainOutlet.vue";
-export { default as SelectGlossary } from "./component-library/SelectGlossary.vue";
-export { default as SelectFilterBusinessType } from "./component-library/SelectFilterBusinessType.vue";
-export { default as SelectGoodsReceipt } from "./component-library/SelectGoodsReceipt.vue";
-export { default as SelectSubDistrict } from "./component-library/SelectSubDistrict.vue";
-export { default as SelectUom } from "./component-library/SelectUom.vue";
-export { default as SelectSupplier } from "./component-library/SelectSupplier.vue";
-export { default as MultiSelectArcheType } from "./component-library/MultiSelectArcheType.vue";
-export { default as MultiSelectArea } from "./component-library/MultiSelectArea.vue";
-export { default as MultiSelectBusinessType } from "./component-library/MultiSelectBusinessType.vue";
-export { default as MultiSelectDistrict } from "./component-library/MultiSelectDistrict.vue";
-export { default as MultiSelectGlossary } from "./component-library/MultiSelectGlossary.vue";
-export { default as MultiSelectPacker } from "./component-library/MultiSelectPacker.vue";
-export { default as MultiSelectProductTag } from "./component-library/MultiSelectProductTag.vue";
-export { default as MultiSelectSubDistrictAll } from "./component-library/MultiSelectSubDistrictAll.vue";
-export { default as MultiSelectWrt } from "./component-library/MultiSelectWrt.vue";
-export { default as SelectArchetype } from "./component-library/SelectArchetype.vue";
-export { default as SelectDivision } from "./component-library/SelectDivision.vue";
-export { default as SelectSalesGroup } from "./component-library/SelectSalesGroup.vue";
-export { default as MultiSelectRole } from "./component-library/MultiSelectRole.vue";
-export { default as UploadImageBanner } from "./component-library/UploadImageBanner.vue";
-export { default as UploadImageCustomize } from "./component-library/UploadImageCustomize.vue";
-export { default as MultiSelectAreaCheckbox } from "./component-library/MultiSelectAreaCheckbox.vue";
-export { default as MultiSelectArcheTypeCheckbox } from "./component-library/MultiSelectArcheTypeCheckbox.vue";
-export { default as SelectRedirectTo } from "./component-library/SelectRedirectTo.vue";
-export { default as SelectProductSection } from "./component-library/SelectProductSection.vue";
-export { default as SelectTaskTipe } from "./component-library/SelectTaskTipe.vue";
-export { default as DisplayPhotoOverlay } from "./component-library/DisplayPhotoOverlay.vue";
-export { default as SelectInvoiceTerm }  from "./component-library/SelectInvoiceTerm.vue";
-export { default as SelectPriceSet }  from "./component-library/SelectPriceSet.vue";
+export {components as Components}
 
-//MODAL COMPONENTS
-export { default as ConfirmationDialogNew } from "./component-library/com-new/ConfirmationDialogNew.vue";
-export { default as ShippingAddressNew } from "./component-library/com-new/ShippingAddressNew.vue";
-export { default as DetailRowNew } from "./component-library/com-new/DetailRowNew.vue";
-export { default as PermissionUpdate } from "./component-library/com-new/PermissionUpdate.vue";
-export { default as PermissionCreate } from "./component-library/com-new/PermissionCreate.vue";
-export { default as AuditLogNew } from "./component-library/com-new/AuditLogNew.vue";
-export { default as UploadImage } from "./component-library/com-new/UploadImage.vue";
-export { default as UploadImageMultiple } from "./component-library/com-new/UploadImageMultiple.vue";
-export { default as UploadExcel } from "./component-library/UploadExcel.vue";
-
-//loading bar
-export { default as LoadingBar } from "./component-library/com-new/LoadingBar.vue";
-
-// Image Source
+//IMAGES EXPORTS
 export { default as ImageLogo } from "../public/img/eden-logo.png";
 export { default as ImageLogoStaging } from "../public/img/eden-logo-staging.png";
 export { default as ImageLogoDev } from "../public/img/eden-logo-dev.png";
@@ -104,8 +38,453 @@ export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
 export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
 export { default as Worktime } from "../public/img/worktime_new.png";
 
-// Image Source
+Vue.use(http);
 
-// CSS Style
-// export { default as CustomCss } from "../src/assets/custom/main.css";
-// CSS Style
+Vue.directive('privilege', {
+  inserted: function (el, binding, vnode) {
+      let priv = localStorage.getItem('priv')
+      if (typeof binding.value !== 'undefined') {
+          priv = "," + priv + ","
+          binding.value = "," + binding.value + ","
+          if (priv.indexOf(binding.value) < 0) {
+              vnode.elm.parentElement.removeChild(vnode.elm)
+          }
+      }
+  }
+})
+
+Vue.mixin({
+  data: function() {
+    return {
+      status: [
+        {
+          text: "All Status",
+          value: 999
+        },
+        {
+          text: "Active",
+          value: 1
+        },
+        {
+          text: "Archived",
+          value: 2
+        }
+      ],
+
+      salable: [
+        {
+          text: "Salable",
+          value: 1
+        },
+        {
+          text: "Non Salable",
+          value: 2
+        },
+        {
+          text: "All",
+          value: 0
+        }
+      ],
+
+      purchasable: [
+        {
+          text: "Purchasable",
+          value: 1
+        },
+        {
+          text: "Non Purchasable",
+          value: 2
+        },
+        {
+          text: "All",
+          value: 0
+        }
+      ],
+
+      status_prospect: [
+        {
+          text: "All Status",
+          value: 999
+        },
+        {
+          text: "New",
+          value: 1
+        },
+        {
+          text: "Registered",
+          value: 2
+        },
+        {
+          text: "Decline",
+          value: 3
+        }
+      ],
+
+      //  rules input validation
+      val_alphabet: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z])+$/;
+          return pattern.test(value) || "Alphabet Input Only.";
+        }
+      ],
+      val_alphabet_space: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z\s])+$/;
+          return pattern.test(value) || "Alphabet & Space Input Only.";
+        }
+      ],
+      val_alphabet_spec_char: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z.,?!,><])+$/;
+          return (
+            pattern.test(value) || "Alphabet & Special Character Input Only."
+          );
+        }
+      ],
+      val_alphanumeric: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z0-9])+$/;
+          return pattern.test(value) || "Alphanumeric Input Only.";
+        }
+      ],
+      val_alphanumeric_space: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z0-9\s])+$/;
+          return pattern.test(value) || "Alphanumeric & Space Input Only.";
+        }
+      ],
+      val_alphanumeric_spec_char_space: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><\s])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric, Space & Special Character Input Only."
+          );
+        }
+      ],
+      val_numeric: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([0-9])+$/;
+          return pattern.test(value) || "Numeric Input Only.";
+        }
+      ],
+      val_numeric_space: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([0-9\s])+$/;
+          return pattern.test(value) || "Numeric & Space Input Only.";
+        }
+      ],
+      val_numeric_spec_char: [
+        value => !!value || "Field is required.",
+        value => {
+          const pattern = /^([0-9.,?!><])+$/;
+          return (
+            pattern.test(value) || "Numeric & Special Character Input Only."
+          );
+        }
+      ],
+      val_phone_number: [
+        value =>
+          ((value || "").length >= 8 && (value || "").length <= 15) ||
+          "Min 8, Max 15 characters",
+        value => {
+          const pattern = /^([0-9])+$/;
+          return pattern.test(value) || "Numeric Input Only.";
+        }
+      ],
+      val_ric_number: [
+        value => !!value || "Field is required.",
+        value => (value || "").length == 16 || "16 Digit characters",
+        value => {
+          const pattern = /^([0-9])+$/;
+          return pattern.test(value) || "Numeric Input Only.";
+        }
+      ],
+      val_pass_int: [
+        value => !!value || "Field is required.",
+        value =>
+          ((value || "").length >= 8 && (value || "").length <= 32) ||
+          "Min 8, Max 32 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9!@#$%^&*)(}{][])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric & Special Character Input Only."
+          );
+        }
+      ],
+      val_pass_int: [
+        value => !!value || "Field is required.",
+        value =>
+          ((value || "").length >= 8 && (value || "").length <= 32) ||
+          "Min 8, Max 32 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric & Special Character Input Only."
+          );
+        }
+      ],
+      val_name_person: [
+        value =>
+          ((value || "").length >= 1 && (value || "").length <= 30) ||
+          "Min 1, Max 30 characters",
+        value => {
+          const pattern = /^([a-zA-Z\s])+$/;
+          return pattern.test(value) || "Alphabet & Space Input Only.";
+        }
+      ],
+      val_name_merchant: [
+        value => !!value || "Required.",
+        value =>
+          ((value || "").length >= 1 && (value || "").length <= 20) ||
+          "Min 1, Max 20 characters"
+      ],
+      val_email: [
+        value => {
+          const pattern = /^$|^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "E-mail must be valid";
+        }
+      ],
+      val_name_master: [
+        value => !!value || "Field is required.",
+        value =>
+          ((value || "").length >= 1 && (value || "").length <= 20) ||
+          "Min 1, Max 20 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><\s])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric, Space & Special Characte Input."
+          );
+        }
+      ],
+      val_note_long: [
+        value => (value || "").length <= 250 || "Max 250 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><\s])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric, Space & Special Characte Input."
+          );
+        }
+      ],
+      val_note_short: [
+        value => (value || "").length <= 100 || "Max 100 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><\s])+$/;
+          return (
+            pattern.test(value) ||
+            "Alphanumeric, Space & Special Characte Input."
+          );
+        }
+      ],
+      val_code_voucher: [
+        value => !!value || "Field is required.",
+        value =>
+          ((value || "").length >= 5 && (value || "").length <= 20) ||
+          "Min 5, Max 20 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9])+$/;
+          return pattern.test(value) || "Alphanumeric Input Only.";
+        }
+      ],
+      val_alt_phone_number: [
+        value =>
+          ((value || "").length >= 8 && (value || "").length <= 100) ||
+          "Min 8, Max 100 characters",
+        value => {
+          const pattern = /^([0-9\s])+$/;
+          return pattern.test(value) || "Numeric Input Only.";
+        }
+      ],
+      val_address: [
+        value => !!value || "Field is required.",
+        value => (value || "").length <= 350 || "Max 350 characters",
+        value => {
+          const pattern = /^([a-zA-Z0-9.,?!><\s])+$/;
+          return pattern.test(value) || "Numeric Input Only.";
+        }
+      ],
+      money: {
+        locale: "in-ID",
+        prefix: "Rp. ",
+        suffix: "",
+        length: 20,
+        precision: 2
+      },
+      qtyInteger: {
+        locale: "in-ID",
+        prefix: "",
+        suffix: "",
+        length: 10,
+        precision: 0
+      },
+      qtyFloat: {
+        locale: "in-ID",
+        prefix: "",
+        suffix: "",
+        length: 20,
+        precision: 2
+      }
+    };
+  },
+  methods: {
+    statusMaster(str) {
+      if (str === "active") {
+        str = "#C6EB93";
+      } else if (str === "finished") {
+        str = "#9DDCFF";
+      } else if (str === "cancelled") {
+        str = "#FF9D9D";
+      } else if (str === "deleted") {
+        str = "#868686";
+      } else if (str === "draft") {
+        str = "#E9EDEF";
+      } else if (str === "partial") {
+        str = "#CBBBE9";
+      } else if (str === "on_delivery") {
+        str = "#8FE8CD";
+      } else if (str === "delivered") {
+        str = "#CBBBE9";
+      } else if (str === "invoiced_not_delivered") {
+        str = "#FBE8AE";
+      } else if (str === "invoiced_on_delivery") {
+        str = "#8FE8CD";
+      } else if (str === "invoiced_delivered") {
+        str = "#CBBBE9";
+      } else if (str === "paid_not_delivered") {
+        str = "#FFD34D";
+      } else if (str === "paid_on_delivery") {
+        str = "#8FE8CD";
+      } else if (str === "on_process") {
+        str = "#E8EA93";
+      } else if (str === "archived") {
+        str = "#FFCC9D";
+      } else if (str === "new") {
+        str = "#C6EB93";
+      } else if (str === "registered") {
+        str = "#9DDCFF";
+      } else if (str === "declined") {
+        str = "#868686";
+      } else if (str === "failed") {
+        str = "#868686";
+      } else if (str === "picked") {
+        str = "#7CEBA8";
+      }
+      return str;
+    },
+    statusMasterText(str) {
+      if (str === "active") {
+        str = "#333333";
+      } else if (str === "finished") {
+        str = "#333333";
+      } else if (str === "cancelled") {
+        str = "#333333";
+      } else if (str === "deleted") {
+        str = "#FFFFFF";
+      } else if (str === "draft") {
+        str = "#333333";
+      } else if (str === "partial") {
+        str = "#333333";
+      } else if (str === "on_delivery") {
+        str = "#333333";
+      } else if (str === "delivered") {
+        str = "#333333";
+      } else if (str === "invoiced_not_delivered") {
+        str = "#333333";
+      } else if (str === "invoiced_on_delivery") {
+        str = "#333333";
+      } else if (str === "invoiced_delivered") {
+        str = "#333333";
+      } else if (str === "paid_not_delivered") {
+        str = "#333333";
+      } else if (str === "paid_on_delivery") {
+        str = "#333333";
+      } else if (str === "archived") {
+        str = "#333333";
+      } else if (str === "new") {
+        str = "#333333";
+      } else if (str === "registered") {
+        str = "#333333";
+      } else if (str === "declined") {
+        str = "#ffffff";
+      } else if (str === "picked") {
+        str = "#333333";
+      }
+      return str;
+    },
+    formatDate(val) {
+      if (val) {
+          return this.$moment(val).utcOffset('+0700').format('YYYY-MM-DD')
+      }
+    },
+    formatDateRange(val) {
+        if (val.length > 0) {
+            let ret = ''
+            if (val.length == 1) {
+                let date = val[0]
+                ret = this.$moment(date).format('YYYY-MM-DD')
+            } else {
+                let date = val[0]
+                let date2 = val[1]
+                if (date > date2) {
+                    ret = this.$moment(date2).format('YYYY-MM-DD') + ' to ' + this.$moment(date).format('YYYY-MM-DD')
+                } else {
+                    ret = this.$moment(date).format('YYYY-MM-DD') + ' to ' + this.$moment(date2).format('YYYY-MM-DD')
+                }
+            }
+            return ret
+        }
+    },
+    formatTime(val) {
+        if (val) {
+            return this.$moment(val).format('HH:mm')
+        }
+    },
+    formatDateTime(val) {
+        if (val) {
+            return this.$moment(val).format('YYYY-MM-DD HH:mm:ss')
+        }
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    formatUnitPrice(value) {
+      let val = (value / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    toUpperCase(val) {
+      return val.toUpperCase();
+    },
+    capitalizeFirstLetter(val) {
+      return val.charAt(0).toUpperCase() + val.slice(1);
+    },
+    letterOnly(e) {
+      let char = String.fromCharCode(e.keyCode);
+      if (/^[a-zA-Z\s]*$/.test(char)) return true;
+      else e.preventDefault();
+    },
+    br2nl(val) {
+      return val.replace(/(<br>|<\/br>|<br \/>)/gim, "\n");
+    },
+    async auditLog(id, type, open) {
+      let datas = { id: id, type: type, open: open };
+      await this.$root.$emit("auditLogs", datas);
+      return false;
+    },
+    elipsis(x) {
+      return x.slice(0, 18) + "...";
+    }
+  }
+});

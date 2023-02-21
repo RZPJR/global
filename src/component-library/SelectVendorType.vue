@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="areas"
+        v-model="vendor_types"
         :items="items"
         :loading="isLoading"
         item-text="description"
@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.code }} - {{ data.item.name }}
             </div>
         </template>
         <template v-slot:label>
@@ -27,18 +27,18 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Region<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Region</span>
+                <span v-if="!norequired">Vendor Type<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Vendor Type</span>
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.code }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
 <script>
     export default {
-        name: 'SelectArea',
+        name: 'SelectVendorType',
         data() {
             return {
                 items: [],
@@ -46,55 +46,44 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                areas:{}
+                vendor_types:{}
             };
         },
-        props: ['area','disabled','clear','label','error','aux_data', 'norequired', 'name', "dense"],
+        props: ['vendor_type','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
-            remoteSearch(search) {
-                let aux_data = '';
-                if (this.aux_data){
-                    aux_data = '|aux_data.in:'+this.aux_data;
-                }
+            async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                // ini ke endpoint get all
-                this.$http.get("/bridge/v1/region",{params:{
-                    perpage:10,
-                    status:1,
-                    search:search,
-                }}).then(response => {
-                    if(response){
-                        this.items = response.data.data
-                    }
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Region'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                this.items = []
+                // await this.$http.get("/bridge/v1/vendor/type",{params:{
+                //     perpage:10,
+                //     status:1,
+                //     search:search,
+                // }}).then(response => {
+                //     if(response && response.data.data !== null) this.items = response.data.data
+                //     let label = this.label ? this.label : 'Vendor Type'
+                //     this.placeholder = "Select "+ label
+                // });
+                this.isLoading = false
             },
             autoSelectByID(val) {
-                if(val.id){
-                    this.$http.get("/bridge/v1/region/"+val.id)
-                    .then(response => {
-                        this.areas = response.data.data
-                    });
-                }
+                // if(val.id){
+                //     this.$http.get("/bridge/v1/vendor/type/"+val.id)
+                //     .then(response => {
+                //         this.vendor_types = response.data.data
+                //     });
+                // }
             },
             selected(event) {
                 this.$emit('selected', event);
             }
         },
         mounted() {
-            if(this.area){
-                this.autoSelectByID(this.area)
+            if(this.vendor_type){
+                this.autoSelectByID(this.vendor_type)
             }
             if (!this.name) {
-                this.dataname = 'area'
+                this.dataname = 'vendor_type'
             } else {
                 this.dataname = this.name
             }
@@ -112,24 +101,16 @@
             },
             clear: {
                 handler: function (val) {
-                    this.areas = null
+                    this.vendor_types = null
                 },
                 deep: true
             },
-            area: {
+            vendor_type: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.areas = null
-                    }
-                },
-                deep: true
-            },
-            aux_data: {
-                handler: function (val) {
-                    if(val !== null){
-                        this.remoteSearch(this.search)
+                        this.vendor_types = null
                     }
                 },
                 deep: true

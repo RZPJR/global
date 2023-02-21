@@ -16,10 +16,10 @@
     :error-messages="error"
   >
     <template slot="selection" slot-scope="data">
-      <div class="select-item">{{ data.item.code }}</div>
+      <div class="select-item">{{ data.item.code }} - {{ data.item.description }}</div>
     </template>
     <template slot="item" slot-scope="data">
-      {{ data.item.code }}
+      {{ data.item.code }} - {{ data.item.description }}
     </template>
     <template v-slot:label>
       <div v-if="label">
@@ -85,6 +85,7 @@ export default {
       // ini ke endpoint get all
       this.$http.get("/bridge/v1/archetype",{params:{
           perpage:20,
+          status:1,
           search:search,
       }}).then(response => {
           this.items = response.data.data

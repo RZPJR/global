@@ -16,11 +16,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.employee_code }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.employee_code }} - {{ data.item.name }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -56,10 +56,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/user/filter",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search+role,
-                }}).then(response => {
+                this.$http.get("/account/v1/user",{params:{}}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
                         this.items = []
@@ -69,16 +66,21 @@
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
+                }).catch(e => {
+                    this.items = []
                 });
             },
             autoSelectByID(val) {
                 if(val){
+                    this.isLoading = true
                     // ini ke endpoint detail
-                    this.$http.get("/user/filter",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.users = response.data.data[0]
+                    this.$http.get("/account/v1/user/"+val.id).then(response => {
+                        this.items.push(response.data.data)
+                        this.users = response.data.data
+                        this.isLoading = false
+                    }).catch(e => {
+                        this.items = []
+                        this.isLoading = false
                     });
                 }
 

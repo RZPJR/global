@@ -1,9 +1,9 @@
 <template>
     <v-autocomplete
-        v-model="areas"
+        v-model="vendor_badges"
         :items="items"
         :loading="isLoading"
-        item-text="name"
+        item-text="description"
         :name="dataname"
         :search-input.sync="search"
         :placeholder="placeholder"
@@ -27,8 +27,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Area<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Area</span>
+                <span v-if="!norequired">Vendor Badge<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Vendor Badge</span>
             </div>
         </template>
         <template slot="item" slot-scope="data">
@@ -38,7 +38,7 @@
 </template>
 <script>
     export default {
-        name: 'SelectArea',
+        name: 'SelectVendorBadge',
         data() {
             return {
                 items: [],
@@ -46,60 +46,44 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                areas:null
+                vendor_badges:{}
             };
         },
-        props: ['area','disabled','clear','label','error','aux_data', 'norequired', 'name', "dense"],
+        props: ['vendor_badge','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
-            remoteSearch(search) {
-                let aux_data = '';
-                if (this.aux_data){
-                    aux_data = '|aux_data.in:'+this.aux_data;
-                }
+            async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                // ini ke endpoint get all
-                this.$http.get("/config/area/filter",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search + aux_data,
-                }}).then(response => {
-                    if(response){
-                        this.items = response.data.data
-                    }
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    if (this.area){
-                        this.autoSelectByID(this.area)
-                    }
-                    this.isLoading = false
-                    let label = 'Area'
-                    if (this.label) 
-                    label = this.label
-                    this.placeholder = "Select "+ label
-                });
+                this.items = []
+                // await this.$http.get("/bridge/v1/vendor/badge",{params:{
+                //     perpage:10,
+                //     status:1,
+                //     search:search,
+                // }}).then(response => {
+                //     if(response && response.data.data !== null) this.items = response.data.data
+                //     let label = this.label ? this.label : 'Vendor Badge'
+                //     this.placeholder = "Select "+ label
+                // });
+                this.isLoading = false
             },
             autoSelectByID(val) {
-                if(val.id){
-                    this.$http.get("/config/area/filter",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.areas = response.data.data[0]
-                    });
-                }
+                // if(val.id){
+                //     this.$http.get("/bridge/v1/vendor/badge/"+val.id)
+                //     .then(response => {
+                //         this.vendor_badges = response.data.data
+                //     });
+                // }
             },
             selected(event) {
                 this.$emit('selected', event);
             }
         },
         mounted() {
-            // this.remoteSearch('',this.aux_data);
-            if(this.area){
-                this.autoSelectByID(this.area)
+            if(this.vendor_badge){
+                this.autoSelectByID(this.vendor_badge)
             }
             if (!this.name) {
-                this.dataname = 'area'
+                this.dataname = 'vendor_badge'
             } else {
                 this.dataname = this.name
             }
@@ -109,32 +93,24 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.area){
-                        this.remoteSearch('',this.aux_data)
+                    } else{
+                        this.remoteSearch('')
                     }
                 },
                 deep: true
             },
             clear: {
                 handler: function (val) {
-                    this.areas = null
+                    this.vendor_badges = null
                 },
                 deep: true
             },
-            area: {
+            vendor_badge: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.areas = null
-                    }
-                },
-                deep: true
-            },
-            aux_data: {
-                handler: function (val) {
-                    if(val !== null){
-                        this.remoteSearch(this.search)
+                        this.vendor_badges = null
                     }
                 },
                 deep: true

@@ -56,10 +56,8 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/logistic/dispatch/courier",{params:{
-                    embeds:'couriervendor',
-                    conditions: vendorId,
-                    orderby:'-id',
+                this.$http.get("/bridge/v1/courier",{params:{
+                    perpage:10
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data

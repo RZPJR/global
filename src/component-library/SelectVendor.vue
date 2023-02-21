@@ -49,14 +49,12 @@
         },
         props: ['vendor', 'disabled', 'clear', 'error', 'label', "norequired", "dense"],
         methods: {
-            remoteSearch(search) {
+            remoteSearch() {
                 this.placeholder = "Loading items..."
                 this.isLoading = true
-                this.$http2.get("/logistic/vendor", {
+                this.$http.get("/bridge/v1/courier_vendor", {
                     params: {
                         perpage: 10,
-                        conditions: 'status:1|name.icontains:' + search,
-                        orderby: '-id',
                     }
                 }).then(response => {
                     let arr = []
@@ -78,15 +76,10 @@
                 });
             },
             autoSelectByID(val) {
-                if (val.id) {
-                    this.$http2.get("/logistic/vendor", {
-                        params: {
-                            conditions: 'id.e:' + val.id,
-                        }
-                    }).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.vendors = response.data.data[0]
-                    });
+                if(val){
+                    this.couriers = val
+                } else {
+                    this.couriers = null
                 }
 
             },
