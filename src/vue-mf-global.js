@@ -3,6 +3,8 @@ import http from "./plugins/axios.js";
 import "./set-public-path";
 import "./global.css";
 import "./assets/css/main.scss";
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 
 // Import all components in the component-library directory
 const components = {};
@@ -38,6 +40,7 @@ export { default as AddImageOrFile } from "../public/img/AddImageOrFile.png";
 export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEnable.png";
 export { default as Worktime } from "../public/img/worktime_new.png";
 
+Vue.use(VueFileAgent);
 Vue.use(http);
 
 Vue.directive('privilege', {
