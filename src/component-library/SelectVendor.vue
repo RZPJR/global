@@ -71,7 +71,6 @@
                     }
                     let label = this.label ? this.label : 'Vendor'
                     this.placeholder = "Select "+ label
-                    console.log(this.items)
                 });
                 this.isLoading = false
             },
