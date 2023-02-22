@@ -38,34 +38,40 @@
                 placeholder : '',
                 isLoading: false,
                 search:'',
-                order_channel:''
+                order_channel:[]
             };
         },
-        props: ['disabled','clear','error','dense','norequired'],
+        props: ['disabled','clear','error','dense','norequired','attribute','table','order_channels'],
         methods: {
             remoteSearch() {
                 this.items = []
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/config/glossary",{params:{
+                this.$http.get("/configuration/v1/glossary",{params:{
                     perpage:10,
-                    conditions:'attribute:order_channel',
+                    table:this.table,
+                    attribute:this.attribute,
                 }}).then(response => {
-                    let array = response.data.data
-                    if (array != null) {
-                        array.forEach(element => {
-                            this.items.push({
-                                value:element.value_int,
-                                note:this.capitalizeFirstLetter(element.note)
-                            })
-                        });
+                    if (response.data.data && response.data.data != null) {
+                        this.items = response.data.data;
+                    } else {
+                        this.items = [];
                     }
+
                     this.isLoading = false
                     let label = 'Glossary'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
                 });
+            },
+            autoSelectByID(val) {
+                if(val){
+                    this.order_channel= []
+                    for (let i = 0; i < val.length; i++) {
+                        this.order_channel.push(val[i])
+                    }
+                }
             },
             selected(event) {
                 this.$emit('selected', event);
@@ -78,6 +84,14 @@
             order_channel: {
                 handler: function () { // watch perubahan untuk auto select
                     this.search = ''
+                },
+                deep: true
+            },
+            order_channels: {
+                handler: function (val) {
+                    if(val !== null){ // ini untuk auto select
+                        this.autoSelectByID(val)
+                    }
                 },
                 deep: true
             },
