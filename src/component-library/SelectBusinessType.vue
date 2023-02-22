@@ -1,41 +1,41 @@
 <template>
     <v-autocomplete
-        v-model="business_types"
-        :items="items"
-        item-text="code"
-        :search-input.sync="search"
-        :placeholder="placeholder"
-        :loading="isLoading"
+        :data-unq="dataUnq"
+        v-model="customer_types"
+        :item-text="textList"
         @change="selected"
-        :disabled="disabled"
+        @click:clear="remoteSearch('')"
         return-object
         clearable
         outlined
-        :class="dense?'':'rounded-form'"
-        :error-messages="error"
-        :filtered="filtered"
+        :items="items"
+        :name="dataname"
+        :loading="isLoading"
+        :search-input.sync="search"
+        :placeholder="placeholder"
+        :disabled="disabled"
         :dense="dense"
+        :class="dense?'':'rounded-form'"
+        :filtered="filtered"
+        :error-messages="error"
     >
         <template v-slot:label>
-            <div class="select-item">
-                <span v-if="label">
-                    <span v-if="!norequired">{{ label }}<span :class="disabled?'':'text-red'">*</span></span>
-                    <span v-else>{{ label }}</span>
-                </span>
-                <span v-else>
-                    <span v-if="!norequired">Business Type<span :class="disabled?'':'text-red'">*</span></span>
-                    <span v-else>Business Type</span>
-                </span>
+            <div v-if="label">
+                <span v-if="!norequired">{{ label }}<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>{{ label }}</span>
+            </div>
+            <div v-else>
+                <span v-if="!norequired">Customer Type<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Customer Type</span>
+            </div>
+        </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item" >
+                {{ data.item.code }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }}
-        </template>
-        <template slot="selection" slot-scope="data">
-            {{ data.item.code }}
-        </template>
-        <template slot="item" slot-scope="data">
-            {{ data.item.code }}
+            {{ data.item.code }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -45,87 +45,84 @@
         data() {
             return {
                 items: [],
-                search:'',
-                business_types:null,
                 isLoading: false,
+                search:'',
+                dataname:'',
                 placeholder : '',
-                typeId:'',
+                customer_types:{}
             };
         },
-        props: ['business_type','disabled','clear','error','filtered','aux_data', 'norequired', 'label', "dense"],
+        props: ['customer_type','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq", "filtered"],
         methods: {
-            remoteSearch(search,aux_data) {
-                if (aux_data !== '' && aux_data !== undefined){
-                    aux_data = '|aux_data.in:'+aux_data;
-                }else{
-                    aux_data = '';
-                }
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.code + ' — ' + item.description
+            },
+            // For get all data from API
+            async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/bridge/v1/business_type",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search+aux_data,
+                this.items = []
+                await this.$http.get("/bridge/v1/customer_type",{params:{
+                    per_page:10,
+                    search:search,
                 }}).then(response => {
-                    if(response){
+                    if(response && response.data.data !== null) {
                         this.items = response.data.data
                     }
-                    if(this.items === null){
-                        this.items = []
-                    }
-                    this.isLoading = false
-                    let label = 'Business Type'
-                    if (this.label) 
-                    label = this.label
+                    let label = this.label ? this.label : 'Customer Type'
                     this.placeholder = "Select "+ label
                 });
+                this.isLoading = false
             },
+            // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                if(val){
-                    this.$http.get("/customer/business_type/filter",{params:{
-                        conditions:'id.e:'+val,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.business_types = response.data.data[0]
+                if(val.id){
+                    this.$http.get("/bridge/v1/customer_type/"+val.id)
+                    .then(response => {
+                        this.items = response.data.data
+                        this.customer_types = response.data.data
                     });
                 }
             },
+            // For Pass Selected Value
             selected(event) {
                 this.$emit('selected', event);
             }
         },
-        created() {
-            // this.remoteSearch('',this.aux_data);
+        mounted() {
+            if(this.customer_type){
+                this.autoSelectByID(this.customer_type)
+            }
+            if (!this.name) {
+                this.dataname = 'customer_type'
+            } else {
+                this.dataname = this.name
+            }
         },
         watch: {
             search: {
                 handler: function (val) {
                     if(val){
-                        this.remoteSearch(val,this.aux_data)
-                    } else {
-                        this.remoteSearch('',this.aux_data)
+                        this.remoteSearch(val)
+                    } else if (!this.customer_type) {
+                        this.remoteSearch('')
                     }
                 },
                 deep: true
             },
             clear: {
-                handler: function (val) { // clear data
-                    this.business_types = null
-                    this.remoteSearch('',this.aux_data)
-                },
-                deep: true
-            },
-            aux_data: { // for hide '' or show '2' aux data
                 handler: function (val) {
-                    if(val !== null){
-                        this.remoteSearch(this.search,val)
-                    }
+                    this.customer_types = null
                 },
                 deep: true
             },
-            business_type: {
-                handler: function (val) { // watch auto select by params id in update
-                    if (val) {
+            customer_type: {
+                handler: function (val) {
+                    if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
+                    } else {
+                        this.customer_types = null
                     }
                 },
                 deep: true
