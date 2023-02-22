@@ -70,7 +70,7 @@
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/bridge.v1/uom",{params:{
+                    this.$http.get("/bridge/v1/uom",{params:{
                             conditions:'id.e:'+val.id,
                         }}).then(response => {
                         this.items.push(response.data.data[0])
@@ -107,7 +107,6 @@
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
-
                 },
                 deep: true
             }

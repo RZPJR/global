@@ -4,7 +4,7 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="name"
+        item-text="description"
         :counter="maxSelected"
         :menu-props="menuProps"
         :search-input.sync="search"
@@ -37,7 +37,7 @@
             <span v-else>Product Tag</span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.code }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -64,11 +64,11 @@
                     this.attribute = 'prd_max_tag'
                 }
                 if(this.attribute){
-                    this.$http.get("/config/app",{params:{
-                        conditions:'attribute:'+this.attribute,
+                    this.$http.get("/catalog/v1/item_category",{params:{
+                        // conditions:'attribute:'+this.attribute,
                         orderby:'-id',
                     }}).then(response => {
-                        this.maxSelected = response.data.data[0].value
+                        this.maxSelected = response.data.data
                     });
                 }
             },

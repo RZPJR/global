@@ -1,10 +1,10 @@
 <template>
     <v-autocomplete
-        v-model="archeTypes"
+        v-model="item_category"
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="description"
+        item-text="name"
         :menu-props="menuProps"
         :search-input.sync="search"
         @change="selected"
@@ -20,50 +20,47 @@
         :error-messages="error"
     >
         <template v-slot:label>
-            <span v-if="!norequired">Archetype Exclude<span style="color:red">*</span></span>
-            <span v-else>Archetype Exclude</span>
+            <span v-if="!norequired">Item Category<span style="color:red">*</span></span>
+            <span v-else>Item Category</span>
         </template>
         <template slot="selection" slot-scope="data">
             <v-chip
                 close
                 @click:close="remove(data.item)"
             >
-                {{ data.item.description }} - {{ data.item.customer_type.description }}
+                {{ data.item.name }}
             </v-chip>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }} - {{ data.item.customer_type.description }}
+            {{ data.item.code }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
 <script>
     export default {
-        name: 'MultiSelectArcheType',
+        name: 'MultiSelectItemCategory',
         data() {
             return {
                 items: [],
                 placeholder : '',
                 isLoading: false,
-                archeTypes: [],
+                item_category: [],
                 menuProps: {
                     disabled: false
                 },
                 search:'',
             };
         },
-        props: ['archeType','disabled','clear','label','error','aux_data', 'norequired', 'attribute','dense'],
+        props: ['item_categories','disabled','clear','label','error', 'norequired', 'attribute','dense'],
         methods: {
-            remoteSearch(search,aux_data) {
-                if (aux_data !== '' && aux_data !== undefined){
-                    aux_data = '|aux_data.in:'+aux_data;
-                }else{
-                    aux_data = '';
-                }
+            remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/archetype",{params:{
-                    conditions:'status:1|name.icontains:'+search+aux_data,
+                this.$http.get("/catalog/v1/item_category",{params:{
+                    status: '1',
+                    perpage: 10,
+                    search: search,
                 }}).then(response => {
                     if(response.data.data){
                         response.data.data.forEach((value, index) =>{
@@ -71,7 +68,7 @@
                         });
                     }
                     this.isLoading = false
-                    let label = 'Archetype Exclude'
+                    let label = 'Item Category'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -79,9 +76,9 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.archeTypes= []
+                    this.item_category= []
                     for (let i = 0; i < val.length; i++) {
-                        this.archeTypes.push(val[i])
+                        this.item_category.push(val[i])
                     }
                 }
             },
@@ -89,45 +86,31 @@
                 this.$emit('selected', event);
             },
             remove (item) {
-                const index = this.archeTypes.indexOf(item)
+                const index = this.item_category.indexOf(item)
                 // if (index >= 0) 
-                this.archeTypes.splice(index, 1)
-                this.$emit('selected', this.archeTypes);
+                this.item_category.splice(index, 1)
+                this.$emit('selected', this.item_category);
             },
         },
         watch: {
             search: {
                 handler: function (val) {
-                    this.remoteSearch('',this.aux_data)
+                    this.remoteSearch('')
                 },
                 deep: true
             },
             clear: {
                 handler: function (val) {
                     this.archeTypes = null
-                    this.remoteSearch('',this.aux_data)
+                    this.remoteSearch('')
                 },
                 deep: true
             },
-            archeType: {
+            item_categories: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
-                },
-                deep: true
-            },
-            aux_data: {
-                handler: function (val) {
-                    if(val !== null){
-                        this.remoteSearch(this.search,val)
-                    }
-                },
-                deep: true
-            },
-            archeTypes: {
-                handler: function (val) {
-                    this.search = ''
                 },
                 deep: true
             },

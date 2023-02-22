@@ -46,7 +46,7 @@
                 placeholder : '',
             };
         },
-        props: ['item_class_search','disabled','clear','label','error', 'norequired', 'dense'],
+        props: ['item_classes','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
             remoteSearch(search) {
                 this.placeholder="Loading items..."
@@ -69,10 +69,9 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    // ini ke endpoint detail
-                    this.$http.get("/bridge.v1/class",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(response => {
+                    this.$http.get("/bridge/v1/class",{params:{
+                        conditions:'id.e:'+val.id,
+                    }}).then(response => {
                         this.items.push(response.data.data[0])
                         this.item_class = response.data.data[0]
                     });
@@ -88,7 +87,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.item_class_search){
+                    } else if(!this.item_classes){
                         this.remoteSearch('')
                     }
 
@@ -102,7 +101,7 @@
                 },
                 deep: true
             },
-            item_class_search: {
+            item_classes: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
