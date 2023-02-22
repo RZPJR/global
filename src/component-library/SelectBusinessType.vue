@@ -62,7 +62,7 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/bridge/v1/business_type",{params:{
+                this.$http.get("/bridge/v1/customer_type",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search+aux_data,
                 }}).then(response => {
@@ -80,12 +80,11 @@
                 });
             },
             autoSelectByID(val) {
-                if(val){
-                    this.$http.get("/customer/business_type/filter",{params:{
-                        conditions:'id.e:'+val,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.business_types = response.data.data[0]
+                if(val.id){
+                    this.$http.get("/bridge/v1/customer_type/"+val.id)
+                    .then(response => {
+                        this.items = response.data.data
+                        this.business_types = response.data.data
                     });
                 }
             },

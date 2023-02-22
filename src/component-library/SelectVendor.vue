@@ -78,10 +78,8 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    console.log(val.id,'val')
                     this.$http.get("/bridge/v1/courier_vendor/"+val.id)
                     .then(response => {
-                        console.log(response.data.data,'response')
                         this.items = response.data.data
                         this.vendors = response.data.data
                     });
