@@ -67,12 +67,12 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.$http.get("/bridge/v1/region",{params:{
-                    // perpage:10,
-                    conditions:'status:1|name.icontains:'+search + aux_data,
+                    status:1,
+                    search:search,
                 }}).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
+                    this.items = []
+                    if(response.data.data){
+                        this.items = response.data.data
                     }
                     this.isLoading = false
                     let label = 'Region'
