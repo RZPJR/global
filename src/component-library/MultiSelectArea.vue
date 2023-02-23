@@ -71,7 +71,7 @@
                     search:search,
                 }}).then(response => {
                     this.items = []
-                    if(response.data.data){
+                    if(response.data.data && response.data.data != null){
                         this.items = response.data.data
                     }
                     this.isLoading = false
