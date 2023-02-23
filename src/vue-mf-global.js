@@ -41,6 +41,7 @@ export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEna
 export { default as Worktime } from "../public/img/worktime_new.png";
 
 Vue.use(VueFileAgent);
+Vue.use(require('vue-moment'));
 Vue.use(http);
 
 Vue.directive('privilege', {
