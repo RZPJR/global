@@ -19,27 +19,26 @@
           :items-per-page="10"
           :mobile-breakpoint="0"
         >
-          <template v-slot:item="item">
+          <template v-slot:item="props">
             <tr class="h-row">
-              <td>{{ item.item.function }}</td>
-              <td>{{ item.item.timestamp | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+              <td>{{ props.item.function }}</td>
+              <td>{{ props.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
               <td>
-                <div v-if="item.item.staff">
-                  {{ item.item.staff.display_name }} ({{
-                    item.item.staff.user.email
+                <div v-if="props.item.user">
+                  {{ props.item.user.name }} ({{
+                    props.item.user.email
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
               <td>
-                <div v-if="item.item.staff">
-                  {{ item.item.staff.role.name }} ({{
-                    item.item.staff.role.division.name
+                <div v-if="props.item.user">
+                  {{ props.item.user.main_role }} ({{
+                    props.item.user.division
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
-              <td>{{ item.item.note }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -80,25 +79,16 @@ export default {
           class: "grey--text text--darken-4",
           sortable: false,
         },
-        {
-          text: "Note",
-          class: "grey--text text--darken-4",
-          sortable: false,
-        },
       ],
       datas: [
         {
-          staff: {
-            display_name: "",
-            user: {
-              email: "",
-            },
-            role: {
-              name: "",
-              division: {
-                name: "",
-              },
-            },
+          function: "",
+          created_at: "",
+          user: {
+            name: "",
+            email: "",
+            main_role: "",
+            division: ""
           },
         },
       ],
@@ -139,13 +129,12 @@ export default {
           });
       } else {
         this.$http
-          .get("/audit_log", {
+          .get("/audit/v1/log", {
             params: {
-              perpage: 10000,
-              embeds:
-                "staff_id__role_id,staff_id__role_id__division_id,merchant_id,staff_id__user_id",
-              conditions: "ref_id.e:" + id + "|type:" + type,
+              perpage: 100,
               orderby: "-id",
+              type:type,
+              reference_id:id
             },
           })
           .then((response) => {
