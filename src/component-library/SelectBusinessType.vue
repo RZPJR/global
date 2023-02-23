@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        :data-unq="dataUnq"
+        :data-unq="data_unq"
         v-model="customer_types"
         :item-text="textList"
         @change="selected"
@@ -52,7 +52,7 @@
                 customer_types:{}
             };
         },
-        props: ['customer_type','disabled','clear','label','error', 'norequired', 'name', "dense", "dataUnq", "filtered"],
+        props: ['customer_type','disabled','clear','label','error', 'norequired', 'name', "dense", "data_unq", "filtered"],
         methods: {
             // For show dropdown suggestion search by code or description
             textList(item){
