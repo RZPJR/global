@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="vendor_types"
+        v-model="vendor_organizations"
         :item-text="textList"
         @change="selected"
         @click:clear="remoteSearch('')"
@@ -23,8 +23,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Vendor Type<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Vendor Type</span>
+                <span v-if="!norequired">Vendor Organization<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Vendor Organization</span>
             </div>
         </template>
         <template slot="selection" slot-scope="data">
@@ -39,7 +39,7 @@
 </template>
 <script>
     export default {
-        name: 'SelectVendorType',
+        name: 'SelectVendorOrganization',
         data() {
             return {
                 items: [],
@@ -47,10 +47,10 @@
                 search:'',
                 dataname:'',
                 placeholder : '',
-                vendor_types:{}
+                vendor_organizations:{}
             };
         },
-        props: ['vendor_type','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['vendor_organization','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -61,7 +61,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                // await this.$http.get("/bridge/v1/vendor/type",{params:{
+                // await this.$http.get("/bridge/v1/vendor/organization",{params:{
                 await this.$http.get("/account/v1/role",{params:{
                     per_page:10,
                     search:search,
@@ -69,7 +69,7 @@
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
                     }
-                    let label = this.label ? this.label : 'Vendor Type'
+                    let label = this.label ? this.label : 'Vendor Organization'
                     this.placeholder = "Select "+ label
                 });
                 this.isLoading = false
@@ -77,11 +77,11 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    // this.$http.get("/bridge/v1/vendor/type/"+val.id)
+                    // this.$http.get("/bridge/v1/vendor/organization/"+val.id)
                     this.$http.get("/account/v1/role/"+val.id)
                     .then(response => {
                         this.items = response.data.data
-                        this.vendor_types = response.data.data
+                        this.vendor_organizations = response.data.data
                     });
                 }
             },
@@ -91,11 +91,11 @@
             }
         },
         mounted() {
-            if(this.vendor_type){
-                this.autoSelectByID(this.vendor_type)
+            if(this.vendor_organization){
+                this.autoSelectByID(this.vendor_organization)
             }
             if (!this.name) {
-                this.dataname = 'vendor_type'
+                this.dataname = 'vendor_organization'
             } else {
                 this.dataname = this.name
             }
@@ -105,7 +105,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if (!this.vendor_type) {
+                    } else if (!this.vendor_organization) {
                         this.remoteSearch('')
                     }
                 },
@@ -113,16 +113,16 @@
             },
             clear: {
                 handler: function (val) {
-                    this.vendor_types = null
+                    this.vendor_organizations = null
                 },
                 deep: true
             },
-            vendor_type: {
+            vendor_organization: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.vendor_types = null
+                        this.vendor_organizations = null
                     }
                 },
                 deep: true
