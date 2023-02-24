@@ -128,7 +128,6 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    console.log(val,"before")
                     this.$http.get("/bridge/v1/item/"+val.id).then(response => {
                         if(response.data.data) {
                             this.products = response.data.data
