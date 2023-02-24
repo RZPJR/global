@@ -21,8 +21,14 @@
         chips
     >
         <template v-slot:label>
-            <span v-if="!norequired">Order Channel<span class="text-red">*</span></span>
-            <span v-else>Order Channel</span>
+            <div v-if="label">
+                <span v-if="!norequired">{{ label }}<span class="text-red">*</span></span>
+                <span v-else>{{ label }}</span>
+            </div>
+            <div v-else>
+                <span v-if="!norequired">Order Channel<span class="text-red">*</span></span>
+                <span v-else>Order Channel</span>
+            </div>
         </template>
         <template slot="item" slot-scope="data">
             {{ data.item.note }}
@@ -41,7 +47,7 @@
                 order_channel:[]
             };
         },
-        props: ['disabled','clear','error','dense','norequired','attribute','table','order_channels'],
+        props: ['disabled','clear','error','dense','norequired','attribute','table','order_channels','label'],
         methods: {
             remoteSearch() {
                 this.items = []
