@@ -77,14 +77,12 @@ export default {
       if (val) {
         // ini ke endpoint detail
         this.$http
-          .get("/catalog/v1/item_category", {
-            params: {
-              conditions: "id.e:" + val.id,
-            },
-          })
+          .get("/catalog/v1/item_category/"+val.id)
           .then((response) => {
-            this.items.push(response.data.data[0]);
-            this.product_tags = response.data.data[0];
+            if(response.data.data) {
+              this.items.push(response.data.data);
+              this.product_tags = response.data.data;
+            }
           });
       }
     },
