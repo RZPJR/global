@@ -128,13 +128,13 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/item",{params:{
-                        conditions:'product.id.e:'+val.id,
-                        embeds: 'product,product.uom_id',
-                    }}).then(response => {
-                        this.products = response.data.data[0].product
-                        this.items.push(response.data.data[0].product);
-                        this.product_text = response.data.data[0].product.code +' - '+response.data.data[0].product.name
+                    console.log(val,"before")
+                    this.$http.get("/bridge/v1/item/"+val.id).then(response => {
+                        if(response.data.data) {
+                            this.products = response.data.data
+                            this.items.push(response.data.data);
+                            this.product_text = response.data.data.code +' - '+response.data.data.description
+                        }
                     });
                 } else {
                     this.products = null
