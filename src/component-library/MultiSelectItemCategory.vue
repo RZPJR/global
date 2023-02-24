@@ -15,9 +15,10 @@
         chips
         multiple
         deletable-chips
-        :class="dense?'multi':'rounded-form multi'"
         :dense="dense"
         :error-messages="error"
+        :counter="maxSelected"
+        @input="adjustOptions"
     >
         <template v-slot:label>
             <span v-if="!norequired">Item Category<span style="color:red">*</span></span>
@@ -49,6 +50,7 @@
                     disabled: false
                 },
                 search:'',
+                maxSelected: 3
             };
         },
         props: ['item_categories','disabled','clear','label','error', 'norequired', 'attribute','dense'],
@@ -73,12 +75,18 @@
                     label = this.label
                     this.placeholder = "Select "+ label
                 });
+                if(this.item_category.length >= this.maxSelected){
+                    this.menuProps.disabled = true
+                }
             },
             autoSelectByID(val) {
                 if(val){
                     this.item_category= []
                     for (let i = 0; i < val.length; i++) {
                         this.item_category.push(val[i])
+                    }
+                    if(this.item_category.length >= this.maxSelected){
+                        this.menuProps.disabled = true
                     }
                 }
             },
@@ -91,11 +99,43 @@
                 this.item_category.splice(index, 1)
                 this.$emit('selected', this.item_category);
             },
+            adjustOptions() {
+                if (this.computedCounterValue >= this.maxSelected) {
+                    this.menuProps.disabled = true
+                } else {
+                    this.menuProps.disabled = false
+                }
+            },
+        },
+        computed: {
+            computedCounterValue () {
+                let totalCount = 0
+                if (this.item_category && this.item_category.length > 0) {
+                    const selectedItems = this.item_category.map((name) => {
+                        return this.items.find((element) => element.name == name.name)
+                    })
+                    totalCount = selectedItems.reduce(function(prev, cur) {
+                        return prev + ((cur.count)? cur.count: 1);
+                    }, 0);
+                }
+                return totalCount
+            },
+        },
+        mounted() {
+            if(this.attribute && this.attribute !== null){
+                this.maxSelected = this.attribute
+            }
         },
         watch: {
             search: {
                 handler: function (val) {
-                    this.remoteSearch('')
+                    if(val){
+                        if(this.computedCounterValue < this.maxSelected){
+                            this.remoteSearch(val)
+                        }
+                    } else if(!this.area){
+                        this.remoteSearch('')
+                    }
                 },
                 deep: true
             },
