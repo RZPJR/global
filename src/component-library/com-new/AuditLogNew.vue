@@ -19,27 +19,26 @@
           :items-per-page="10"
           :mobile-breakpoint="0"
         >
-          <template v-slot:item="item">
+          <template v-slot:item="props">
             <tr class="h-row">
-              <td>{{ item.item.function }}</td>
-              <td>{{ item.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+              <td>{{ props.item.function }}</td>
+              <td>{{ props.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
               <td>
-                <div v-if="item.item.user">
-                  {{ item.item.user.name }} ({{
-                    item.item.user.email
+                <div v-if="props.item.user">
+                  {{ props.item.user.name }} ({{
+                    props.item.user.email
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
               <td>
-                <div v-if="item.item.user">
-                  {{ item.item.user.main_role }} ({{
-                    item.item.user.division
+                <div v-if="props.item.user">
+                  {{ props.item.user.main_role }} ({{
+                    props.item.user.division
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
-              <td>{{ item.item.note }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -80,13 +79,19 @@ export default {
           class: "grey--text text--darken-4",
           sortable: false,
         },
+      ],
+      datas: [
         {
-          text: "Note",
-          class: "grey--text text--darken-4",
-          sortable: false,
+          function: "",
+          created_at: "",
+          user: {
+            name: "",
+            email: "",
+            main_role: "",
+            division: ""
+          },
         },
       ],
-      datas: [],
     };
   },
   props: {
@@ -101,6 +106,7 @@ export default {
     render(id, type) {
       this.overlay = true;
       if (this.data.label == "URL_2") {
+        // Need update with new API
         this.$http2
           .get("/audit_log", {
             params: {
@@ -126,6 +132,7 @@ export default {
         this.$http
           .get("/audit/v1/log", {
             params: {
+              per_page: 100,
               type : type,
               reference_id : id,
               order_by: "-id",
