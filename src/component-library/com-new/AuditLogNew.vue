@@ -39,6 +39,7 @@
                 </div>
                 <div v-else>-</div>
               </td>
+              <td>{{ item.item.note }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -76,6 +77,11 @@ export default {
         },
         {
           text: "Role (Division)",
+          class: "grey--text text--darken-4",
+          sortable: false,
+        },
+        {
+          text: "Note",
           class: "grey--text text--darken-4",
           sortable: false,
         }
