@@ -39,7 +39,6 @@
                 </div>
                 <div v-else>-</div>
               </td>
-              <td>{{ item.item.note }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -79,14 +78,20 @@ export default {
           text: "Role (Division)",
           class: "grey--text text--darken-4",
           sortable: false,
-        },
+        }
+      ],
+      datas: [
         {
-          text: "Note",
-          class: "grey--text text--darken-4",
-          sortable: false,
+          function: "",
+          created_at: "",
+          user: {
+            name: "",
+            email: "",
+            main_role: "",
+            division: ""
+          },
         },
       ],
-      datas: [],
     };
   },
   props: {
@@ -101,6 +106,7 @@ export default {
     render(id, type) {
       this.overlay = true;
       if (this.data.label == "URL_2") {
+        // Need changes to new API
         this.$http2
           .get("/audit_log", {
             params: {
@@ -126,6 +132,7 @@ export default {
         this.$http
           .get("/audit/v1/log", {
             params: {
+              per_page: 100,
               type : type,
               reference_id : id,
               order_by: "-id",
