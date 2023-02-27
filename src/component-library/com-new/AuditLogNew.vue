@@ -1,164 +1,147 @@
 <template>
-  <v-dialog v-model="data.model" persistent max-width="900px">
-    <LoadingBar :value="overlay" />
-    <v-card class="OpenSans">
-      <v-card-title>
-        <v-row>
-          <v-col class="text-title-modal" cols="12" md="6"> History </v-col>
-          <v-col class="flex-align-end" cols="12" md="6">
-            <v-btn icon @click="data.model = false">
-              <v-icon color="grey"> mdi-close-circle-outline </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card-title>
-      <v-card-text>
-        <v-data-table
-          :headers="fields"
-          :items="datas"
-          :items-per-page="10"
-          :mobile-breakpoint="0"
-        >
-          <template v-slot:item="props">
-            <tr class="h-row">
-              <td>{{ props.item.function }}</td>
-              <td>{{ props.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
-              <td>
-                <div v-if="props.item.user">
-                  {{ props.item.user.name }} ({{
-                    props.item.user.email
-                  }})
-                </div>
-                <div v-else>-</div>
-              </td>
-              <td>
-                <div v-if="props.item.user">
-                  {{ props.item.user.main_role }} ({{
-                    props.item.user.division
-                  }})
-                </div>
-                <div v-else>-</div>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card>
+  <v-dialog
+      v-model="data.model"
+      persistent
+      max-width="900px"
+  > 
+      <v-overlay :value="overlay" :z-index="12" >
+          <v-progress-circular
+              indeterminate
+              size="84"
+              color="green"
+              width=15
+          ></v-progress-circular>
+      </v-overlay>
+      <div class="pa-8" style="background:white;border-radius: 15px;">
+          <div class="title-page">
+              See History
+          </div>
+          <div class="title-table mt-6">
+              <label class="label-title">
+              History
+              </label>
+          </div>
+          <v-data-table
+              :headers="fields"
+              :items="datas"
+              :items-per-page="10"
+              :mobile-breakpoint="0"
+          >
+              <template v-slot:item="item">
+                  <tr>
+                      <td>{{ item.item.function }}</td>
+                      <td>{{ item.item.timestamp | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+                      <td>
+                          <div v-if="item.item.staff">
+                              {{ item.item.staff.display_name}} ({{ item.item.staff.user.email}})
+                          </div>
+                          <div v-else>
+                              -
+                          </div>
+                      </td>
+                      <td>
+                          <div v-if="item.item.staff">
+                              {{ item.item.staff.role.name}} ({{ item.item.staff.role.division.name}})
+                          </div>
+                          <div v-else>
+                              -
+                          </div>
+                      </td>
+                      <td>{{ item.item.note }}</td>
+                  </tr>
+              </template>
+          </v-data-table>
+
+          <div class="row mx-3 mb-1">
+              <v-btn 
+                  rounded 
+                  elevation="0" 
+                  class="no-caps px-7" 
+                  @click="data.model = false"
+                  style="background: #E6E9ED; color:#768F9C;height:45px"
+              >Back</v-btn>
+          </div>
+      </div>
   </v-dialog>
 </template>
-<style scoped>
-.h-row {
-  height: 48px;
-}
-</style>
-<script>
-export default {
-  name: "AuditLogNew",
-  data() {
-    return {
-      overlay: false,
-      fields: [
-        {
-          text: "Action",
-          class: "grey--text text--darken-4",
-          sortable: false,
-        },
 
-        {
-          text: "Timestamp",
-          class: "grey--text text--darken-4",
-          sortable: false,
-        },
-        {
-          text: "User",
-          class: "grey--text text--darken-4",
-          sortable: false,
-        },
-        {
-          text: "Role (Division)",
-          class: "grey--text text--darken-4",
-          sortable: false,
-        },
-      ],
-      datas: [
-        {
-          function: "",
-          created_at: "",
-          user: {
-            name: "",
-            email: "",
-            main_role: "",
-            division: ""
-          },
-        },
-      ],
-    };
-  },
-  props: {
-    data: {
-      model: "",
-      id: "",
-      type: "",
-      label: "",
-    },
-  },
-  methods: {
-    render(id, type) {
-      this.overlay = true;
-      if (this.data.label == "URL_2") {
-        // Need update with new API
-        this.$http2
-          .get("/audit_log", {
-            params: {
-              perpage: 10000,
-              embeds:
-                "staff_id__role_id,staff_id__role_id__division_id,merchant_id,staff_id__user_id",
-              conditions: "ref_id.e:" + id + "|type:" + type,
-              orderby: "-id",
-            },
-          })
-          .then((response) => {
-            this.overlay = false;
-            this.datas = response.data.data;
-            if (this.datas === null) {
-              this.datas = [];
-            }
-          })
-          .catch((e) => {
-            this.datas = [];
-            this.overlay = false;
-          });
-      } else {
-        this.$http
-          .get("/audit/v1/log", {
-            params: {
-              per_page: 100,
-              type : type,
-              reference_id : id,
-              order_by: "-id",
-            },
-          })
-          .then((response) => {
-            this.overlay = false;
-            this.datas = response.data.data;
-            if (this.datas === null) {
-              this.datas = [];
-            }
-          })
-          .catch((e) => {
-            this.datas = [];
-            this.overlay = false;
-          });
-      }
-    },
-  },
-  watch: {
-    data: {
-      handler: function (val) {
-        this.render(val.id, val.type);
+<script>
+  export default {
+      name: 'AuditLog',
+      data() {
+          return {
+              overlay : false,
+              fields: [
+                  {
+                      text:'Action',
+                      sortable: false,
+                  },
+
+                  {
+                      text:'Timestamp',
+                      sortable: false,
+                  },
+                  {
+                      text:'User',
+                      sortable: false,
+                  },
+                  {
+                      text:'Role (Division)',
+                      sortable: false,
+                  },
+                  {
+                      text:'Note',
+                      sortable: false,
+                  },
+              ],
+              datas:[{
+                  staff : {
+                      display_name : "",
+                      user : {
+                          email : "",
+                      },
+                      role: {
+                          name: "",
+                          division: {
+                              name: "",
+                          }
+                      }
+                  }
+                  
+              }]
+          }
       },
-      deep: true,
-    },
-  },
-};
+      props: {
+          data : {
+              model : "",
+              id: "",
+              type: ""
+          }
+      },
+      methods:{
+          render(id,type){
+              this.overlay = true
+              this.$http.get("/audit_log",{params:{
+                          perpage:10000,
+                          embeds:'staff_id__role_id,staff_id__role_id__division_id,merchant_id,staff_id__user_id',
+                          conditions:'ref_id.e:'+id +'|type:'+ type,
+                          orderby:'-id',
+                      }}).then(response => {
+                  this.overlay = false;
+                  this.datas = response.data.data
+                      if(this.datas === null){
+                          this.datas = []
+                      }
+              });
+          },
+      },
+      watch: {
+          data: {
+              handler: function (val) {
+                  this.render(val.id, val.type)
+              },
+              deep: true
+          },
+      }
+  };
 </script>
