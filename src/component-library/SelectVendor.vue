@@ -9,7 +9,7 @@
         outlined
         :items="items"
         :name="data_name"
-        :loading="is_loading"
+        :loading="isLoading"
         :search-input.sync="search"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -43,7 +43,7 @@
         data() {
             return {
                 items: [],
-                is_loading: false,
+                isLoading: false,
                 search:'',
                 data_name:'',
                 placeholder : '',
@@ -59,7 +59,7 @@
             // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
-                this.is_loading = true
+                this.isLoading = true
                 this.items = []
                 await this.$http.get("/bridge/v1/courier_vendor",{params:{
                     per_page:10,
@@ -71,7 +71,7 @@
                     let label = this.label ? this.label : 'Vendor'
                     this.placeholder = "Select "+ label
                 });
-                this.is_loading = false
+                this.isLoading = false
             },
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
