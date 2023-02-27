@@ -8,8 +8,8 @@
         clearable
         outlined
         :items="items"
-        :name="dataname"
-        :loading="isLoading"
+        :name="data_name"
+        :loading="is_loading"
         :search-input.sync="search"
         :placeholder="placeholder"
         :disabled="disabled"
@@ -43,9 +43,9 @@
         data() {
             return {
                 items: [],
-                isLoading: false,
+                is_loading: false,
                 search:'',
-                dataname:'',
+                data_name:'',
                 placeholder : '',
                 vendors:{}
             };
@@ -59,7 +59,7 @@
             // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
-                this.isLoading = true
+                this.is_loading = true
                 this.items = []
                 await this.$http.get("/bridge/v1/courier_vendor",{params:{
                     per_page:10,
@@ -71,7 +71,7 @@
                     let label = this.label ? this.label : 'Vendor'
                     this.placeholder = "Select "+ label
                 });
-                this.isLoading = false
+                this.is_loading = false
             },
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
@@ -93,9 +93,9 @@
                 this.autoSelectByID(this.vendor)
             }
             if (!this.name) {
-                this.dataname = 'vendor'
+                this.data_name = 'vendor'
             } else {
-                this.dataname = this.name
+                this.data_name = this.name
             }
         },
         watch: {
