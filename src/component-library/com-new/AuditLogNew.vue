@@ -19,26 +19,27 @@
           :items-per-page="10"
           :mobile-breakpoint="0"
         >
-          <template v-slot:item="props">
+          <template v-slot:item="item">
             <tr class="h-row">
-              <td>{{ props.item.function }}</td>
-              <td>{{ props.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+              <td>{{ item.item.function }}</td>
+              <td>{{ item.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
               <td>
-                <div v-if="props.item.user">
-                  {{ props.item.user.name }} ({{
-                    props.item.user.email
+                <div v-if="item.item.user">
+                  {{ item.item.user.name }} ({{
+                    item.item.user.email
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
               <td>
-                <div v-if="props.item.user">
-                  {{ props.item.user.main_role }} ({{
-                    props.item.user.division
+                <div v-if="item.item.user">
+                  {{ item.item.user.main_role }} ({{
+                    item.item.user.division
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
+              <td>{{ item.item.note }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -79,19 +80,13 @@ export default {
           class: "grey--text text--darken-4",
           sortable: false,
         },
-      ],
-      datas: [
         {
-          function: "",
-          created_at: "",
-          user: {
-            name: "",
-            email: "",
-            main_role: "",
-            division: ""
-          },
+          text: "Note",
+          class: "grey--text text--darken-4",
+          sortable: false,
         },
       ],
+      datas: [],
     };
   },
   props: {
@@ -131,10 +126,9 @@ export default {
         this.$http
           .get("/audit/v1/log", {
             params: {
-              perpage: 100,
-              orderby: "-id",
-              type:type,
-              reference_id:id
+              type : type,
+              reference_id : id,
+              order_by: "-id",
             },
           })
           .then((response) => {
