@@ -6,7 +6,7 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="code"
+        :item-text="textList"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -109,6 +109,9 @@ export default {
         }
       }
     },
+    textList(item){
+      return item.code + ' - ' + item.description
+    },
     selected(event) {
       // select 1 item
       this.$emit("selected", event);
@@ -133,7 +136,7 @@ export default {
     search: {
       // untuk search
       handler: function (val) {
-        this.remoteSearch("", this.aux_data);
+        this.remoteSearch(val, this.aux_data);
       },
       deep: true,
     },
