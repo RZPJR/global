@@ -127,6 +127,9 @@ export default {
       }
     },
   },
+  created() {
+    this.remoteSearch("")
+  },
   watch: {
     search: {
       // untuk search
