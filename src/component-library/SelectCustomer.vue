@@ -64,6 +64,7 @@
                 await this.$http.get("/bridge/v1/customer",{params:{
                     per_page:10,
                     search:search,
+                    status:1,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
