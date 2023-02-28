@@ -48,7 +48,7 @@
             :style="'width:'+minWidth+'px;height:'+minHeight+'px'"
             :class="notUseLabel? '':'mt-2'">
             <v-btn
-                class="btn-remove absolute -mt40"
+                class="btn-remove absolute"
                 fab
                 x-small
                 plain
@@ -238,7 +238,7 @@
         z-index:1;
         background:#FC7079;
         color:white;
-        right:10px;
+        left:315px;
         top:10px
     }
 </style>

@@ -1,34 +1,35 @@
 <template>
     <v-autocomplete
-        v-model="vendor_badges"
-        :items="items"
-        :loading="isLoading"
-        item-text="description"
-        :name="dataname"
-        :search-input.sync="search"
-        :placeholder="placeholder"
+        v-model="customers"
+        :item-text="textList"
         @change="selected"
-        :disabled="disabled"
+        @click:clear="remoteSearch('')"
         return-object
         clearable
         outlined
+        :items="items"
+        :name="data_name"
+        :loading="isLoading"
+        :search-input.sync="search"
+        :placeholder="placeholder"
+        :disabled="disabled"
         :dense="dense"
         :class="dense?'':'rounded-form'"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
-            </div>
-        </template>
         <template v-slot:label>
             <div v-if="label">
                 <span v-if="!norequired">{{ label }}<span :class="disabled?'':'text-red'">*</span></span>
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Vendor Badge<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Vendor Badge</span>
+                <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Customer</span>
+            </div>
+        </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item" >
+                {{ data.item.code }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
@@ -38,54 +39,63 @@
 </template>
 <script>
     export default {
-        name: 'SelectVendorBadge',
+        name: 'SelectCustomer',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 search:'',
-                dataname:'',
+                data_name:'',
                 placeholder : '',
-                vendor_badges:{}
+                customers:{}
             };
         },
-        props: ['vendor_badge','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['customer','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
+            // For show dropdown suggestion search by code or name
+            textList(item){
+                return item.code + ' — ' + item.name
+            },
+            // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                // await this.$http.get("/bridge/v1/vendor/badge",{params:{
-                //     perpage:10,
-                //     status:1,
-                //     search:search,
-                // }}).then(response => {
-                //     if(response && response.data.data !== null) this.items = response.data.data
-                //     let label = this.label ? this.label : 'Vendor Badge'
-                //     this.placeholder = "Select "+ label
-                // });
+                await this.$http.get("/bridge/v1/customer",{params:{
+                    per_page:10,
+                    search:search,
+                }}).then(response => {
+                    if(response && response.data.data !== null) {
+                        this.items = response.data.data
+                    }
+                    let label = this.label ? this.label : 'Customer'
+                    this.placeholder = "Select "+ label
+                });
                 this.isLoading = false
             },
+            // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                // if(val.id){
-                //     this.$http.get("/bridge/v1/vendor/badge/"+val.id)
-                //     .then(response => {
-                //         this.vendor_badges = response.data.data
-                //     });
-                // }
+                if(val.id){
+                    this.$http.get("/bridge/v1/customer/"+val.id)
+                    .then(response => {
+                        this.items = response.data.data
+                        this.customers = response.data.data
+                    });
+                }
             },
+            // For Pass Selected Value
             selected(event) {
                 this.$emit('selected', event);
             }
         },
         mounted() {
-            if(this.vendor_badge){
-                this.autoSelectByID(this.vendor_badge)
+            if(this.customer){
+                this.autoSelectByID(this.customer)
             }
             if (!this.name) {
-                this.dataname = 'vendor_badge'
+                this.data_name = 'customer'
             } else {
-                this.dataname = this.name
+                this.data_name = this.name
             }
         },
         watch: {
@@ -93,7 +103,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else{
+                    } else if (!this.customer) {
                         this.remoteSearch('')
                     }
                 },
@@ -101,16 +111,16 @@
             },
             clear: {
                 handler: function (val) {
-                    this.vendor_badges = null
+                    this.customers = null
                 },
                 deep: true
             },
-            vendor_badge: {
+            customer: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.vendor_badges = null
+                        this.customers = null
                     }
                 },
                 deep: true

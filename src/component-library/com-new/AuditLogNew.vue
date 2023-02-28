@@ -22,19 +22,19 @@
           <template v-slot:item="item">
             <tr class="h-row">
               <td>{{ item.item.function }}</td>
-              <td>{{ item.item.timestamp | moment("DD/MM/YYYY HH:mm:ss") }}</td>
+              <td>{{ item.item.created_at | moment("DD/MM/YYYY HH:mm:ss") }}</td>
               <td>
-                <div v-if="item.item.staff">
-                  {{ item.item.staff.display_name }} ({{
-                    item.item.staff.user.email
+                <div v-if="item.item.user">
+                  {{ item.item.user.name }} ({{
+                    item.item.user.email
                   }})
                 </div>
                 <div v-else>-</div>
               </td>
               <td>
-                <div v-if="item.item.staff">
-                  {{ item.item.staff.role.name }} ({{
-                    item.item.staff.role.division.name
+                <div v-if="item.item.user">
+                  {{ item.item.user.main_role }} ({{
+                    item.item.user.division
                   }})
                 </div>
                 <div v-else>-</div>
@@ -84,21 +84,17 @@ export default {
           text: "Note",
           class: "grey--text text--darken-4",
           sortable: false,
-        },
+        }
       ],
       datas: [
         {
-          staff: {
-            display_name: "",
-            user: {
-              email: "",
-            },
-            role: {
-              name: "",
-              division: {
-                name: "",
-              },
-            },
+          function: "",
+          created_at: "",
+          user: {
+            name: "",
+            email: "",
+            main_role: "",
+            division: ""
           },
         },
       ],
@@ -116,6 +112,7 @@ export default {
     render(id, type) {
       this.overlay = true;
       if (this.data.label == "URL_2") {
+        // Need changes to new API
         this.$http2
           .get("/audit_log", {
             params: {
@@ -139,13 +136,12 @@ export default {
           });
       } else {
         this.$http
-          .get("/audit_log", {
+          .get("/audit/v1/log", {
             params: {
-              perpage: 10000,
-              embeds:
-                "staff_id__role_id,staff_id__role_id__division_id,merchant_id,staff_id__user_id",
-              conditions: "ref_id.e:" + id + "|type:" + type,
-              orderby: "-id",
+              per_page: 100,
+              type : type,
+              reference_id : id,
+              order_by: "-id",
             },
           })
           .then((response) => {
