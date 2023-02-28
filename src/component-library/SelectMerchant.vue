@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="merchants"
+        v-model="customers"
         :items="items"
         :loading="isLoading"
         item-text="name"
@@ -32,8 +32,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Merchant<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Merchant</span>
+                <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Customer</span>
             </div>
         </template>
     </v-autocomplete>
@@ -47,10 +47,10 @@
                 isLoading: false,
                 placeholder : '',
                 search: '',
-                merchants: null
+                customers: null
             };
         },
-        props: ['merchant', 'disabled', 'clear', 'error', 'label', "norequired", "customerGroup", "business_type", "minSearch", "dense"],
+        props: ['customer', 'disabled', 'clear', 'error', 'label', "norequired", "customerGroup", "business_type", "minSearch", "dense"],
         methods: {
             remoteSearch(search) {
                 let customer_group = '';
@@ -63,42 +63,36 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/customer/merchant/filter", {
+                this.$http.get("/bridge/v1/customer", {
                     params: {
                         perpage: 10,
-                        embeds: 'finance_area_id,invoiceterm',
-                        conditions: 'status:1|name.icontains:' + search + '%2COr.code.icontains:'
-                        + search + '%2COr.phonenumber.icontains:' + search + customer_group + business_types,
-                        orderby: '-id',
+                        status:1,
                     }
                 }).then(response => {
-                    if (response) {
+                    this.items = []
+                    if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
-                    if (this.items === null) {
-                        this.items = []
-                    }
-                    if (this.merchant) {
-                        this.autoSelectByID(this.merchant)
+                    if (this.customer) {
+                        this.autoSelectByID(this.customer)
                     }
                     this.isLoading = false
-                    let label = 'Merchant'
-                    if (this.label) 
-                    label = this.label
+                    let label = 'Customer'
+                    if (this.label) label = this.label
                     this.placeholder = "Select "+ label
                 });
             },
             autoSelectByID(val) {
                 if (val) {
                     // ini ke endpoint detail
-                    this.$http.get("/customer/merchant/filter", {
+                    this.$http.get("/customer/customer/filter", {
                         params: {
                             embeds: 'finance_area_id',
                             conditions: 'id.e:' + val.id,
                         }
                     }).then(response => {
                         this.items.push(response.data.data[0])
-                        this.merchants = response.data.data[0]
+                        this.customers = response.data.data[0]
                     });
                 }
 
@@ -128,11 +122,11 @@
             },
             clear: {
                 handler: function (val) { // ini untuk clear data
-                    this.merchants = null
+                    this.customers = null
                 },
                 deep: true
             },
-            merchant: {
+            customer: {
                 handler: function (val) { // watch perubahan untuk auto select (biasa di pakai di page update)
                     if (val) {
                         this.autoSelectByID(val)

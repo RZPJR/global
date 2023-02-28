@@ -470,6 +470,13 @@ Vue.mixin({
     capitalizeFirstLetter(val) {
       return val.charAt(0).toUpperCase() + val.slice(1);
     },
+    capitalizeFirstLetterEveryWords(val) {
+        let arr = val.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+        }
+        return arr.join(" ");
+    },
     letterOnly(e) {
       let char = String.fromCharCode(e.keyCode);
       if (/^[a-zA-Z\s]*$/.test(char)) return true;
