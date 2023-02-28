@@ -11,7 +11,6 @@
         outlined
         :placeholder="placeholder"
         :dense="dense"
-        :class="dense ? '' : 'rounded-form'"
         required
         clearable
         :error-messages="error"
@@ -100,7 +99,7 @@ export default {
                         this.items.push({
                             id: element.id,
                             value: element.value_int,
-                            value_name: this.capitalizeFirstLetter(element.value_name),
+                            value_name: this.capitalizeFirstLetterEveryWords(element.value_name.replace(/_/g, ' ')),
                         });
                     });
                     break;
