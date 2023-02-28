@@ -178,6 +178,11 @@
                 return URL.createObjectURL(this.image);
             }
         },
+        mounted() {
+            if (this.imageFromUpdate) {
+                this.image = this.imageFromUpdate
+            }
+        },
         watch: {
             'errorMsg': {
                 handler: function (val) {

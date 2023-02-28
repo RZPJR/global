@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="vendors"
+        v-model="addresses"
         :item-text="textList"
         @change="selected"
         @click:clear="remoteSearch('')"
@@ -23,8 +23,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Vendor<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Vendor</span>
+                <span v-if="!norequired">Address<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Address</span>
             </div>
         </template>
         <template slot="selection" slot-scope="data">
@@ -39,7 +39,7 @@
 </template>
 <script>
     export default {
-        name: 'SelectVendor',
+        name: 'SelectAddress',
         data() {
             return {
                 items: [],
@@ -47,10 +47,10 @@
                 search:'',
                 data_name:'',
                 placeholder : '',
-                vendors:{}
+                addresses:{}
             };
         },
-        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['address','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -61,14 +61,14 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/bridge/v1/courier_vendor",{params:{
+                await this.$http.get("/bridge/v1/address",{params:{
                     per_page:10,
                     search:search,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
                     }
-                    let label = this.label ? this.label : 'Vendor'
+                    let label = this.label ? this.label : 'Address'
                     this.placeholder = "Select "+ label
                 });
                 this.isLoading = false
@@ -76,10 +76,10 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/courier_vendor/"+val.id)
+                    this.$http.get("/bridge/v1/address/"+val.id)
                     .then(response => {
                         this.items = response.data.data
-                        this.vendors = response.data.data
+                        this.addresses = response.data.data
                     });
                 }
             },
@@ -89,11 +89,11 @@
             }
         },
         mounted() {
-            if(this.vendor){
-                this.autoSelectByID(this.vendor)
+            if(this.address){
+                this.autoSelectByID(this.address)
             }
             if (!this.name) {
-                this.data_name = 'vendor'
+                this.data_name = 'address'
             } else {
                 this.data_name = this.name
             }
@@ -103,7 +103,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if (!this.vendor) {
+                    } else if (!this.address) {
                         this.remoteSearch('')
                     }
                 },
@@ -111,16 +111,16 @@
             },
             clear: {
                 handler: function (val) {
-                    this.vendors = null
+                    this.addresses = null
                 },
                 deep: true
             },
-            vendor: {
+            address: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.vendors = null
+                        this.addresses = null
                     }
                 },
                 deep: true

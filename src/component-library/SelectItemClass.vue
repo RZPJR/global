@@ -1,10 +1,10 @@
 <template>
     <v-autocomplete
-        v-model="uoms"
+        v-model="item_class"
         :items="items"
         :loading="isLoading"
         item-text="description"
-        name="uom"
+        name="item_class"
         :search-input.sync="search"
         :placeholder="placeholder"
         @change="selected"
@@ -23,10 +23,10 @@
         </template>
         <template v-slot:label>
            <span v-if="!norequired">
-                UOM<span :class="disabled?'':'text-red'">*</span>
+                Item Class<span :class="disabled?'':'text-red'">*</span>
             </span>
            <span v-else>
-                UOM
+            Item Class
             </span>
         </template>
         <template slot="item" slot-scope="data">
@@ -36,23 +36,23 @@
 </template>
 <script>
     export default {
-        name: 'SelectUom',
+        name: 'SelectItemClass',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 search:'',
-                uoms:null,
+                item_class:null,
                 placeholder : '',
             };
         },
-        props: ['uom','disabled','clear','label','error', 'norequired', 'dense'],
+        props: ['item_classes','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/uom",{params:{
+                this.$http.get("/bridge/v1/class",{params:{
                     perpage:10,
                     conditions:'status:1|name.icontains:'+search,
                 }}).then(response => {
@@ -61,7 +61,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'UOM'
+                    let label = 'Item Class'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -69,12 +69,11 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    // ini ke endpoint detail
-                    this.$http.get("/bridge/v1/uom",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(response => {
+                    this.$http.get("/bridge/v1/class",{params:{
+                        conditions:'id.e:'+val.id,
+                    }}).then(response => {
                         this.items.push(response.data.data[0])
-                        this.uoms = response.data.data[0]
+                        this.item_class = response.data.data[0]
                     });
                 }
 
@@ -88,7 +87,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.uom){
+                    } else if(!this.item_classes){
                         this.remoteSearch('')
                     }
 
@@ -97,12 +96,12 @@
             },
             clear: {
                 handler: function (val) {
-                    this.uoms = null
+                    this.item_class = null
                     this.remoteSearch('','')
                 },
                 deep: true
             },
-            uom: {
+            item_classes: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)

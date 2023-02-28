@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        v-model="vendors"
+        v-model="customers"
         :item-text="textList"
         @change="selected"
         @click:clear="remoteSearch('')"
@@ -23,8 +23,8 @@
                 <span v-else>{{ label }}</span>
             </div>
             <div v-else>
-                <span v-if="!norequired">Vendor<span :class="disabled?'':'text-red'">*</span></span>
-                <span v-else>Vendor</span>
+                <span v-if="!norequired">Customer<span :class="disabled?'':'text-red'">*</span></span>
+                <span v-else>Customer</span>
             </div>
         </template>
         <template slot="selection" slot-scope="data">
@@ -39,7 +39,7 @@
 </template>
 <script>
     export default {
-        name: 'SelectVendor',
+        name: 'SelectCustomer',
         data() {
             return {
                 items: [],
@@ -47,10 +47,10 @@
                 search:'',
                 data_name:'',
                 placeholder : '',
-                vendors:{}
+                customers:{}
             };
         },
-        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['customer','disabled','clear','label','error', 'norequired', 'name', "dense"],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -61,14 +61,15 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/bridge/v1/courier_vendor",{params:{
+                await this.$http.get("/bridge/v1/customer",{params:{
                     per_page:10,
                     search:search,
+                    status:1,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
                     }
-                    let label = this.label ? this.label : 'Vendor'
+                    let label = this.label ? this.label : 'Customer'
                     this.placeholder = "Select "+ label
                 });
                 this.isLoading = false
@@ -76,10 +77,10 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/courier_vendor/"+val.id)
+                    this.$http.get("/bridge/v1/customer/"+val.id)
                     .then(response => {
                         this.items = response.data.data
-                        this.vendors = response.data.data
+                        this.customers = response.data.data
                     });
                 }
             },
@@ -89,11 +90,11 @@
             }
         },
         mounted() {
-            if(this.vendor){
-                this.autoSelectByID(this.vendor)
+            if(this.customer){
+                this.autoSelectByID(this.customer)
             }
             if (!this.name) {
-                this.data_name = 'vendor'
+                this.data_name = 'customer'
             } else {
                 this.data_name = this.name
             }
@@ -103,7 +104,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if (!this.vendor) {
+                    } else if (!this.customer) {
                         this.remoteSearch('')
                     }
                 },
@@ -111,16 +112,16 @@
             },
             clear: {
                 handler: function (val) {
-                    this.vendors = null
+                    this.customers = null
                 },
                 deep: true
             },
-            vendor: {
+            customer: {
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
                     } else {
-                        this.vendors = null
+                        this.customers = null
                     }
                 },
                 deep: true

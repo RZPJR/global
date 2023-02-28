@@ -5,7 +5,7 @@
         <v-autocomplete
           v-model="roles"
           :items="items"
-          :loading="is_loading"
+          :loading="isLoading"
           :placeholder="placeholder"
           item-value="code"
           item-text="name"
@@ -64,7 +64,7 @@ export default {
       all_role: false,
       items: [],
       placeholder: "",
-      is_loading: false,
+      isLoading: false,
       roles: [],
       search: "",
     };
@@ -89,7 +89,7 @@ export default {
         division_id = "|division_id:" + div;
       }
       this.placeholder = "Loading items...";
-      this.is_loading = true;
+      this.isLoading = true;
       // ini ke endpoint get all
       this.$http
         .get("/account/v1/role", {
@@ -107,7 +107,7 @@ export default {
               this.items = this.items.filter((e) => e.id != this.main_role);
             }
           }
-          this.is_loading = false;
+          this.isLoading = false;
           let label = "Role";
           if (this.label) label = this.label;
           this.placeholder = "Select " + label;

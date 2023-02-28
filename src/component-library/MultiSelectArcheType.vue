@@ -4,7 +4,7 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="name"
+        item-text="description"
         :menu-props="menuProps"
         :search-input.sync="search"
         @change="selected"
@@ -28,11 +28,11 @@
                 close
                 @click:close="remove(data.item)"
             >
-                {{ data.item.name }} - {{ data.item.business_type.name }}
+                {{ data.item.description }} - {{ data.item.customer_type.description }}
             </v-chip>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }} - {{ data.item.business_type.name }}
+            {{ data.item.code }} - {{ data.item.description }} - {{ data.item.customer_type.description }}
         </template>
     </v-autocomplete>
 </template>
