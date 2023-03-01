@@ -55,7 +55,7 @@ export default {
     "clear",
     "error",
     "label",
-    "business_type_id",
+    "customer_type_id",
     "aux_data",
     "norequired",
     "customer_group",
@@ -63,10 +63,6 @@ export default {
   ],
   methods: {
     remoteSearch(search) {
-      let business_type_id = ''
-      if(this.business_type_id){
-          business_type_id = "|business_type_id.e:" + this.business_type_id
-      }
       let aux_data = '';
       if(this.aux_data) {
           aux_data = '|aux_data.in:'+this.aux_data;
@@ -87,6 +83,7 @@ export default {
           perpage:20,
           status:1,
           search:search,
+          customer_type_id: this.customer_type_id
       }}).then(response => {
           this.items = response.data.data
           if(this.items === null){
@@ -147,7 +144,7 @@ export default {
       },
       deep: true,
     },
-    business_type_id: {
+    customer_type_id: {
       // ini fungsi untuk request by area_id
       handler: function (val) {
         if (val) {
