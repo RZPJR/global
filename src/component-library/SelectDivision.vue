@@ -68,7 +68,7 @@ export default {
       this.isLoading = true;
       // to endpoint get list division
       this.$http
-        .get("/account/v1/division", {
+        .get("/bridge/v1/division", {
           params: {
             perpage: 20,
             status:1,
@@ -89,7 +89,7 @@ export default {
     autoSelectByID(val) {
       if (val) {
         // ini ke endpoint detail
-        this.$http.get("/account/v1/division/" + val.id).then((response) => {
+        this.$http.get("/bridge/v1/division/" + val.id).then((response) => {
           this.items.push(response.data.data);
           this.divisions = response.data.data;
         });
