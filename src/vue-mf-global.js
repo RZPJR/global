@@ -451,6 +451,11 @@ Vue.mixin({
             return ret
         }
     },
+    formatHumanDiff(val) {
+        if (val) {
+            return this.$moment(val).fromNow()
+        }
+    },
     formatTime(val) {
         if (val) {
             return this.$moment(val).format('HH:mm')
