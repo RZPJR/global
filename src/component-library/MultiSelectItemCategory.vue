@@ -19,6 +19,7 @@
         :error-messages="error"
         :counter="maxSelected"
         @input="adjustOptions"
+        class="multi"
     >
         <template v-slot:label>
             <span v-if="!norequired">Item Category<span style="color:red">*</span></span>
@@ -92,12 +93,16 @@
             },
             selected(event) {
                 this.$emit('selected', event);
+                if(this.item_category.length >= this.maxSelected){
+                    this.menuProps.disabled = true
+                }
             },
             remove (item) {
                 const index = this.item_category.indexOf(item)
                 // if (index >= 0) 
                 this.item_category.splice(index, 1)
                 this.$emit('selected', this.item_category);
+                this.menuProps.disabled = false
             },
             adjustOptions() {
                 if (this.computedCounterValue >= this.maxSelected) {
