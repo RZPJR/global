@@ -99,7 +99,6 @@
             },
             remove (item) {
                 const index = this.item_category.indexOf(item)
-                // if (index >= 0) 
                 this.item_category.splice(index, 1)
                 this.$emit('selected', this.item_category);
                 this.menuProps.disabled = false
