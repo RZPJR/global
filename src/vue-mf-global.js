@@ -41,6 +41,7 @@ export { default as AddImageOrFileEnable } from "../public/img/AddImageOrFileEna
 export { default as Worktime } from "../public/img/worktime_new.png";
 export { default as Plus } from "../public/icon/plus.png";
 export { default as Minus } from "../public/icon/close-new.png";
+export { default as Download } from "../public/icon/download_new.png";
 
 Vue.use(VueFileAgent);
 Vue.use(http);
