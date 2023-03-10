@@ -147,20 +147,15 @@
             },
             autoSelectByID(val) {
                 if (val) {
-                    this.$http.get("/warehouse/stock/filter", {
-                        params: {
-                            conditions: 'product.id.e:' + val.id,
-                            embeds: 'product,product.uom_id',
-                        }
-                    }).then(response => {
+                    this.$http.get("/catalog/v1/item/"+val.id).then(response => {
                         if(this.isCompletedProduct){
-                            this.products = response.data.data[0]
-                            this.items.push(response.data.data[0]);
+                            this.products = response.data.data
+                            this.items.push(response.data.data);
                         }else{
-                            this.products = response.data.data[0].product
-                            this.items.push(response.data.data[0].product);
+                            this.products = response.data.data
+                            this.items.push(response.data.data);
                         }
-                        this.product_text = response.data.data[0].product.code + ' - ' + response.data.data[0].product.name
+                        this.product_text = response.data.data.code + ' - ' + response.data.data.description
                     });
                 } else {
                     this.products = []
