@@ -72,7 +72,6 @@
                 this.$http.get("/site/v3/site",{params:{
                     page: 1,
                     per_page:10,
-                    // conditions:'status:1|name.icontains:'+search+area_id+aux+subdistrictId,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
