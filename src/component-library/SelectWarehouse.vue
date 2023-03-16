@@ -18,11 +18,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.id }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.id }} - {{ data.item.name }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -70,7 +70,8 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/site/v3/site",{params:{
-                    // perpage:10,
+                    page: 1,
+                    per_page:10,
                     // conditions:'status:1|name.icontains:'+search+area_id+aux+subdistrictId,
                 }}).then(response => {
                     if(response){
