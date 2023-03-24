@@ -18,11 +18,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.firstname }} {{ data.item.namemiddle }} {{ data.item.lastname }} 
+                {{ data.item.id }} - {{ data.item.name }} {{ data.item.middle_name }} {{ data.item.last_name }} 
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.firstname }} {{ data.item.namemiddle }} {{ data.item.lastname }} 
+            {{ data.item.id }} - {{ data.item.name }} {{ data.item.middle_name }} {{ data.item.last_name }} 
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -56,8 +56,9 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/bridge/v1/salesperson",{params:{
-                    perpage:10,
+                this.$http.get("/sales/v1/sales_person",{params:{
+                    page:1,
+                    per_page:10,
                     search:search
                 }}).then(response => {
                     if(response){
@@ -75,7 +76,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/salesperson",{params:{
+                    this.$http.get("/sales/v1/sales_person",{params:{
                             conditions:'id.e:'+val.id,
                         }}).then(responses => {
                         this.items.push(responses.data.data[0])
