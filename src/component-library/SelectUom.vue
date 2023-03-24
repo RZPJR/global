@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.id }} - {{ data.item.name }}
             </div>
         </template>
         <template v-slot:label>
@@ -30,7 +30,7 @@
             </span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
@@ -52,9 +52,9 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/uom",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search,
+                this.$http.get("/catalog/v1/uom",{params:{
+                    page:1,
+                    per_page:10,
                 }}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
@@ -70,7 +70,7 @@
             autoSelectByID(val) {
                 if(val){
                     // ini ke endpoint detail
-                    this.$http.get("/bridge/v1/uom",{params:{
+                    this.$http.get("/catalog/v1/uom",{params:{
                             conditions:'id.e:'+val.id,
                         }}).then(response => {
                         this.items.push(response.data.data[0])
