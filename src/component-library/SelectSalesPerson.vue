@@ -4,8 +4,7 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        item-text="name"
-        item-value='code'
+        :item-text="textList"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -50,6 +49,10 @@
         },
         props: ['sales_person','disabled','clear','error','filtered', "label", 'norequired', "dense"],
         methods: {
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.id + ' — ' + item.name
+            },
             remoteSearch(search) {
                 if (this.sales_person) {
                     this.autoSelectByID(this.sales_person)

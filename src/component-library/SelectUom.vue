@@ -3,7 +3,7 @@
         v-model="uoms"
         :items="items"
         :loading="isLoading"
-        item-text="description"
+        :item-text="textList"
         name="uom"
         :search-input.sync="search"
         :placeholder="placeholder"
@@ -48,6 +48,10 @@
         },
         props: ['uom','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.id + ' — ' + item.name
+            },
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
