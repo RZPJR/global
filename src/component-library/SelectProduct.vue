@@ -100,7 +100,7 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/catalog/v1/item",{params:{
-                    perpage:10,
+                    per_page:10,
                     search:search,
                     status: '1',
                 }}).then(response => {

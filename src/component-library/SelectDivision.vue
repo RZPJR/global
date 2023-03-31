@@ -70,7 +70,7 @@ export default {
       this.$http
         .get("/account/v1/division", {
           params: {
-            perpage: 20,
+            per_page: 20,
             status:1,
             search:search
           },
