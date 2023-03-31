@@ -22,29 +22,52 @@ spec:
         app: global
     spec:
       imagePullSecrets:
-        - name: registry
+      - name: registry
       containers:
-        - name: global
-          image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/dev:<VERSION>
-          ports:
-            - name: http-port
-              containerPort: 8080
-          imagePullPolicy: Always
-          resources:
-            requests:
-              memory: 150Mi
-              cpu: 100m
-            limits:
-              memory: 500Mi
-              cpu: 300m
-          volumeMounts:
-            - name: tz-config
-              mountPath: /etc/localtime
+      - name: global
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/dev:<VERSION>
+        ports:
+          - name: http-port
+            containerPort: 8080
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: 50Mi
+            cpu: 15m
+          limits:
+            memory: 150Mi
+            cpu: 100m
+        volumeMounts:
+          - name: tz-config
+            mountPath: /etc/localtime
       volumes:
         - name: tz-config
           hostPath:
             path: /usr/share/zoneinfo/Asia/Jakarta
             type: File
+      tolerations:
+      - key: instance_type
+        value: service
+        effect: NoSchedule
+        operator: Equal
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - devops
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - global
+            topologyKey: kubernetes.io/hostname
 ---
 apiVersion: v1
 kind: Service

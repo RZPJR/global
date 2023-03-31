@@ -3,7 +3,7 @@
         v-model="item_class"
         :items="items"
         :loading="isLoading"
-        item-text="description"
+        :item-text="textList"
         name="item_class"
         :search-input.sync="search"
         :placeholder="placeholder"
@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.id }} - {{ data.item.name }}
             </div>
         </template>
         <template v-slot:label>
@@ -30,7 +30,7 @@
             </span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
@@ -48,13 +48,17 @@
         },
         props: ['item_classes','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.id + ' — ' + item.name
+            },
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/class",{params:{
-                    perpage:10,
-                    conditions:'status:1|name.icontains:'+search,
+                this.$http.get("/catalog/v1/item_class",{params:{
+                    page:1,
+                    per_page:10,
                 }}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
@@ -69,7 +73,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/class",{params:{
+                    this.$http.get("/catalog/v1/item_class",{params:{
                         conditions:'id.e:'+val.id,
                     }}).then(response => {
                         this.items.push(response.data.data[0])
