@@ -99,7 +99,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/item",{params:{
+                this.$http.get("/catalog/v1/item",{params:{
                     perpage:10,
                     search:search,
                     status: '1',
@@ -128,7 +128,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/item/"+val.id).then(response => {
+                    this.$http.get("/catalog/v1/item/"+val.id).then(response => {
                         if(response.data.data) {
                             this.products = response.data.data
                             this.items.push(response.data.data);
