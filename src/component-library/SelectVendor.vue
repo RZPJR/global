@@ -29,11 +29,11 @@
         </template>
         <template slot="selection" slot-scope="data">
             <div class="select-item" >
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.id }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.id }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
@@ -61,10 +61,13 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/bridge/v1/courier_vendor",{params:{
+                await this.$http.get("/logistic/v3/courier-vendor", {
+                  params:{
+                    page: 1,
                     per_page:10,
                     search:search,
-                }}).then(response => {
+                  }
+                }).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
                     }
@@ -76,7 +79,7 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/courier_vendor/"+val.id)
+                    this.$http.get("/logistic/v3/courier-vendor/detail?id="+val.id)
                     .then(response => {
                         this.items = response.data.data
                         this.vendors = response.data.data

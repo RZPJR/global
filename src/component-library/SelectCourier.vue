@@ -17,11 +17,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.id }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-             {{ data.item.code }} - {{ data.item.name }}
+             {{ data.item.id }} - {{ data.item.name }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -56,9 +56,12 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/bridge/v1/courier",{params:{
-                    perpage:10
-                }}).then(response => {
+                this.$http.get("/logistic/v3/courier",{
+                  params:{
+                    page: 1,
+                    per_page:10
+                  }
+                }).then(response => {
                     if(response){
                         this.items = response.data.data
                     }

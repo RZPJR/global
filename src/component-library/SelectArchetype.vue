@@ -3,7 +3,7 @@
     v-model="archetypes"
     :items="items"
     :loading="isLoading"
-    item-text="code"
+    :item-text="textList"
     :search-input.sync="search"
     :placeholder="placeholder"
     @change="selected"
@@ -62,6 +62,10 @@ export default {
     "dense",
   ],
   methods: {
+    // For show dropdown suggestion search by code or name
+    textList(item){
+        return item.code + ' — ' + item.description
+    },
     remoteSearch(search) {
       let aux_data = '';
       if(this.aux_data) {
@@ -79,8 +83,8 @@ export default {
       this.placeholder="Loading items..."
       this.isLoading = true
       // ini ke endpoint get all
-      this.$http.get("/bridge/v1/archetype",{params:{
-          perpage:20,
+      this.$http.get("/crm/v1/archetype",{params:{
+          per_page:20,
           status:1,
           search:search,
           customer_type_id: this.customer_type_id
@@ -99,7 +103,7 @@ export default {
     autoSelectByID(val) {
       if (val) {
         this.$http
-          .get("/bridge/v1/archetype", {
+          .get("/crm/v1/archetype", {
             params: {
               conditions: "id.e:" + val.id,
             },

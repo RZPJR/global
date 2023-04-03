@@ -3,7 +3,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="description"
+        :item-text="textList"
         :name="dataname"
         :search-input.sync="search"
         :placeholder="placeholder"
@@ -51,6 +51,10 @@
         },
         props: ['area','disabled','clear','label','error','aux_data', 'norequired', 'name', "dense"],
         methods: {
+            // For show dropdown suggestion search by code or name
+            textList(item){
+                return item.code + ' — ' + item.description
+            },
             remoteSearch(search) {
                 let aux_data = '';
                 if (this.aux_data){
@@ -59,8 +63,8 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/region",{params:{
-                    perpage:10,
+                this.$http.get("/configuration/v1/region",{params:{
+                    per_page:10,
                     status:1,
                     search:search,
                 }}).then(response => {
@@ -79,7 +83,7 @@
             },
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/region/"+val.id)
+                    this.$http.get("/configuration/v1/region/"+val.id)
                     .then(response => {
                         this.areas = response.data.data
                     });
