@@ -81,9 +81,10 @@ export default {
       this.placeholder="Loading items..."
       this.isLoading = true
       // ini ke endpoint get all
-      this.$http.get("/bridge/v1/archetype",{params:{
-          status:1,
-          search:search,
+      this.$http.get("/crm/v1/archetype",{params:{
+          per_page: 10,
+          status: 1,
+          search: search
       }}).then(response => {
           if (response.data.data) {
               this.items = response.data.data

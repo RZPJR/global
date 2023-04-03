@@ -5,7 +5,7 @@
         v-model="areas"
         :items="items"
         :loading="isLoading"
-        item-text="description"
+        :item-text="textList"
         name="area"
         :placeholder="placeholder"
         :search-input.sync="search"
@@ -70,6 +70,10 @@ export default {
     "norequired",
   ],
   methods: {
+    // For show dropdown suggestion search by code or name
+    textList(item){
+        return item.code + ' — ' + item.description
+    },
     remoteSearch(search, aux_data) {
       // get data or render data
       if (aux_data !== '' && aux_data !== undefined){
@@ -79,7 +83,8 @@ export default {
       }
       this.placeholder="Loading items..."
       this.isLoading = true
-      this.$http.get("/bridge/v1/region",{params:{
+      this.$http.get("/configuration/v1/region",{params:{
+          per_page:10,
           status:1,
           search:search,
       }}).then(response => {
