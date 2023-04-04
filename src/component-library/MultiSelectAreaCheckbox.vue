@@ -84,7 +84,7 @@ export default {
       this.placeholder="Loading items..."
       this.isLoading = true
       this.$http.get("/configuration/v1/region",{params:{
-          per_page:10,
+          per_page:1000,
           status:1,
           search:search,
       }}).then(response => {

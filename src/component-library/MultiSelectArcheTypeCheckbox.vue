@@ -82,7 +82,7 @@ export default {
       this.isLoading = true
       // ini ke endpoint get all
       this.$http.get("/crm/v1/archetype",{params:{
-          per_page: 10,
+          per_page: 1000,
           status: 1,
           search: search
       }}).then(response => {
