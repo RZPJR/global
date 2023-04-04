@@ -5,7 +5,7 @@
         :placeholder="placeholder"
         :loading="isLoading"
         item-text="description"
-        item-value="code"
+        item-value="id"
         name="salesGroup"
         :search-input.sync="search"
         @change="selected"
@@ -19,11 +19,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.id }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.description }}
         </template>
         <template v-slot:label>
             <div v-if="label">
