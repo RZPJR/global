@@ -62,8 +62,10 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/archetype",{params:{
-                    conditions:'status:1|name.icontains:'+search+aux_data,
+                this.$http.get("/crm/v1/archetype",{params:{
+                    per_page: 10,
+                    status: 1,
+                    search: search
                 }}).then(response => {
                     if(response.data.data){
                         response.data.data.forEach((value, index) =>{
