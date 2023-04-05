@@ -61,7 +61,7 @@
                 this.isLoading = true
                 this.$http.get("/sales/v1/sales_person",{params:{
                     page:1,
-                    per_page:10,
+                    per_page:100,
                     search:search
                 }}).then(response => {
                     if(response){
