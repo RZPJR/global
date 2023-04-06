@@ -66,7 +66,8 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/bridge/v1/region",{params:{
+                this.$http.get("/configuration/v1/region",{params:{
+                    per_page:10,
                     status:1,
                     search:search,
                 }}).then(response => {
@@ -88,7 +89,7 @@
                 if(val){
                     this.areas= []
                     val.forEach(id => {
-                        this.$http.get("/bridge/v1/region/" + id).then(response => {
+                        this.$http.get("/configuration/v1/region/" + id).then(response => {
                             this.areas.push(response.data.data)
                         });
                     });
