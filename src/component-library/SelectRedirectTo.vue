@@ -91,7 +91,16 @@ export default {
     autoSelectByID(val) {
       // auto fill
       if (val) {
-        this.redirect_to2 = val;
+        // this.redirect_to2 = val;
+        this.$http.get("/configuration/v1/glossary",{
+          params: {
+            value_name: val.value_name,
+            value_int: val.to
+          },
+        })
+        .then(response => {
+          this.redirect_to2 = response.data.data[0]
+        });
       }
     },
   },
