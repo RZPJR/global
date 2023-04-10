@@ -52,15 +52,12 @@
         props: ['area','disabled','clear','label','error','aux_data', 'norequired', 'name', "dense"],
         methods: {
             remoteSearch(search) {
-                let aux_data = '';
-                if (this.aux_data){
-                    aux_data = '|aux_data.in:'+this.aux_data;
-                }
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/bridge/v1/region",{params:{
-                    perpage:10,
+                this.$http.get("/configuration/v1/region",{params:{
+                    page:1,
+                    per_page:10,
                     status:1,
                     search:search,
                 }}).then(response => {
@@ -79,7 +76,7 @@
             },
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/region/"+val.id)
+                    this.$http.get("/configuration/v1/region/"+val.id)
                     .then(response => {
                         this.areas = response.data.data
                     });
