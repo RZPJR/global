@@ -56,10 +56,6 @@
                 return item.code + ' — ' + item.description
             },
             remoteSearch(search) {
-                let aux_data = '';
-                if (this.aux_data){
-                    aux_data = '|aux_data.in:'+this.aux_data;
-                }
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
