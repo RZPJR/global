@@ -56,7 +56,6 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/configuration/v1/region",{params:{
-                    page:1,
                     per_page:10,
                     status:1,
                     search:search,
