@@ -118,7 +118,7 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/catalog/v1/item", {params: {
-                    perpage:10,
+                    per_page:10,
                     search:search,
                     status: '1',
                 }}).then(response => {
@@ -126,13 +126,10 @@
                     let label = 'Product'
                     if (this.label) label = this.label
                     this.placeholder = "Select "+ label
-
                     this.items = []
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
-
-
                     if (this.product) {
                         this.autoSelectByID(this.product)
                     }
