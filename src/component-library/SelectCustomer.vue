@@ -29,11 +29,11 @@
         </template>
         <template slot="selection" slot-scope="data">
             <div class="select-item" >
-                {{ data.item.code }} - {{ data.item.name }}
+                {{ data.item.customer_code }} - {{ data.item.name }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.name }}
+            {{ data.item.customer_code }} - {{ data.item.name }}
         </template>
     </v-autocomplete>
 </template>
@@ -54,14 +54,14 @@
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
-                return item.code + ' — ' + item.name
+                return item.customer_code + ' — ' + item.name
             },
             // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/bridge/v1/customer",{params:{
+                await this.$http.get("/crm/v1/customer",{params:{
                     per_page:10,
                     search:search,
                     status:1,
@@ -77,7 +77,7 @@
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
                 if(val.id){
-                    this.$http.get("/bridge/v1/customer/"+val.id)
+                    this.$http.get("/crm/v1/customer/"+val.id)
                     .then(response => {
                         this.items = response.data.data
                         this.customers = response.data.data
