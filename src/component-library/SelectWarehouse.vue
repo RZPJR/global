@@ -1,7 +1,7 @@
 <template>
     <v-autocomplete
         v-model="warehouses"
-        item-text="description"
+        item-text="name"
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
