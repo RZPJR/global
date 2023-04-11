@@ -87,7 +87,7 @@
                 });
             },
             autoSelectByID(val) {
-                this.$http.get("/site/v1/site/"+val.id)
+                this.$http.get("/site/v1/site/detail?id="+val.id)
                 .then(response => {
                         if (response.data.data === null) {
                             this.items = []
