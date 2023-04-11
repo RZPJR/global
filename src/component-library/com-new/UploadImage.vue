@@ -92,6 +92,7 @@
                 image: null,
                 imageError: '',
                 disable: true,
+                currentTime: this.$moment().valueOf(),
                 nameFile: '',
                 imgUrl: null,
                 overlay: false,
@@ -141,7 +142,7 @@
                                 }
                             } else {
                                 that.imageError = "";
-                                that.nameFile = (that.forImgName).replace(/ /g, "");
+                                that.nameFile = (that.forImgName + "-" + that.currentTime).replace(/ /g, "");
                                 let datas = new FormData();
                                 let blob = resp.slice(0, resp.size, resp.type);
                                 let newFile = new File([blob], that.nameFile + '.' + that.extention, {type: resp.type});
@@ -179,9 +180,9 @@
             }
         },
         mounted() {
-            if (this.imageFromUpdate) {
-                this.image = this.imageFromUpdate
-            }
+            setInterval(() => {
+                this.currentTime = this.$moment().valueOf()
+            }, 1000);
         },
         watch: {
             'errorMsg': {
