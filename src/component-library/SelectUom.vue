@@ -73,13 +73,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    // ini ke endpoint detail
-                    this.$http.get("/catalog/v1/uom",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.uoms = response.data.data[0]
-                    });
+                    this.uoms = val
                 }
 
             },
