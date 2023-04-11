@@ -142,7 +142,6 @@
                                 }
                             } else {
                                 that.imageError = "";
-                                // that.nameFile = (that.forImgName).replace(/ /g, "");
                                 that.nameFile = (that.forImgName + "-" + that.currentTime).replace(/ /g, "");
                                 let datas = new FormData();
                                 let blob = resp.slice(0, resp.size, resp.type);
