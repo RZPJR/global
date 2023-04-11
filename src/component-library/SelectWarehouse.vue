@@ -1,7 +1,7 @@
 <template>
     <v-autocomplete
         v-model="warehouses"
-        item-text="description"
+        item-text="name"
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
@@ -87,7 +87,7 @@
                 });
             },
             autoSelectByID(val) {
-                this.$http.get("/site/v1/site/detail?id="+val.id)
+                this.$http.get("/site/v1/site/"+val.id)
                 .then(response => {
                         if (response.data.data === null) {
                             this.items = []
