@@ -73,14 +73,9 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/catalog/v1/item_class",{params:{
-                        conditions:'id.e:'+val.id,
-                    }}).then(response => {
-                        this.items.push(response.data.data[0])
-                        this.item_class = response.data.data[0]
-                    });
+                    this.items.push(val)
+                    this.item_class = val
                 }
-
             },
             selected(event) {
                 this.$emit('selected', event);
