@@ -171,7 +171,9 @@ import {
             },
             data: {
                 handler: function (val) {
-                    this.arrImg = val
+                    if(val.length > 0){
+                        this.arrImg = val
+                    }
                 },
                 deep: true
             },
