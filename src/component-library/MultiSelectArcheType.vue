@@ -100,7 +100,7 @@
         watch: {
             search: {
                 handler: function (val) {
-                    this.remoteSearch('',this.aux_data)
+                    this.remoteSearch(val,this.aux_data)
                 },
                 deep: true
             },

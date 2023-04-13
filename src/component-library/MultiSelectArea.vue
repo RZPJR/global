@@ -88,10 +88,8 @@
             autoSelectByID(val) {
                 if(val){
                     this.areas= []
-                    val.forEach(id => {
-                        this.$http.get("/configuration/v1/region/" + id).then(response => {
-                            this.areas.push(response.data.data)
-                        });
+                    val.forEach(area => {
+                        this.areas.push(area)
                     });
                     if(this.areas.length >= this.maxSelected){
                         this.menuProps.disabled = true
