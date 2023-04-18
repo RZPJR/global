@@ -29,11 +29,11 @@
         </template>
         <template slot="selection" slot-scope="data">
           <v-chip close @click:close="remove(data)">
-            {{ data.item.code }} - {{ data.item.description }} 
+            {{ data.item.description }} 
           </v-chip>
         </template>
         <template slot="item" slot-scope="data">
-          {{ data.item.code }} - {{ data.item.description }}
+          {{ data.item.description }}
         </template>
       </v-autocomplete>
     </div>

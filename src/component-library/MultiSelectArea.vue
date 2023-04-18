@@ -36,7 +36,7 @@
             <span v-else>Region</span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
