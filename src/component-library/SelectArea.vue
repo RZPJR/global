@@ -18,7 +18,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.description }}
             </div>
         </template>
         <template v-slot:label>
@@ -32,7 +32,7 @@
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
