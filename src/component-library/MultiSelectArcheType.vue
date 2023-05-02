@@ -23,14 +23,6 @@
             <span v-if="!norequired">Archetype Exclude<span style="color:red">*</span></span>
             <span v-else>Archetype Exclude</span>
         </template>
-        <template slot="selection" slot-scope="data">
-            <v-chip
-                close
-                @click:close="remove(data.item)"
-            >
-                {{ data.item.description }} - {{ data.item.customer_type.description }}
-            </v-chip>
-        </template>
         <template slot="item" slot-scope="data">
             {{ data.item.code }} - {{ data.item.description }} - {{ data.item.customer_type.description }}
         </template>
@@ -89,12 +81,6 @@
             },
             selected(event) {
                 this.$emit('selected', event);
-            },
-            remove (item) {
-                const index = this.archeTypes.indexOf(item)
-                // if (index >= 0) 
-                this.archeTypes.splice(index, 1)
-                this.$emit('selected', this.archeTypes);
             },
         },
         watch: {
