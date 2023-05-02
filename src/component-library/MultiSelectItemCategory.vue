@@ -25,14 +25,6 @@
             <span v-if="!norequired">Item Category<span style="color:red">*</span></span>
             <span v-else>Item Category</span>
         </template>
-        <template slot="selection" slot-scope="data">
-            <v-chip
-                close
-                @click:close="remove(data.item)"
-            >
-                {{ data.item.name }}
-            </v-chip>
-        </template>
         <template slot="item" slot-scope="data">
             {{ data.item.code }} - {{ data.item.name }}
         </template>
@@ -96,12 +88,6 @@
                 if(this.item_category.length >= this.maxSelected){
                     this.menuProps.disabled = true
                 }
-            },
-            remove (item) {
-                const index = this.item_category.indexOf(item)
-                this.item_category.splice(index, 1)
-                this.$emit('selected', this.item_category);
-                this.menuProps.disabled = false
             },
             adjustOptions() {
                 if (this.computedCounterValue >= this.maxSelected) {
