@@ -76,7 +76,6 @@
                 if(val){
                     this.uoms = val
                 }
-
             },
             selected(event) {
                 this.$emit('selected', event);
