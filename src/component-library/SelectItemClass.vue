@@ -59,6 +59,7 @@
                 this.$http.get("/catalog/v1/item_class",{params:{
                     page:1,
                     per_page:10,
+                    search: search
                 }}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){

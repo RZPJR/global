@@ -59,6 +59,7 @@
                 this.$http.get("/catalog/v1/uom",{params:{
                     page:1,
                     per_page:10,
+                    search: search
                 }}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
@@ -89,7 +90,6 @@
                     } else if(!this.uom){
                         this.remoteSearch('')
                     }
-
                 },
                 deep: true
             },
