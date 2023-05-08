@@ -67,6 +67,7 @@
                     page:1,
                     per_page:10,
                     search:search,
+                    status: 1
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
