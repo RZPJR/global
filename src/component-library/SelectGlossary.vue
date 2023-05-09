@@ -118,15 +118,12 @@ export default {
             }
         },
     },
-    mounted() {
-        this.remoteSearch();
-    },
     watch: {
         search: {
             handler: function (val) {
                 if (val) {
-                    this.remoteSearch(val);
-                } else if (!this.glossary) {
+                    this.remoteSearch(val);                    
+                } else {
                     this.remoteSearch("");
                 }
             },
