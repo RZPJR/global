@@ -1,10 +1,10 @@
 <template>
     <v-autocomplete
-        v-model="payment_terms"
+        v-model="shipping_methods"
         :items="items"
         :loading="isLoading"
         :item-text="textList"
-        name="payment_term"
+        name="shipping_method"
         :search-input.sync="search"
         :placeholder="placeholder"
         @change="selected"
@@ -15,11 +15,6 @@
         :dense="dense"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.description }}
-            </div>
-        </template>
         <template v-slot:label>
             <span v-if="!norequired">
                 {{ label }}<span :class="disabled?'':'text-red'">*</span>
@@ -28,6 +23,11 @@
                 {{ label }}
             </span>
         </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item">
+                {{ data.item.description }}
+            </div>
+        </template>
         <template slot="item" slot-scope="data">
             {{ data.item.description }}
         </template>
@@ -35,45 +35,44 @@
 </template>
 <script>
     export default {
-        name: 'SelectPaymentTerm',
+        name: 'SelectShippingMethod',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 search: '',
-                payment_terms: null,
+                shipping_methods: null,
                 placeholder : '',
             };
         },
-        props: ['payment_term','disabled','clear','label','error', 'norequired', 'dense'],
+        props: ['shipping_method','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.description
+            },
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-
-                //Getting data from endpoint
-                this.$http.get("/sales/v1/payment_term",{params:{
-                    page: 1,
-                    per_page: 10,
-                    search: search,
+                // ini ke endpoint get all
+                this.$http.get("/sales/v1/shipping_method",{params:{
+                    page:1,
+                    per_page:20,
+                    search: search
                 }}).then(response => {
-                    this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
                     this.isLoading = false
-                    let label = 'Payment Term'
+                    let label = 'Shipping Method'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
                 });
             },
-            textList(item){
-                return item.description
-            },
             autoSelectByID(val) {
                 if(val){
-                    this.payment_terms = val
+                    this.shipping_methods = val
                 }
             },
             selected(event) {
@@ -85,7 +84,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.payment_term){
+                    } else if(!this.shipping_method){
                         this.remoteSearch('')
                     }
                 },
@@ -93,19 +92,19 @@
             },
             clear: {
                 handler: function (val) {
-                    this.payment_terms = null
+                    this.shipping_methods = null
                     this.remoteSearch('')
                 },
                 deep: true
             },
-            payment_term: {
+            shipping_method: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
                 },
                 deep: true
-            },
+            }
         },
     };
 </script>

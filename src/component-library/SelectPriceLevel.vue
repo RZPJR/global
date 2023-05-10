@@ -1,10 +1,10 @@
 <template>
     <v-autocomplete
-        v-model="payment_terms"
+        v-model="price_levels"
         :items="items"
         :loading="isLoading"
         :item-text="textList"
-        name="payment_term"
+        name="price_level"
         :search-input.sync="search"
         :placeholder="placeholder"
         @change="selected"
@@ -17,7 +17,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.description }}
+                {{ data.item.id }} - {{ data.item.description }}
             </div>
         </template>
         <template v-slot:label>
@@ -29,30 +29,30 @@
             </span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
 <script>
     export default {
-        name: 'SelectPaymentTerm',
+        name: 'SelectPriceLevel',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 search: '',
-                payment_terms: null,
+                price_levels: null,
                 placeholder : '',
             };
         },
-        props: ['payment_term','disabled','clear','label','error', 'norequired', 'dense'],
+        props: ['price_level','disabled','clear','label','error', 'norequired', 'dense', 'region', 'province', 'city', 'district', 'subdistrict'],
         methods: {
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
 
                 //Getting data from endpoint
-                this.$http.get("/sales/v1/payment_term",{params:{
+                this.$http.get("/sales/v1/sales_price_level",{params:{
                     page: 1,
                     per_page: 10,
                     search: search,
@@ -62,18 +62,18 @@
                         this.items = response.data.data
                     }
                     this.isLoading = false
-                    let label = 'Payment Term'
+                    let label = 'Price Level'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
                 });
             },
             textList(item){
-                return item.description
+                return item.id + '-' + item.description
             },
             autoSelectByID(val) {
                 if(val){
-                    this.payment_terms = val
+                    this.price_levels = val
                 }
             },
             selected(event) {
@@ -85,7 +85,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.payment_term){
+                    } else if(!this.price_level){
                         this.remoteSearch('')
                     }
                 },
@@ -93,12 +93,12 @@
             },
             clear: {
                 handler: function (val) {
-                    this.payment_terms = null
+                    this.price_levels = null
                     this.remoteSearch('')
                 },
                 deep: true
             },
-            payment_term: {
+            price_level: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
