@@ -94,7 +94,7 @@
             clear: {
                 handler: function (val) {
                     this.payment_terms = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

@@ -60,8 +60,6 @@
                     per_page:20,
                     search: search
                 }}).then(response => {
-                    console.log("response")
-                    console.log(response.data.data)
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
@@ -95,7 +93,7 @@
             clear: {
                 handler: function (val) {
                     this.shipping_methods = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

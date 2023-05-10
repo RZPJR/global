@@ -93,7 +93,7 @@
             clear: {
                 handler: function (val) {
                     this.customer_classes = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

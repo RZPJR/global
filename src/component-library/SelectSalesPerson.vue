@@ -105,7 +105,7 @@
             clear: {
                 handler: function (val) { // ini untuk clear data
                     this.sales_persons = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

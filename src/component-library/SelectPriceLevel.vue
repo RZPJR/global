@@ -94,7 +94,7 @@
             clear: {
                 handler: function (val) {
                     this.price_levels = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

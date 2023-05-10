@@ -138,7 +138,7 @@
             clear: {
                 handler: function (val) {
                     this.adm_divisions = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

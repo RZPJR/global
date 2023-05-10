@@ -94,7 +94,7 @@
             clear: {
                 handler: function (val) {
                     this.territories = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },
