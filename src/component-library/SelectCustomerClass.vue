@@ -15,11 +15,6 @@
         :dense="dense"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.id }} - {{ data.item.description }}
-            </div>
-        </template>
         <template v-slot:label>
             <span v-if="!norequired">
                 {{ label }}<span :class="disabled?'':'text-red'">*</span>
@@ -27,6 +22,11 @@
             <span v-else>
                 {{ label }}
             </span>
+        </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item">
+                {{ data.item.id }} - {{ data.item.description }}
+            </div>
         </template>
         <template slot="item" slot-scope="data">
             {{ data.item.id }} - {{ data.item.description }}
@@ -60,9 +60,8 @@
                     per_page:10,
                     search: search
                 }}).then(response => {
-                    this.items = response.data.data
-                    if(this.items === null){
-                        this.items = []
+                    if (response.data.data && response.data.data !== null && response.data.data !== []) {
+                        this.items = response.data.data
                     }
                     this.isLoading = false
                     let label = 'Customer Class'
