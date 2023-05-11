@@ -71,7 +71,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'Salesperson'
+                    let label = 'Sales Person'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
