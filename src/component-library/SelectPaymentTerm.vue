@@ -56,6 +56,7 @@
                     page: 1,
                     per_page: 10,
                     search: search,
+                    payment_usefor: 2,
                 }}).then(response => {
                     this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
