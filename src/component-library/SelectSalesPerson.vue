@@ -60,10 +60,10 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.$http.get("/sales/v1/sales_person",{params:{
+                    status: 1,
                     page:1,
                     per_page:10,
                     search:search,
-                    status: 1,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
