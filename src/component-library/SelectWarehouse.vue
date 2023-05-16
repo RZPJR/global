@@ -1,7 +1,7 @@
 <template>
     <v-autocomplete
         v-model="warehouses"
-        item-text="description"
+        item-text="name"
         :items="items"
         :placeholder="placeholder"
         :loading="isLoading"
@@ -69,7 +69,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/site/v3/site",{params:{
+                this.$http.get("/site/v1/site",{params:{
                     page: 1,
                     per_page:10,
                 }}).then(response => {
@@ -87,7 +87,7 @@
                 });
             },
             autoSelectByID(val) {
-                this.$http.get("/site/v3/site/detail?id="+val.id)
+                this.$http.get("/site/v1/site/detail?id="+val.id)
                 .then(response => {
                         if (response.data.data === null) {
                             this.items = []

@@ -5,7 +5,7 @@
         :placeholder="placeholder"
         :loading="isLoading"
         item-text="description"
-        item-value="code"
+        item-value="id"
         name="salesGroup"
         :search-input.sync="search"
         @change="selected"
@@ -19,11 +19,11 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.code }} - {{ data.item.description }}
+                {{ data.item.id }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.code }} - {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.description }}
         </template>
         <template v-slot:label>
             <div v-if="label">
@@ -57,7 +57,9 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // For get data from api
-                this.$http.get("/bridge/v1/territory",{params:{
+                this.$http.get("/sales/v1/sales_territory",{params:{
+                    page:1,
+                    per_page:100,
                     search:search,
                 }
                 }).then(response => {
@@ -74,7 +76,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/bridge/v1/territory/"+val.id).then(response => {
+                    this.$http.get("/sales/v1/sales_territory/"+val.id).then(response => {
                         this.isLoading = false
                         this.sales_group = response.data.data
                     });
