@@ -62,7 +62,8 @@
                 this.$http.get("/sales/v1/sales_person",{params:{
                     page:1,
                     per_page:10,
-                    search:search
+                    search:search,
+                    status: 1,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
@@ -71,7 +72,7 @@
                         this.items = []
                     }
                     this.isLoading = false
-                    let label = 'Sales Person'
+                    let label = 'Salesperson'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
