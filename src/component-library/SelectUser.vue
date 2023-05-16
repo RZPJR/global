@@ -51,12 +51,17 @@
             remoteSearch(search) {
                 let role = ""
                 if(this.role_id){
-                    role = "|role.id.e:"+this.role_id
+                    role = this.role_id
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 // ini ke endpoint get all
-                this.$http.get("/account/v1/user",{params:{}}).then(response => {
+                this.$http.get("/account/v1/user",{params:{
+                    page:1,
+                    per_page:10,
+                    search:search,
+                    role_id:role
+                }}).then(response => {
                     this.items = response.data.data
                     if(this.items === null){
                         this.items = []
