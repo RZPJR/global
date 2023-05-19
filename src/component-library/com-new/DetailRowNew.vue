@@ -1,6 +1,15 @@
 <template>
 <div class="second-color">
-    <div v-if="align== true">
+    <div v-if="crossURL && align === true">
+        <div class="row">
+            <div class="col text-black60">{{name}} :</div>
+        </div>
+        <div class="row" style="margin:-12px">
+            <div class="col text-black"><a :href="crossURL" class="routerLink linkReload" target="_blank"><span class="text-secondary">{{value}}</span></a></div>
+        </div>
+        <v-divider class="my-3"/>
+    </div>
+    <div v-else-if="align === true">
         <div class="row">
             <div class="col text-black60">{{name}} :</div>
         </div>
@@ -19,7 +28,7 @@
     <div v-else-if="crossURL">
         <div class="row">
             <div class="col"><span class="text-black60">{{name}}</span> :</div>
-            <a :href="crossURL" class="routerLink linkReload" target="_blank">{{value}}</a>
+            <a :href="crossURL" class="routerLink linkReload" target="_blank"><span class="text-secondary">{{value}}</span></a>
         </div>
         <v-divider class="my-3"/>
     </div>

@@ -60,9 +60,10 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.$http.get("/sales/v1/sales_person",{params:{
+                    status: 1,
                     page:1,
-                    per_page:100,
-                    search:search
+                    per_page:10,
+                    search:search,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
@@ -105,7 +106,7 @@
             clear: {
                 handler: function (val) { // ini untuk clear data
                     this.sales_persons = null
-                    this.remoteSearch('','')
+                    this.remoteSearch('')
                 },
                 deep: true
             },

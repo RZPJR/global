@@ -94,6 +94,18 @@ export default {
                         });
                     });
                     break;
+                case 'Business Type':
+                case 'Best Time To Call':
+                case 'Reference Info':
+                case 'Registration Channel':
+                    sortedArray.forEach((element) => {
+                        this.items.push({
+                            id: element.id,
+                            value: element.value_int,
+                            value_name: element.note,
+                        });
+                    });
+                    break;
                 default:
                     sortedArray.forEach((element) => {
                         this.items.push({
@@ -106,15 +118,12 @@ export default {
             }
         },
     },
-    mounted() {
-        this.remoteSearch();
-    },
     watch: {
         search: {
             handler: function (val) {
                 if (val) {
-                    this.remoteSearch(val);
-                } else if (!this.glossary) {
+                    this.remoteSearch(val);                    
+                } else {
                     this.remoteSearch("");
                 }
             },

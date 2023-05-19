@@ -31,11 +31,11 @@
         </template>
         <template slot="selection" slot-scope="data">
             <div class="select-item" >
-                {{ data.item.id }} - {{ data.item.name }}
+                {{ data.item.id }} - {{ data.item.description }}
             </div>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.id }} - {{ data.item.name }}
+            {{ data.item.id }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -56,17 +56,18 @@
         methods: {
             // For show dropdown suggestion search by code or description
             textList(item){
-                return item.id + ' — ' + item.name
+                return item.id + ' — ' + item.description
             },
             // For get all data from API
             async remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/sales/v1/customer_type",{params:{
+                await this.$http.get("/crm/v1/customer_type",{params:{
                     page:1,
                     per_page:10,
                     search:search,
+                    status: 1,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data

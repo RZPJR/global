@@ -1,10 +1,10 @@
 <template>
     <v-autocomplete
-        v-model="payment_terms"
+        v-model="customer_classes"
         :items="items"
         :loading="isLoading"
         :item-text="textList"
-        name="payment_term"
+        name="customer_class"
         :search-input.sync="search"
         :placeholder="placeholder"
         @change="selected"
@@ -15,11 +15,6 @@
         :dense="dense"
         :error-messages="error"
     >
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.description }}
-            </div>
-        </template>
         <template v-slot:label>
             <span v-if="!norequired">
                 {{ label }}<span :class="disabled?'':'text-red'">*</span>
@@ -28,53 +23,56 @@
                 {{ label }}
             </span>
         </template>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item">
+                {{ data.item.id }} - {{ data.item.description }}
+            </div>
+        </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.description }}
+            {{ data.item.id }} - {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
 <script>
     export default {
-        name: 'SelectPaymentTerm',
+        name: 'SelectCustomerClass',
         data() {
             return {
                 items: [],
                 isLoading: false,
                 search: '',
-                payment_terms: null,
+                customer_classes: null,
                 placeholder : '',
             };
         },
-        props: ['payment_term','disabled','clear','label','error', 'norequired', 'dense'],
+        props: ['customer_class','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
+            // For show dropdown suggestion search by code or description
+            textList(item){
+                return item.id + ' — ' + item.description
+            },
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-
-                //Getting data from endpoint
-                this.$http.get("/sales/v1/payment_term",{params:{
-                    page: 1,
-                    per_page: 10,
-                    search: search,
-                    payment_usefor: 2,
+                // ini ke endpoint get all
+                this.$http.get("/crm/v1/customer_class",{params:{
+                    page:1,
+                    per_page:10,
+                    search: search
                 }}).then(response => {
-                    this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
                     this.isLoading = false
-                    let label = 'Payment Term'
+                    let label = 'Customer Class'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
                 });
             },
-            textList(item){
-                return item.description
-            },
             autoSelectByID(val) {
                 if(val){
-                    this.payment_terms = val
+                    this.customer_classes = val
                 }
             },
             selected(event) {
@@ -86,7 +84,7 @@
                 handler: function (val) {
                     if(val){
                         this.remoteSearch(val)
-                    } else if(!this.payment_term){
+                    } else if(!this.customer_class){
                         this.remoteSearch('')
                     }
                 },
@@ -94,19 +92,19 @@
             },
             clear: {
                 handler: function (val) {
-                    this.payment_terms = null
+                    this.customer_classes = null
                     this.remoteSearch('')
                 },
                 deep: true
             },
-            payment_term: {
+            customer_class: {
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
                 },
                 deep: true
-            },
+            }
         },
     };
 </script>
