@@ -157,11 +157,7 @@ import {
                 imgRemove: [],
             }
         },
-        props: {
-            name: "",
-            error: "",
-            data: ""
-        },
+        props: ['label','error','name','type','data','max_img'],
         watch: {
             error: {
                 handler: function (val) {
@@ -185,7 +181,7 @@ import {
                     self.realRemove()
                 }
             });
-            if(this.data.length > 0){
+            if(this.data && this.data.length > 0){
                 this.arrImg = this.data
             }
         },
@@ -198,7 +194,7 @@ import {
                 }
             },
             maxImg() {
-                if (this.arrImg.length < 3) {
+                if (this.arrImg.length < this.max_img) {
                     return true
                 } else {
                     return false
