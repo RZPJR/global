@@ -50,7 +50,7 @@
                 customers:{}
             };
         },
-        props: ['customer','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['customer','disabled','clear','label','error', 'norequired', 'name', 'dense','customer_type'],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -65,6 +65,7 @@
                     per_page:10,
                     search:search,
                     status:1,
+                    customer_type: this.customer_type,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
