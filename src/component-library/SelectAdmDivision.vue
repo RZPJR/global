@@ -45,7 +45,7 @@
                 placeholder : '',
             };
         },
-        props: ['adm_division','disabled','clear','label','error', 'norequired', 'dense', 'region', 'province', 'city', 'district', 'subdistrict', 'val'],
+        props: ['adm_division','disabled','clear','label','error', 'norequired', 'dense', 'region', 'province', 'city', 'district', 'subdistrict'],
         methods: {
             remoteSearch(search) {
                 this.placeholder="Loading items..."
@@ -186,14 +186,6 @@
                 handler: function (val) {
                     if(val !== null){ // reder remote search
                         this.remoteSearch('')
-                    }
-                },
-                deep: true
-            },
-            val: {
-                handler: function (val) {
-                    if(val !== null){ // reder remote search
-                        this.autoSelectByID(val)
                     }
                 },
                 deep: true
