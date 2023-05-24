@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>Main Image<span style="color:red">*</span></div>
+        <div v-if="label">{{ label }}<span style="color:red">*</span></div>
+        <div v-else>Main Image<span style="color:red">*</span></div>
         <v-row class="mt-1">
             <div class="ma-3" v-for="(item, idx) in arrImg" :key="idx">
                 <v-file-input :id="`fileUpload${idx}`" style="display:none;" type="file" accept="image/jpeg" v-model="item.image" @change="verifyFileUpload(idx)"/>
