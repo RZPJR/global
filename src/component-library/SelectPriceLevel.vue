@@ -17,7 +17,7 @@
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
-                {{ data.item.id }} - {{ data.item.description }}
+                {{ data.item.description }}
             </div>
         </template>
         <template v-slot:label>
@@ -29,7 +29,7 @@
             </span>
         </template>
         <template slot="item" slot-scope="data">
-            {{ data.item.id }} - {{ data.item.description }}
+            {{ data.item.description }}
         </template>
     </v-autocomplete>
 </template>
@@ -69,7 +69,7 @@
                 });
             },
             textList(item){
-                return item.id + '-' + item.description
+                return item.description
             },
             autoSelectByID(val) {
                 if(val){
