@@ -20,12 +20,20 @@
                 {{ data.item.code }} - {{ data.item.description }}
             </div>
         </template>
-        <template v-slot:label>
+        <template v-if="label" v-slot:label>
             <span v-if="!norequired">
                 {{ label }}<span :class="disabled?'':'text-red'">*</span>
             </span>
             <span v-else>
                 {{ label }}
+            </span>
+        </template>
+        <template v-else v-slot:label>
+            <span v-if="!norequired">
+                Archetype<span :class="disabled?'':'text-red'">*</span>
+            </span>
+            <span v-else>
+                Archetype
             </span>
         </template>
         <template slot="item" slot-scope="data">
