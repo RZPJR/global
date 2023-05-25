@@ -80,12 +80,7 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.$http.get("/sales/v1/sales_person",{params:{
-                            conditions:'id.e:'+val.id,
-                        }}).then(responses => {
-                        this.items.push(responses.data.data[0])
-                        this.sales_persons = responses.data.data[0]
-                    });
+                    this.sales_persons = val
                 }
             },
             selected(event) {

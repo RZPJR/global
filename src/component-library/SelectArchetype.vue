@@ -1,173 +1,120 @@
 <template>
-  <v-autocomplete
-    v-model="archetypes"
-    :items="items"
-    :loading="isLoading"
-    :item-text="textList"
-    :search-input.sync="search"
-    :placeholder="placeholder"
-    @change="selected"
-    :disabled="disabled"
-    return-object
-    :dense="dense"
-    :class="dense ? '' : 'rounded-form'"
-    clearable
-    outlined
-    :error-messages="error"
-  >
-    <template slot="selection" slot-scope="data">
-      <div class="select-item">{{ data.item.code }} - {{ data.item.description }}</div>
-    </template>
-    <template slot="item" slot-scope="data">
-      {{ data.item.code }} - {{ data.item.description }}
-    </template>
-    <template v-slot:label>
-      <div v-if="label">
-        <span v-if="!norequired"
-          >{{ label }}<span :class="disabled ? '' : 'text-red'">*</span></span
-        >
-        <span v-else>{{ label }}</span>
-      </div>
-      <div v-else>
-        <span v-if="!norequired"
-          >Archetype<span :class="disabled ? '' : 'text-red'">*</span></span
-        >
-        <span v-else>Archetype</span>
-      </div>
-    </template>
-  </v-autocomplete>
+    <v-autocomplete
+        v-model="archetypes"
+        :items="items"
+        :loading="isLoading"
+        :item-text="textList"
+        name="archetype"
+        :search-input.sync="search"
+        :placeholder="placeholder"
+        @change="selected"
+        :disabled="disabled"
+        return-object
+        clearable
+        outlined
+        :dense="dense"
+        :error-messages="error"
+    >
+        <template slot="selection" slot-scope="data">
+            <div class="select-item">
+                {{ data.item.code }} - {{ data.item.description }}
+            </div>
+        </template>
+        <template v-slot:label>
+            <span v-if="!norequired">
+                {{ label }}<span :class="disabled?'':'text-red'">*</span>
+            </span>
+            <span v-else>
+                {{ label }}
+            </span>
+        </template>
+        <template slot="item" slot-scope="data">
+            {{ data.item.code }} - {{ data.item.description }}
+        </template>
+    </v-autocomplete>
 </template>
 <script>
-export default {
-  name: "SelectArchetype",
-  data() {
-    return {
-      items: [],
-      isLoading: false,
-      search: "",
-      placeholder: "",
-      archetypes: null,
-    };
-  },
-  props: [
-    "archetype",
-    "disabled",
-    "clear",
-    "error",
-    "label",
-    "customer_type_id",
-    "aux_data",
-    "norequired",
-    "customer_group",
-    "dense",
-  ],
-  methods: {
-    // For show dropdown suggestion search by code or name
-    textList(item){
-        return item.code + ' — ' + item.description
-    },
-    remoteSearch(search) {
-      let aux_data = '';
-      if(this.aux_data) {
-          aux_data = '|aux_data.in:'+this.aux_data;
-      }
-      let cg = ''
-      if (this.customer_group){
-          cg = '|customer_group:'+this.customer_group;
-      }else{
-          cg = '';
-      }
-      if (this.archetype){
-          this.autoSelectByID(this.archetype)
-      }
-      this.placeholder="Loading items..."
-      this.isLoading = true
-      // ini ke endpoint get all
-      this.$http.get("/crm/v1/archetype",{params:{
-          per_page:20,
-          status:1,
-          search:search,
-          customer_type_id: this.customer_type_id
-      }}).then(response => {
-          this.items = response.data.data
-          if(this.items === null){
-              this.items = []
-          }
-          this.isLoading = false
-          let label = 'Archetype'
-          if (this.label)
-          label = this.label
-          this.placeholder = "Select "+ label
-      });
-    },
-    autoSelectByID(val) {
-      if (val) {
-        this.$http
-          .get("/crm/v1/archetype", {
-            params: {
-              conditions: "id.e:" + val.id,
+    export default {
+        name: 'SelectArchetype',
+        data() {
+            return {
+                items: [],
+                isLoading: false,
+                search: '',
+                archetypes: null,
+                placeholder : '',
+            };
+        },
+        props: ['archetype','disabled','clear','label','error', 'norequired', 'dense','customer_type_id'],
+        methods: {
+            remoteSearch(search) {
+                this.placeholder="Loading items..."
+                this.isLoading = true
+
+                //Getting data from endpoint
+                this.$http.get("/crm/v1/archetype",{params:{
+                    page: 1,
+                    per_page: 10,
+                    search: search,
+                    customer_type_id: this.customer_type_id
+                }}).then(response => {
+                    this.items = [];
+                    if (response.data.data && response.data.data !== null && response.data.data !== []) {
+                        this.items = response.data.data
+                    }
+                    let label = 'Archetype'
+                    if (this.label) 
+                    	label = this.label
+                    this.isLoading = false
+                    this.placeholder = "Select "+ label
+                });
             },
-          })
-          .then((response) => {
-            this.items.push(response.data.data[0]);
-            this.archetypes = response.data.data[0];
-          });
-      }
-    },
-    selected(event) {
-      this.$emit("selected", event);
-    },
-  },
-  created() {
-    // this.remoteSearch('');
-  },
-  watch: {
-    search: {
-      handler: function (val) {
-        if (val) {
-          this.remoteSearch(val);
-        } else if (!this.archetype) {
-          this.remoteSearch("");
-        }
-      },
-      deep: true,
-    },
-    clear: {
-      handler: function (val) {
-        this.archetypes = null;
-        this.remoteSearch("");
-      },
-      deep: true,
-    },
-    archetype: {
-      handler: function (val) {
-        if (val) {
-          // ini untuk auto select
-          this.autoSelectByID(val);
-        }
-      },
-      deep: true,
-    },
-    customer_type_id: {
-      // ini fungsi untuk request by area_id
-      handler: function (val) {
-        if (val) {
-          // ini untuk auto select
-          this.remoteSearch("");
-        } else {
-          this.archetypes = null;
-        }
-      },
-      deep: true,
-    },
-    aux_data: {
-      handler: function (val) {
-        if (val !== null) {
-          this.remoteSearch("");
-        }
-      },
-      deep: true,
-    },
-  },
-};
+            textList(item){
+                return item.description
+            },
+            autoSelectByID(val) {
+                if(val){
+                    this.archetypes = val
+                }
+            },
+            selected(event) {
+                this.$emit('selected', event);
+            }
+        },
+        watch: {
+            search: {
+                handler: function (val) {
+                    if(val){
+                        this.remoteSearch(val)
+                    } else if(!this.archetype){
+                        this.remoteSearch('')
+                    }
+                },
+                deep: true
+            },
+            clear: {
+                handler: function (val) {
+                    this.archetypes = null
+                    this.remoteSearch('')
+                },
+                deep: true
+            },
+            archetype: {
+                handler: function (val) {
+                    if(val !== null){ // ini untuk auto select
+                        this.autoSelectByID(val)
+                    }
+                },
+                deep: true
+            },
+			customer_type_id: { // ini fungsi untuk request by customer type
+				handler: function (val) {
+					if (val) {
+						this.remoteSearch('');
+					}
+				},
+				deep: true,
+			},
+        },
+    };
 </script>

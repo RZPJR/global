@@ -104,7 +104,11 @@
             search: {
                 handler: function (val) {
                     if(val){
-                        this.remoteSearch(val)
+                        let that = this
+                        clearTimeout(this._timerId)
+                        this._timerId = setTimeout(function(){
+                            that.remoteSearch(val)
+                        }, 1000);
                     } else if (!this.customer) {
                         this.remoteSearch('')
                     }
