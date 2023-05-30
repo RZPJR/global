@@ -144,7 +144,8 @@
             },
             adm_division: {
                 handler: function (val) {
-                    if(val !== null){ // ini untuk auto select
+                    this.adm_divisions = null
+                    if(val !== null || val !== ''){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
                 },

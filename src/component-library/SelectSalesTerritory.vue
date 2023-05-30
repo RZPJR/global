@@ -62,7 +62,7 @@
                         this.items = response.data.data
                     }
                     this.isLoading = false
-                    let label = 'Adm Division'
+                    let label = 'Territory'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -74,6 +74,9 @@
             autoSelectByID(val) {
                 if(val){
                     this.territories = val
+                    this.$http.get("/sales/v1/sales_territory/detail?id=" + val.id).then(response => {
+                        this.items.push(response.data.data)
+                    });
                 }
             },
             selected(event) {
