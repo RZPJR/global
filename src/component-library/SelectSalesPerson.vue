@@ -78,8 +78,8 @@
             },
             autoSelectByID(val) {
                 if(val){
-                    this.sales_persons = val
                     this.$http.get("/sales/v1/sales_person/detail?id=" + val.id).then(response => {
+                        this.sales_persons = response.data.data
                         this.items.push(response.data.data)
                     });
                 }
