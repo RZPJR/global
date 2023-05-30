@@ -65,11 +65,9 @@
                     per_page:10,
                     search:search,
                 }}).then(response => {
-                    if(response){
+                    this.items = []
+                    if(response.data.data){
                         this.items = response.data.data
-                    }
-                    if(this.items === null){
-                        this.items = []
                     }
                     this.isLoading = false
                     let label = 'Salesperson'
@@ -81,6 +79,9 @@
             autoSelectByID(val) {
                 if(val){
                     this.sales_persons = val
+                    this.$http.get("/sales/v1/sales_person/detail?id=" + val.id).then(response => {
+                        this.items.push(response.data.data)
+                    });
                 }
             },
             selected(event) {
