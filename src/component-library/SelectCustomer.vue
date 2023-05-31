@@ -80,7 +80,7 @@
                 if(val.id){
                     this.$http.get("/crm/v1/customer/"+val.id)
                     .then(response => {
-                        this.items = response.data.data
+                        this.items.push(response.data.data)
                         this.customers = response.data.data
                     });
                 }
