@@ -7,7 +7,7 @@
 			@change="onFileSelected"
 			outlined
 			:error-messages="error"
-			id="filePDF"
+			:id="label"
 		></v-file-input>
         <v-overlay style="z-index: 6 !important;" :value="overlay">
             <v-progress-circular
@@ -37,7 +37,7 @@
 		onFileSelected(d) {
             let that = this;
 			if(d !== null){
-				let file = document.getElementById("filePDF");
+				let file = document.getElementById(this.label);
 				let resp = file.files[0]
 				if(resp.type === 'application/pdf'){
 					if(resp.size/1000 <  this.max_size*1000){

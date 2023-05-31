@@ -74,6 +74,7 @@
             autoSelectByID(val) {
                 if(val){
                     this.price_levels = val
+                    this.items.push(val)
                 }
             },
             selected(event) {
