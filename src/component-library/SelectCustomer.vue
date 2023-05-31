@@ -50,7 +50,7 @@
                 customers:{}
             };
         },
-        props: ['customer','disabled','clear','label','error', 'norequired', 'name', 'dense','customer_type'],
+        props: ['customer','disabled','clear','label','error', 'norequired', 'name', 'dense','customer_type', 'not_call_api'],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -94,6 +94,9 @@
             if(this.customer){
                 this.autoSelectByID(this.customer)
             }
+            if(!this.not_call_api){
+                this.remoteSearch('')
+            }
             if (!this.name) {
                 this.data_name = 'customer'
             } else {
@@ -109,8 +112,6 @@
                         this._timerId = setTimeout(function(){
                             that.remoteSearch(val)
                         }, 1000);
-                    } else if (!this.customer) {
-                        this.remoteSearch('')
                     }
                 },
                 deep: true
