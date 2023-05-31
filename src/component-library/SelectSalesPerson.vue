@@ -4,7 +4,6 @@
         :items="items"
         :loading="isLoading"
         :placeholder="placeholder"
-        :item-text="textList"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -14,6 +13,7 @@
         :error-messages="error"
         clearable
         :dense="dense"
+        no-filter
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
@@ -92,8 +92,12 @@
             search: {
                 handler: function (val) {
                     if(val){
-                        this.remoteSearch(val)
-                    } else if(!this.sales_person){
+                        let that = this
+                        clearTimeout(this._timerId)
+                        this._timerId = setTimeout(function(){
+                            that.remoteSearch(val)
+                        }, 1000);
+                    } else if (!this.sales_person) {
                         this.remoteSearch('')
                     }
                 },
