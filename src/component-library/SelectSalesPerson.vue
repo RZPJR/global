@@ -77,11 +77,15 @@
                 });
             },
             autoSelectByID(val) {
-                if(val){
+                if(val?.id){
                     this.$http.get("/sales/v1/sales_person/detail?id=" + val.id).then(response => {
-                        this.sales_persons = response.data.data
-                        this.items.push(response.data.data)
+                        if(response?.data?.data){
+                            this.sales_persons = response.data.data
+                            this.items.push(response.data.data)
+                        }
                     });
+                }else{
+                    this.sales_persons = null
                 }
             },
             selected(event) {

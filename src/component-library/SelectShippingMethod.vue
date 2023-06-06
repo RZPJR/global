@@ -79,6 +79,9 @@
                 this.$emit('selected', event);
             }
         },
+        mounted() {
+            this.remoteSearch('');
+        },
         watch: {
             search: {
                 handler: function (val) {
@@ -101,6 +104,8 @@
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
+                    } else {
+                        this.shipping_methods = null
                     }
                 },
                 deep: true
