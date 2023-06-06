@@ -3,6 +3,7 @@
         v-model="sales_persons"
         :items="items"
         :loading="isLoading"
+        :item-text="textList"
         :placeholder="placeholder"
         :search-input.sync="search"
         @change="selected"
@@ -51,7 +52,7 @@
         methods: {
             // For show dropdown suggestion search by code or description
             textList(item){
-                return item.id + ' — ' + item.name
+                return item.id + ' — ' + item.name + '-' + item.middle_name + ' — ' + item.last_name
             },
             remoteSearch(search) {
                 if (this.sales_person) {
