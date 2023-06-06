@@ -72,11 +72,14 @@
                 return item.id + '-' + item.description
             },
             autoSelectByID(val) {
-                if(val){
-                    this.territories = val
+                if(val?.id){
                     this.$http.get("/sales/v1/sales_territory/detail?id=" + val.id).then(response => {
-                        this.items.push(response.data.data)
+                        if(response?.data?.data)
+                            this.territories = response.data.data
+                            this.items.push(response.data.data)
                     });
+                }else{
+                    this.territories = null
                 }
             },
             selected(event) {

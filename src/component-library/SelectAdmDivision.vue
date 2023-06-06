@@ -58,6 +58,8 @@
                     city: this.city,
                     district: this.district,
                     subdistrict: this.subdistrict,
+                    page: 1,
+                    per_page: 100,
                 }}).then(response => {
                     this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {

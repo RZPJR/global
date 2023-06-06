@@ -80,11 +80,14 @@
                 return item.id + item.description
             },
             autoSelectByID(val) {
-                if(val){
-                    this.customer_classes = val
+                if(val?.id){
                     this.$http.get("/crm/v1/customer_class/detail?id=" + val.id).then(response => {
-                        this.items.push(response.data.data)
+                        if(response?.data?.data)
+                            this.customer_classes = response.data.data
+                            this.items.push(response.data.data)
                     });
+                }else{
+                    this.customer_classes = null
                 }
             },
             selected(event) {
@@ -116,6 +119,8 @@
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
+                    } else {
+                        this.sales_persons = null
                     }
                 },
                 deep: true
