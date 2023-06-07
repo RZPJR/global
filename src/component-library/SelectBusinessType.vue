@@ -89,9 +89,7 @@
             }
         },
         mounted() {
-            if(this.customer_type){
-                this.autoSelectByID(this.customer_type)
-            }
+            this.remoteSearch('')
             if (!this.name) {
                 this.dataname = 'customer_type'
             } else {
