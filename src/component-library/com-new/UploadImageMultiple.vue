@@ -162,7 +162,18 @@ import {
         watch: {
             error: {
                 handler: function (val) {
-                    this.arrImg[0].imageError = val
+                    if (val) {
+                        this.arrImg[0].imageError = val
+                    } else {
+                        this.arrImg = [
+                            {
+                                image: null,
+                                imageError: "",
+                                imgUrl: null,
+                                nameFile: ""
+                            }
+                        ]
+                    }
                 },
                 deep: true
             },
