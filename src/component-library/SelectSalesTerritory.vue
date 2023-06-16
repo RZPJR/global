@@ -62,7 +62,7 @@
                         this.items = response.data.data
                     }
                     this.isLoading = false
-                    let label = 'Adm Division'
+                    let label = 'Territory'
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
@@ -72,8 +72,14 @@
                 return item.id + '-' + item.description
             },
             autoSelectByID(val) {
-                if(val){
-                    this.territories = val
+                if(val?.id){
+                    this.$http.get("/sales/v1/sales_territory/detail?id=" + val.id).then(response => {
+                        if(response?.data?.data)
+                            this.territories = response.data.data
+                            this.items.push(response.data.data)
+                    });
+                }else{
+                    this.territories = null
                 }
             },
             selected(event) {

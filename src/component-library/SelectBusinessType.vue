@@ -79,12 +79,8 @@
             },
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                if(val.id){
-                    this.$http.get("/sales/v1/customer_type/"+val.id)
-                    .then(response => {
-                        this.items = response.data.data
-                        this.customer_types = response.data.data
-                    });
+                if(val){
+                    this.customer_types = val
                 }
             },
             // For Pass Selected Value
@@ -93,9 +89,7 @@
             }
         },
         mounted() {
-            if(this.customer_type){
-                this.autoSelectByID(this.customer_type)
-            }
+            this.remoteSearch('')
             if (!this.name) {
                 this.dataname = 'customer_type'
             } else {
@@ -123,8 +117,6 @@
                 handler: function (val) {
                     if(val){ // ini untuk auto select
                         this.autoSelectByID(val)
-                    } else {
-                        this.customer_types = null
                     }
                 },
                 deep: true

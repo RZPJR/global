@@ -50,7 +50,7 @@
                 customers:{}
             };
         },
-        props: ['customer','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['customer','disabled','clear','label','error', 'norequired', 'name', 'dense','customer_type', 'not_call_api'],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -65,6 +65,7 @@
                     per_page:10,
                     search:search,
                     status:1,
+                    customer_type: this.customer_type,
                 }}).then(response => {
                     if(response && response.data.data !== null) {
                         this.items = response.data.data
@@ -79,7 +80,7 @@
                 if(val.id){
                     this.$http.get("/crm/v1/customer/"+val.id)
                     .then(response => {
-                        this.items = response.data.data
+                        this.items.push(response.data.data)
                         this.customers = response.data.data
                     });
                 }
@@ -93,6 +94,9 @@
             if(this.customer){
                 this.autoSelectByID(this.customer)
             }
+            if(!this.not_call_api){
+                this.remoteSearch('')
+            }
             if (!this.name) {
                 this.data_name = 'customer'
             } else {
@@ -103,9 +107,11 @@
             search: {
                 handler: function (val) {
                     if(val){
-                        this.remoteSearch(val)
-                    } else if (!this.customer) {
-                        this.remoteSearch('')
+                        let that = this
+                        clearTimeout(this._timerId)
+                        this._timerId = setTimeout(function(){
+                            that.remoteSearch(val)
+                        }, 1000);
                     }
                 },
                 deep: true
