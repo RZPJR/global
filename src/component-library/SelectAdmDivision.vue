@@ -70,6 +70,9 @@
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
+                }).catch((error) => {
+                    console.error("Error occurred while retrieving data:", error);
+                    this.isLoading = false;
                 });
             },
             textList(item){
