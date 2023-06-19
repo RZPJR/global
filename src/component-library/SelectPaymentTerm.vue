@@ -81,6 +81,9 @@
                 this.$emit('selected', event);
             }
         },
+        created() {
+            this.remoteSearch('')
+        },
         watch: {
             search: {
                 handler: function (val) {
