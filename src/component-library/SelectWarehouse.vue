@@ -71,7 +71,7 @@
                 // ini ke endpoint get all
                 this.$http.get("/site/v1/site",{params:{
                     per_page:10,
-                    locncode:search
+                    search:search
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
