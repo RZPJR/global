@@ -70,8 +70,8 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/site/v1/site",{params:{
-                    page: 1,
                     per_page:10,
+                    search:search,
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
@@ -87,7 +87,7 @@
                 });
             },
             autoSelectByID(val) {
-                this.$http.get("/site/v1/site/detail?id="+val.id)
+                this.$http.get("/site/v1/site/"+val.id)
                 .then(response => {
                         if (response.data.data === null) {
                             this.items = []
