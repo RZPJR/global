@@ -1,7 +1,7 @@
 import axios from "axios";
 import Vue from "vue";
 
-let API_URL = "https://gateway.edenfarm.tech";
+let API_URL = "https://uat-gateway.edenfarm.tech";
 let APP_URL = "http://localhost:5000/";
 const ajax = axios.create({
   baseURL: API_URL,

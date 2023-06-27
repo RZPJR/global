@@ -70,8 +70,8 @@
                 this.isLoading = true
                 // ini ke endpoint get all
                 this.$http.get("/site/v1/site",{params:{
-                    per_page:500,
-                    // locncode:search
+                    per_page:10,
+                    search:search
                 }}).then(response => {
                     if(response){
                         this.items = response.data.data
