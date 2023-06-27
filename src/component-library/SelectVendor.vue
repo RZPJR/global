@@ -61,7 +61,7 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/logistic/v3/courier-vendor", {
+                await this.$http.get("/logistic/v1/courier-vendor", {
                   params:{
                     page: 1,
                     per_page:10,
@@ -78,12 +78,10 @@
             },
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                if(val.id){
-                    this.$http.get("/logistic/v3/courier-vendor/detail?id="+val.id)
-                    .then(response => {
-                        this.items = response.data.data
-                        this.vendors = response.data.data
-                    });
+                if(val){
+                    this.vendors = val
+                } else {
+                    this.vendors = null
                 }
             },
             // For Pass Selected Value
