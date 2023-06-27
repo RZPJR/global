@@ -56,7 +56,7 @@
                 }
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/logistic/v3/courier",{
+                this.$http.get("/logistic/v1/courier",{
                   params:{
                     page: 1,
                     per_page:10
