@@ -5,9 +5,19 @@ include:
       - 'build-image.yml'
       - 'deploy-image.yml'
       - 'importmap-shared-deps.yml'
+      - 'purge.yml'
 
 stages:
   - test
   - build
   - deploy
   - reconfig
+  - purge
+
+before_script:
+  - >
+    if [ "$CI_COMMIT_BRANCH" == "uat" ]; then 
+      sed -i "s/<SUBDOMAIN>/${DOMAIN_UAT}/g" src/plugins/axios.js
+    else
+      sed -i "s/<SUBDOMAIN>/${DOMAIN_DEV}/g" src/plugins/axios.js
+    fi
