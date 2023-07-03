@@ -64,7 +64,7 @@
                 await this.$http.get("/logistic/v1/courier-vendor", {
                   params:{
                     page: 1,
-                    per_page:10,
+                    per_page:1000,
                     search:search,
                   }
                 }).then(response => {
