@@ -475,6 +475,13 @@ Vue.mixin({
       let val = (value / 1).toFixed(0).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
+    formatPercentage(value) {
+        let val = (value).toFixed(2).replace(".", ",");
+        if (val.endsWith(",00")) {
+            val = val.slice(0, -3); // Remove the last three characters (",00")
+        }
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "%";
+    },
     toUpperCase(val) {
       return val.toUpperCase();
     },
