@@ -59,7 +59,7 @@
                 this.$http.get("/logistic/v1/courier",{
                   params:{
                     page: 1,
-                    per_page:10
+                    per_page:1000
                   }
                 }).then(response => {
                     if(response){
