@@ -3,8 +3,6 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY . .
 
-#view global domain
-RUN cat src/plugins/axios.js 
 RUN npm install
 RUN npm run build
 
