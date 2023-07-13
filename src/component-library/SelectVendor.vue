@@ -50,7 +50,7 @@
                 vendors:{}
             };
         },
-        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense", "site"],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -61,11 +61,13 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
-                await this.$http.get("/logistic/v3/courier-vendor", {
+                let site = this.site ? this.site : ''
+                await this.$http.get("/logistic/v1/courier-vendor", {
                   params:{
                     page: 1,
-                    per_page:10,
-                    search:search,
+                    per_page:1000,
+                    name:search,
+                    site_id: site
                   }
                 }).then(response => {
                     if(response && response.data.data !== null) {
@@ -78,12 +80,10 @@
             },
             // For request by value id (Page update & etc)
             autoSelectByID(val) {
-                if(val.id){
-                    this.$http.get("/logistic/v3/courier-vendor/detail?id="+val.id)
-                    .then(response => {
-                        this.items = response.data.data
-                        this.vendors = response.data.data
-                    });
+                if(val){
+                    this.vendors = val
+                } else {
+                    this.vendors = null
                 }
             },
             // For Pass Selected Value
@@ -128,6 +128,12 @@
                 },
                 deep: true
             },
+            site: {
+                handler: function (val) {
+                    this.remoteSearch('')
+                },
+                deep: true
+            }
         },
     };
 </script>
