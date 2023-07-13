@@ -54,7 +54,7 @@
                 //Getting data from endpoint
                 this.$http.get("/sales/v1/sales_price_level",{params:{
                     page: 1,
-                    per_page: 10,
+                    per_page: 100,
                     search: search,
                 }}).then(response => {
                     this.items = [];
