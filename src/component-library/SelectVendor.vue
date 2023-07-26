@@ -50,7 +50,7 @@
                 vendors:{}
             };
         },
-        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense"],
+        props: ['vendor','disabled','clear','label','error', 'norequired', 'name', "dense", "site"],
         methods: {
             // For show dropdown suggestion search by code or name
             textList(item){
@@ -61,11 +61,13 @@
                 this.placeholder="Loading items..."
                 this.isLoading = true
                 this.items = []
+                let site = this.site ? this.site : ''
                 await this.$http.get("/logistic/v1/courier-vendor", {
                   params:{
                     page: 1,
                     per_page:1000,
-                    search:search,
+                    name:search,
+                    site_id: site
                   }
                 }).then(response => {
                     if(response && response.data.data !== null) {
@@ -126,6 +128,12 @@
                 },
                 deep: true
             },
+            site: {
+                handler: function (val) {
+                    this.remoteSearch('')
+                },
+                deep: true
+            }
         },
     };
 </script>
