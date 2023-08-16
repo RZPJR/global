@@ -10,7 +10,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: registry
-  namespace: svc-cronjob
+  namespace: global
 data:
   .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJnaXQuZWRlbmZhcm0uaWQ6NTA1MCI6IHsKCQkJImF1dGgiOiAiYkdsdVoyZHZPbnBDU2xwTldYRk9OVlJWT0ZaNlJ6YzRhRzloIgoJCX0KCX0KfQ==
 type: kubernetes.io/dockerconfigjson
