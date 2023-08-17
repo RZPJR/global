@@ -132,8 +132,8 @@ metadata:
   namespace: global
 spec:
   dnsNames:
-  - dev-global.edenfarm.tech
-  secretName: dev-global-tls
+  - global.edenfarm.tech
+  secretName: global-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -149,10 +149,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dev-global.edenfarm.tech
-    secretName: dev-global-tls
+    - global.edenfarm.tech
+    secretName: global-tls
   rules:
-  - host: dev-global.edenfarm.tech
+  - host: global.edenfarm.tech
     http:
       paths:
       - path: /
