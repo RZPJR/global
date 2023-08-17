@@ -39,7 +39,7 @@ spec:
       - name: registry
       containers:
       - name: global
-        image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/eks-dev:<VERSION>
+        image: git.edenfarm.id:5050/project-version3/erp-dashboard/global/dev:<VERSION>
         ports:
         - name: http-port
           containerPort: 8080
@@ -132,8 +132,8 @@ metadata:
   namespace: global
 spec:
   dnsNames:
-  - global.edenfarm.tech
-  secretName: global-tls
+  - dev-global.edenfarm.tech
+  secretName: dev-global-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer
@@ -143,15 +143,16 @@ kind: Ingress
 metadata:
   namespace: global
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
   name: global
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
-    - global.edenfarm.tech
-    secretName: global-tls
+    - dev-global.edenfarm.tech
+    secretName: dev-global-tls
   rules:
-  - host: global.edenfarm.tech
+  - host: dev-global.edenfarm.tech
     http:
       paths:
       - path: /
