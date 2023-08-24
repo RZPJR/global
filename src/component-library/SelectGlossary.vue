@@ -96,6 +96,17 @@ export default {
                     break;
                 case 'Business Type':
                 case 'Best Time To Call':
+                case 'Voucher Type':
+                    sortedArray.forEach((element) => {
+                        if (element.value_int !== 3) {
+                            this.items.push({
+                                id: element.id,
+                                value: element.value_int,
+                                value_name: this.capitalizeFirstLetterEveryWords(element.value_name.replace(/_/g, ' ')),
+                            });
+                        }
+                    });
+                    break;
                 case 'Reference Info':
                 case 'Registration Channel':
                     sortedArray.forEach((element) => {

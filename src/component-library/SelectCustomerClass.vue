@@ -15,7 +15,12 @@
         :dense="dense"
         :error-messages="error"
     >
-        <template v-slot:label>
+        <template slot="selection" slot-scope="data">
+            <div class="select-item">
+                {{ data.item.id }} - {{ data.item.description }}
+            </div>
+        </template>
+        <template v-if="label" v-slot:label>
             <span v-if="!norequired">
                 {{ label }}<span :class="disabled?'':'text-red'">*</span>
             </span>
@@ -23,10 +28,13 @@
                 {{ label }}
             </span>
         </template>
-        <template slot="selection" slot-scope="data">
-            <div class="select-item">
-                {{ data.item.id }} - {{ data.item.description }}
-            </div>
+        <template v-else v-slot:label>
+            <span v-if="!norequired">
+                Customer Class<span :class="disabled?'':'text-red'">*</span>
+            </span>
+            <span v-else>
+                Customer Class
+            </span>
         </template>
         <template slot="item" slot-scope="data">
             {{ data.item.id }} - {{ data.item.description }}
@@ -47,37 +55,47 @@
         },
         props: ['customer_class','disabled','clear','label','error', 'norequired', 'dense'],
         methods: {
-            // For show dropdown suggestion search by code or description
-            textList(item){
-                return item.id + ' — ' + item.description
-            },
             remoteSearch(search) {
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                // ini ke endpoint get all
+
+                //Getting data from endpoint
                 this.$http.get("/crm/v1/customer_class",{params:{
-                    page:1,
-                    per_page:10,
+                    page: 1,
+                    per_page: 10,
                     search: search
                 }}).then(response => {
+                    this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
                         this.items = response.data.data
                     }
-                    this.isLoading = false
                     let label = 'Customer Class'
                     if (this.label) 
-                    label = this.label
+                    	label = this.label
+                    this.isLoading = false
                     this.placeholder = "Select "+ label
                 });
             },
+            textList(item){
+                return item.id + item.description
+            },
             autoSelectByID(val) {
-                if(val){
-                    this.customer_classes = val
+                if(val?.id){
+                    this.$http.get("/crm/v1/customer_class/detail?id=" + val.id).then(response => {
+                        if(response?.data?.data)
+                            this.customer_classes = response.data.data
+                            this.items.push(response.data.data)
+                    });
+                }else{
+                    this.customer_classes = null
                 }
             },
             selected(event) {
                 this.$emit('selected', event);
             }
+        },
+        mounted() {
+            this.remoteSearch();
         },
         watch: {
             search: {
@@ -101,10 +119,12 @@
                 handler: function (val) {
                     if(val !== null){ // ini untuk auto select
                         this.autoSelectByID(val)
+                    } else {
+                        this.sales_persons = null
                     }
                 },
                 deep: true
-            }
+            },
         },
     };
 </script>

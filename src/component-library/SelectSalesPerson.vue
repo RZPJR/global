@@ -3,8 +3,8 @@
         v-model="sales_persons"
         :items="items"
         :loading="isLoading"
-        :placeholder="placeholder"
         :item-text="textList"
+        :placeholder="placeholder"
         :search-input.sync="search"
         @change="selected"
         :disabled="disabled"
@@ -14,6 +14,7 @@
         :error-messages="error"
         clearable
         :dense="dense"
+        no-filter
     >
         <template slot="selection" slot-scope="data">
             <div class="select-item">
@@ -51,7 +52,7 @@
         methods: {
             // For show dropdown suggestion search by code or description
             textList(item){
-                return item.id + ' — ' + item.name
+                return item.id + ' — ' + item.name + '-' + item.middle_name + ' — ' + item.last_name
             },
             remoteSearch(search) {
                 if (this.sales_person) {
@@ -65,11 +66,9 @@
                     per_page:10,
                     search:search,
                 }}).then(response => {
-                    if(response){
+                    this.items = []
+                    if(response.data.data){
                         this.items = response.data.data
-                    }
-                    if(this.items === null){
-                        this.items = []
                     }
                     this.isLoading = false
                     let label = 'Salesperson'
@@ -79,8 +78,15 @@
                 });
             },
             autoSelectByID(val) {
-                if(val){
-                    this.sales_persons = val
+                if(val?.id){
+                    this.$http.get("/sales/v1/sales_person/detail?id=" + val.id).then(response => {
+                        if(response?.data?.data){
+                            this.sales_persons = response.data.data
+                            this.items.push(response.data.data)
+                        }
+                    });
+                }else{
+                    this.sales_persons = null
                 }
             },
             selected(event) {
@@ -91,8 +97,12 @@
             search: {
                 handler: function (val) {
                     if(val){
-                        this.remoteSearch(val)
-                    } else if(!this.sales_person){
+                        let that = this
+                        clearTimeout(this._timerId)
+                        this._timerId = setTimeout(function(){
+                            that.remoteSearch(val)
+                        }, 1000);
+                    } else if (!this.sales_person) {
                         this.remoteSearch('')
                     }
                 },
