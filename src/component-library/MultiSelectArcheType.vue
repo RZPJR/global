@@ -76,6 +76,7 @@
                     this.archeTypes= []
                     for (let i = 0; i < val.length; i++) {
                         this.archeTypes.push(val[i])
+                        this.items.push(val[i])
                     }
                 }
             },

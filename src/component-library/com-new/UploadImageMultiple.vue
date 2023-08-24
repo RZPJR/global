@@ -5,7 +5,7 @@
         <v-row class="mt-1">
             <div class="ma-3" v-for="(item, idx) in arrImg" :key="idx">
                 <v-file-input :id="`fileUpload${idx}`" style="display:none;" type="file" accept="image/jpeg" v-model="item.image" @change="verifyFileUpload(idx)"/>
-                <v-tooltip top v-if="idx==0">
+                <v-tooltip top v-if="idx === 0 && label !== 'Shipping Goods Place/Outlet Image'">
                     <template v-slot:activator="{ on: tooltip }">
                         <div v-on="{ ...tooltip}">
                             <!-- Upload File png-->
@@ -162,7 +162,18 @@ import {
         watch: {
             error: {
                 handler: function (val) {
-                    this.arrImg[0].imageError = val
+                    if (val) {
+                        this.arrImg[0].imageError = val
+                    } else {
+                        this.arrImg = [
+                            {
+                                image: null,
+                                imageError: "",
+                                imgUrl: null,
+                                nameFile: ""
+                            }
+                        ]
+                    }
                 },
                 deep: true
             },

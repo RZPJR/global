@@ -58,6 +58,8 @@
                     city: this.city,
                     district: this.district,
                     subdistrict: this.subdistrict,
+                    page: 1,
+                    per_page: 100,
                 }}).then(response => {
                     this.items = [];
                     if (response.data.data && response.data.data !== null && response.data.data !== []) {
@@ -68,6 +70,9 @@
                     if (this.label) 
                     label = this.label
                     this.placeholder = "Select "+ label
+                }).catch((error) => {
+                    console.error("Error occurred while retrieving data:", error);
+                    this.isLoading = false;
                 });
             },
             textList(item){
@@ -144,7 +149,8 @@
             },
             adm_division: {
                 handler: function (val) {
-                    if(val !== null){ // ini untuk auto select
+                    this.adm_divisions = null
+                    if(val !== null || val !== ''){ // ini untuk auto select
                         this.autoSelectByID(val)
                     }
                 },

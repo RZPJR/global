@@ -49,17 +49,16 @@
         },
         props: ['courier','disabled','clear','error','label', "norequired", "vendor_id", "dense"],
         methods: {
-            remoteSearch() {
-                let vendorId = ''
-                if (this.vendor_id) {
-                    vendorId = 'couriervendor.id.e:' +this.vendor_id
-                }
+            remoteSearch(search) {
+                let vendorId = this.vendor_id ? this.vendor_id : ''
                 this.placeholder="Loading items..."
                 this.isLoading = true
-                this.$http.get("/logistic/v3/courier",{
+                this.$http.get("/logistic/v1/courier",{
                   params:{
                     page: 1,
-                    per_page:10
+                    per_page:1000,
+                    name: search,
+                    courier_vendor_id: vendorId,
                   }
                 }).then(response => {
                     if(response){
@@ -116,11 +115,7 @@
             },
             vendor_id: {
                 handler: function (val) {
-                    if(val){ // ini untuk auto select
-                        this.remoteSearch('')
-                    } else {
-                        this.couriers = null
-                    }
+                    this.remoteSearch('')
                 },
                 deep: true
             },
