@@ -16,7 +16,9 @@ stages:
 
 before_script:
   - >
-    if [ "$CI_COMMIT_BRANCH" == "uat" ]; then 
+    if [ "$CI_COMMIT_BRANCH" == "master" ]; then
+      sed -i "s/<SUBDOMAIN>/${DOMAIN_PROD}/g" src/plugins/axios.js
+    elif [ "$CI_COMMIT_BRANCH" == "uat" ]; then 
       sed -i "s/<SUBDOMAIN>/${DOMAIN_UAT}/g" src/plugins/axios.js
     else
       sed -i "s/<SUBDOMAIN>/${DOMAIN_DEV}/g" src/plugins/axios.js
